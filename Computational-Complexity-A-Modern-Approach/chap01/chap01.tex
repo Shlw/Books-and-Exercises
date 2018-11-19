@@ -45,18 +45,24 @@
 
 \maketitle
 
-\begin{exercise}[1.1]
-    hhh
+\begin{exercise}[1.7]
+    By \textbf{Claim 1.6}, it suffices to show $f$ can be computed in $O(T(n))$ with a three-tape TM $M$.
+    Define bijection $\sigma:\mathbb Z^2\to\mathbb N$, where
+    $$
+    \begin{matrix}
+        \sigma(0,0)=0 & \sigma(1,0)=1 & \sigma(0,1)=2 & \sigma(-1,0)=3 & \sigma(0,-1)=4\\
+        \sigma(2,0)=5 & \sigma(1,1)=6 & \sigma(0,2)=7 & \sigma(-1,1)=8 & \sigma(-2,0)=9\\
+        \sigma(-1,-1)=10 & \sigma(0,-2)=11 & \sigma(1,-1)=12 & \sigma(3,0)=13 & \dots\dots\\
+    \end{matrix}
+    $$
+    Therefore $\sigma$ is time-constructible in $O(T(n))$.
+    $M$ is constructed to maintain current coordinate $(x,y)$ in the second tape 
+    and calculate $\sigma(x,y)$ in the third tape.
+    Then it simulates the action of two-dimensional TM in the first tape.
 \end{exercise}
-\begin{proof}
-    hhh
-\end{proof}
 
 \begin{exercise}[1.8]
 	hhh
 \end{exercise}
-\begin{proof}
-	hhh
-\end{proof}
 
 \end{document}
