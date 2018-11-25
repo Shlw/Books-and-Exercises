@@ -45,6 +45,29 @@
 
 \maketitle
 
+\begin{exercise}[1.3]
+	in \textbf{Claim 1.6}, we want to proof that for every k-tape TM $M$,there always exist a single-tape TM $\widetilde{M}$ can simulate $M$.The way to map the k-tape to a single tape:
+		$$
+        \begin{matrix}		
+			 1-tape&\quad location\quad 1, k+1, 2k+1\\			
+			 2-tape&\quad location\quad 2, k+2, 2k+2\\			
+			 \dots&\dots\\			
+			 k-tape&location\quad k, 2k, 3k\\			
+		\end{matrix}
+        $$
+	Because $M$ can compute $f$ in $T(n)$ ,so the tape in $M$ must be short than $T(n)$, trivial show the tape in $\widetilde{M}$ is no longer than $n+1+kT(n)$ (the first n+1 locations locate the input).
+	For every symbol a in $M's$ alphabet, $\widetilde{M}$ will contain both the symbol $a$ and $\widehat{a}$, indicating the corresponding heads of $M$. 
+	In the beginning, $\widetilde{M}$ would take $O(n^2)$ steps to cope the input bit by bit into the rest of the tape.
+	To simulate one step of $M$ ($T(n)$ steps together):
+    \begin{enumerate}
+        \item move the head to the left (the location 1),then sweeps the tape left-to-right direction to get the k symbols that are marked by $\widehat{ }$. \quad ($2kT(n)$)
+        \item use $M's$ transition function to determine the new state ,symbols and head moves.
+        \item sweep the tape back in the right- to -left direction to update the encode, and move the head to the right place (the location of the next symbol to be read). \quad ($2kT(n)$)
+    \end{enumerate}
+	In the 3 step, there some additional steps maybe needed for updating head movement. 
+	So for the at most $T(n)$ steps of $M$,$\widetilde{M}$ perform at most $5kT(n)^2$. 
+\end{exercise}
+
 \begin{exercise}[1.7]
     By \textbf{Claim 1.6}, it suffices to show $f$ can be computed in $O(T(n))$ with a three-tape TM $M$.
     Define bijection $\sigma:\mathbb Z^2\to\mathbb N$, where
@@ -61,10 +84,6 @@
     Then it simulates the action of two-dimensional TM in the first tape.
 \end{exercise}
 
-\begin{exercise}[1.8]
-	hhh
-\end{exercise}
-
 \begin{exercise}[1.13]
 	\begin{itemize}
 		\item[(a)] According to Section 1.5.2, 
@@ -74,6 +93,7 @@ $$PRIME(y)=\forall_x (x=1)\vee(x=y)\vee(\neg DIVIDES(x,y))$$
 $$
 BIT(n,i)=\exists_p: DIVIDES(n,p)\wedge ((C+i)^3<p<(C+i+1)^3) \wedge (\forall_{p'}: p'\leq (C+i)^3\vee p'\geq p \vee \neg PRIME(p'))
 $$
+
 		\item[(b)] $COMPARE(n,m,i,j)=\forall_i (BIT(n,i)\wedge BIT(m,i)\vee \neg BIT(n,i)\wedge \neg BIT(n,i))$
 	\item[(c)] We need to restore the information of the string in the tape, the current state, the position of the read-write head. We encode those information into a $0,1$ string. We use $111$ to represent the seperator and use $01$ to represent character $0$ and $10$ for character $1$. For example, suppose the original alphabet is $\{0,1\}$, and at a specific time, the string in the tape is $001$, then we encode this into $010110$. The encoding for the left two elements are similar. And notice that $3$ consecutive $1$ will only emerge as a separator.
 \item[(d)] According to (c), we can encode the inicial configuration into a string. By using method in the description of Excercise 13, we can encode this string into an integer $m_{M,x}$. Thus 
@@ -99,7 +119,29 @@ $$
 $$HALT(M,x)=\exists_t HALT_{M,x}(t)$$.
 
 
+
+		\item[(b)] $COMPARE(n,m,i,j)=(BIT(n,i)\wedge BIT(m,i)\vee \neg BIT(n,i)\wedge \neg BIT(n,i))\wedge(BIT(n,j)\wedge BIT(m,j)\vee \neg BIT(n,j)\wedge \neg BIT(n,j))$
+	\item[(c)] We need to restore the information of the string in the tape, the current state, the position of the read-write head. We encode those information into a $0,1$ string. We use $111$ to represent the separator and use $01$ to represent character $0$ and $10$ for character $1$. For example, suppose the original alphabet is $\{0,1\}$, and at a specific time, the string in the tape is $001$, then we encode this into $010110$. The encoding for the left two elements are similar. And notice that $3$ consecutive $1$ will only emerge as a separator.
+\item[(d)] 
+
 	\end{itemize}
+\end{exercise}
+
+\begin{exercise}[1.14]
+\begin{enumerate}		
+	\item[\textbf{(a)}] 
+		The language is in P.
+		Choose one vertex and start DFS in the graph, get the DFS tree,judge whether the scale of the tree is $|V|$ . If equal, then the graph is connected.It's trivial that can be computed in ploy-time.
+		\item[\textbf{(b)}] 
+		The language is in P.
+		Choose one edge$(u,v)$ in G.Then visit all $u's$ adjacent points $t$,judge whether $(t,v)\in E$ . Repeat until all the edges in G have been chosen. The time is $O(n^3)$.
+		\item[\textbf{(c)}] 
+		The language is P.
+		First conducting DFS in G, get the DFS tree and do 2-vertex coloring in the tree.After coloring , check it .
+		Then add the other vertices, which is not in the tree ,to the 2-vertex coloring.If success, G is a bipartite.The algorithm is poly-time.
+		\item[\textbf{(d)}] 
+		The language is P.Choose one vertex and start DFS in the graph, get the DFS tree,judge whether the scale of the tree is $|V|$ and there is not residual edge.It is poly-time.
+\end{enumerate}
 \end{exercise}
 
 \end{document}
