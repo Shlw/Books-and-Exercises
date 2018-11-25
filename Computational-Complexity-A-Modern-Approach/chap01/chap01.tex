@@ -70,15 +70,35 @@
 		\item[(a)] According to Section 1.5.2, 
 $$DIVIDES(x,y)=\exists_k: y=x\times k$$
 $$PRIME(y)=\forall_x (x=1)\vee(x=y)\vee(\neg DIVIDES(x,y))$$
-% We define logical expression $P(x,i)$ such that $P(x,i)$ is true iff $x=p_i$. Then 
-%			$$P(x,i)=(\forall_p(PRIME(p)\wedge((C+i)^2<p<(C+i+1)^2))\wedge (x\geq p))\wedge PRIME(x)$$
-%			$$BIT(n,i)=(x\geq 1)\wedge P(x,i)\wedge DIVIDES(x,n)$$
+
 $$
-BIT(n,i)=\exists_p: DIVIDES(n,p)\wedge ((C+i)^3<p<(C+i+1)^3) \wedge (\forall_{p'}: p'\geq p \vee \neg PRIME(p'))
+BIT(n,i)=\exists_p: DIVIDES(n,p)\wedge ((C+i)^3<p<(C+i+1)^3) \wedge (\forall_{p'}: p'\leq (C+i)^3\vee p'\geq p \vee \neg PRIME(p'))
 $$
-		\item[(b)] $COMPARE(n,m,i,j)=(BIT(n,i)\wedge BIT(m,i)\vee \neg BIT(n,i)\wedge \neg BIT(n,i))\wedge(BIT(n,j)\wedge BIT(m,j)\vee \neg BIT(n,j)\wedge \neg BIT(n,j))$
+		\item[(b)] $COMPARE(n,m,i,j)=\forall_i (BIT(n,i)\wedge BIT(m,i)\vee \neg BIT(n,i)\wedge \neg BIT(n,i))$
 	\item[(c)] We need to restore the information of the string in the tape, the current state, the position of the read-write head. We encode those information into a $0,1$ string. We use $111$ to represent the seperator and use $01$ to represent character $0$ and $10$ for character $1$. For example, suppose the original alphabet is $\{0,1\}$, and at a specific time, the string in the tape is $001$, then we encode this into $010110$. The encoding for the left two elements are similar. And notice that $3$ consecutive $1$ will only emerge as a separator.
-\item[(d)] 
+\item[(d)] According to (c), we can encode the inicial configuration into a string. By using method in the description of Excercise 13, we can encode this string into an integer $m_{M,x}$. Thus 
+$$INIT_{M,x}(n)=\forall_i COMPARE(n,m,i,i)$$.
+\item[(e)] Suppose $\{n_i\}$ encoded all the string $<b,state>$ such that $M$ will halt at this configuration. Then 
+$$
+HALT_M(n)=\exists_i \forall_x COMPARE(n,n_i,x,x)
+$$   
+\item[(f)] Precompute all the string $x,y$ where $x$ represent a configuration of $M$ and $y$ is the configuration obtained by a single computation step of $M$. Suppose $\{n_i\}$,$\{n_i\}$ are the corresposing integers edcoded $x,y$.
+Then 
+$$
+NEXT(n,m)=\exists_i\forall_x COMPARE(n,n_i,x,x)\wedge COMPARE(m,m_i,x,x)
+$$
+\item[(g)] 
+$$
+VALID_M(m,t)=\exists_i\forall_j (j>t-1)\vee(j<1)\vee NEXT(m_j,m_{j+1})
+$$
+\item[(h)] 
+$$
+HALT_{M,x}=\exists_m VALID(m,t)\wedge INIT_{M,x}(m[1])\wedge HALT_M(m[t])
+$$
+\item[(i)] 
+$$HALT(M,x)=\exists_t HALT_{M,x}(t)$$.
+
+
 	\end{itemize}
 \end{exercise}
 
