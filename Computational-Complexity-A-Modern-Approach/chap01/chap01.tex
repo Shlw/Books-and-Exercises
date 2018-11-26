@@ -142,22 +142,22 @@ $$HALT(M,x)=\exists_t HALT_{M,x}(t)$$.
 \begin{enumerate}		
 	\item[\textbf{(a)}] 
 		The language is in P.
-		Choose any node and DFS the graph, then check whether the number of visited nodes is $|V|$. 
+		Choose any vertex and DFS the graph, then check whether the number of visited vertices is $|V|$. 
         If so, the graph is connected.
 		\item[\textbf{(b)}] 
 		The language is in P.
-        Choose any edge $(u,v)\in G=(V,E)$. Then enumerate all $u$'s adjacent nodes $t$ and check whether $(t,v)\in E$. 
+        Choose any edge $(u,v)\in G=(V,E)$. Then enumerate all $u$'s adjacent vertices $t$ and check whether $(t,v)\in E$. 
         Repeat until all the edges in $G$ have been visited.
 		\item[\textbf{(c)}] 
 		The language is P.
 		DFS in a connected component of $G$ and do $2$-coloring simultaneously.
         Then check the validity of the coloring in this component. 
-        Repeat the process for other connected components until all nodes are colored.
+        Repeat the process for other connected components until all vertices are colored.
         If all are valid, $G$ is bipartite. 
 		\item[\textbf{(d)}] 
 		The language is P.
-        Choose any node and start DFS in the graph, then
-        check whether the number of visited nodes is $|V|$ and $|E|=|V|-1$.
+        Choose any vertex and start DFS in the graph, then
+        check whether the number of visited vertices is $|V|$ and $|E|=|V|-1$.
 \end{enumerate}
 \end{exercise}
 
