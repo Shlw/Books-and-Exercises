@@ -147,13 +147,13 @@
             then we encode this as $010110$. The encoding for the left two elements are similar. 
             Notice that $3$ consecutive $1$ will only show as a separator, which is unambiguous.
 
-\item[(d)] According to (c), we can encode the inicial configuration into a string. By using method in the description of Excercise 13, we can encode this string into an integer $m_{M,x}$. Thus 
+\item[(d)] According to (c), we can encode the initial configuration into a string. By using method in the description of Exercise 13, we can encode this string into an integer $m_{M,x}$. Thus 
 $$INIT_{M,x}(n)=\forall_i COMPARE(n,m,i,i)$$.
 \item[(e)] Suppose $\{n_i\}$ encoded all the string $<b,state>$ such that $M$ will halt at this configuration. Then 
 $$
 HALT_M(n)=\exists_i \forall_x COMPARE(n,n_i,x,x)
 $$   
-\item[(f)] Precompute all the string $x,y$ where $x$ represent a configuration of $M$ and $y$ is the configuration obtained by a single computation step of $M$. Suppose $\{n_i\}$,$\{n_i\}$ are the corresposing integers edcoded $x,y$.
+\item[(f)] Precompute all the string $x,y$ where $x$ represent a configuration of $M$ and $y$ is the configuration obtained by a single computation step of $M$. Suppose $\{n_i\}$,$\{n_i\}$ are the corresponding integers encoded $x,y$.
 Then 
 $$
 NEXT(n,m)=\exists_i\forall_x COMPARE(n,n_i,x,x)\wedge COMPARE(m,m_i,x,x)
