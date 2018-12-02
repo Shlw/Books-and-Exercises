@@ -75,6 +75,45 @@
 	Therefore, $\widetilde{M}$ perform at most $5kT(n)^2$. 
 \end{exercise}
 
+1.6 \textbf{Solution.}
+
+Define a transducer: read an input and write an output every time step. Firstly, each computation can be simulated by a transducer with same cost by simulating the buffer of input and do some trivial operations on output.
+
+Secondly, we will prove given a TM transducer $M$ with only one tap in time $T(n)$, we can simulate $M$ with oblivious TM using two taps in time $O(T(n)\log T(n))$.
+
+The brute force method is to using one tap and each time from current position to the left  most and then return back to the right most, meanwhile, each time the position of one step further than the right most (or left most) position, and then return back to original marker. This can be done in $T(n)^{2}$ as Exercise 1.5. One improvement is to increase a tap as a stack to conserve some recursive information.
+
+There are two sub-procedure.
+
+(1) Compress(j): Shift to right and left the number of $n = 2^{j} - 1$ from original mark, and write on one of them, depending on record in stack.
+
+(2)Expand(j): The inverse of Compress(j). Using the record in the top of stack, it preforms the reverse cyclic shift and then removed the record on the top of stack.
+
+The overall procedure are as follows:
+
+Repeat indefinitely for $j = 0, 1, 2, ...$
+
+call Phase(j)\\
+Phase(j)
+
+\quad if $j = 0$, turn left and right end and update the symbol of head position and move the left or right.
+
+\quad else 
+
+\quad \quad call Compress(j)
+
+\quad \quad call Phase(j-1)
+
+\quad \quad call Compress(j)
+
+\quad \quad call Phase(j-1)
+
+\quad \quad call Expand(j)
+
+\quad \quad call Expand(j)
+
+The time complexity is $O(T\log T)$ since $M$ can be simulated in the first $j = \log n$ steps.
+
 \begin{exercise}[1.7]
     By \textbf{Claim 1.6}, it suffices to show $f$ can be computed in $O(T(n))$ with a three-tape TM $M$.
     Define bijection $\sigma:\mathbb Z^2\to\mathbb N$, where
