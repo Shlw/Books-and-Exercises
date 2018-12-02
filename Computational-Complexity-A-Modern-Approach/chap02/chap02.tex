@@ -24,12 +24,21 @@
 \newtheorem{conjecture}{conjecture}
 \newtheorem{definition}{Definition}
 \newtheorem{construction}{Construction}
-\newtheorem*{exercise}{Exercise}
+% \newtheorem*{exercise}{Exercise}
 \newtheorem*{proof}{Proof}
 \newtheorem*{answer}{Answer}
 \newtheorem*{refute}{Refute}
 \newtheorem*{example}{Example}
 \newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
 
 \DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
 \newcommand{\abs}[1]{\left| #1 \right|}
@@ -45,8 +54,20 @@
 
 \maketitle
 
-\begin{exercise}[2.1]
+\begin{exercise}{2.1}
     hhh
+\end{exercise}
+
+\begin{exercise}{2.4}
+	The problem linear programming is corresponding to the following language:
+	\[
+		\mathsf{LP} := \{\langle A,b \rangle \mid A \in \mathbb{R}^{m\times n}, b \in \mathbb{R}^m, \exists v \in \mathbb{R}^n: Av \leq b\}.
+	\]
+	Consider the following polynomial-time algorithm $M$: Given a pair $\langle A,b \rangle$ and a string $u \in \{0,1\}^*$, output $1$ if and only if $u$ encodes a non-empty subset $S \subseteq [m]$ such that for all $v$ in the affine subspace
+	\[
+		V = \{v \in \mathbb{R}^n \mid \forall i \in S: A_i v = b_i\},
+	\]
+	$Av \leq b$ holds. We claim it can be verify in polynomial time. By Gauss algorithm, the basis $\{v_1,\ldots,v_k\}$ and bias $b'$ of $V$ can be computed. It just need to be checked that for all $i\in [k]$, $A v_i = 0$ and $Ab' \leq b$. Clearly, $\langle A,b \rangle$ is in $\mathsf{LP}$ if and only if there exists a string $u$ such that $M(\langle A,b \rangle, u) = 1$. Note that a subset of $[m]$, as the certificate, can be encoded with $m$ bits. Thus, $\mathsf{LP}$ is in $\mathbf{NP}$
 \end{exercise}
 
 \end{document}
