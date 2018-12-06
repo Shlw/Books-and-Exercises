@@ -112,6 +112,24 @@ Time complexity: $O(m)$.
 	$Av \leq b$ holds. We claim it can be verify in polynomial time. By Gauss algorithm, the basis $\{v_1,\ldots,v_k\}$ and bias $b'$ of $V$ can be computed. It just need to be checked that for all $i\in [k]$, $A v_i = 0$ and $Ab' \leq b$. Clearly, $\langle A,b \rangle$ is in $\mathsf{LP}$ if and only if there exists a string $u$ such that $M(\langle A,b \rangle, u) = 1$. Note that a subset of $[m]$, as the certificate, can be encoded with $m$ bits. Thus, $\mathsf{LP}$ is in $\mathbf{NP}$
 \end{exercise}
 
+\begin{exercise}{2.9}
+	To show taht the relation $\leq_p$ is not symmetric, we let $L=\{0,1\}^*$ and $L'=SAT$. It is easy to show that $L\leq_p L'$ by transform every $x\in L$ to a tautology such as $x\vee \neq x$. However, $L'\not\leq_p L$ iff we can solve $SAT$ in polynomial time.
+\end{exercise}
 
+\begin{exercise}{2.20}
+To show that $REALQUADEQ$ is \textbf{NP}-complete, we make reduction from $3SAT$ to $REALQUADEQ$.
+Given a SAT instance, which has $n$ variables and $m$ clauses, we construct $REALQUADEQ$ which has $n+m$ variables and $n+m$ quadratic equations. For example, given
+\begin{align*}
+& x_1\vee x_2\vee x_3\\
+&\neg x_2\vee x_4\vee x_3\\
+\end{align*}
+for $m$ clause, we add $m$ new variables as $y_i$ and construct $m$ equation as 
+\begin{align*}
+&x_1^2+x_2^2+x^3-y_1^2=1\\
+&(1-x_2)^2+x_4^2+x_3^2-y_2^2=1\\
+\end{align*}
+To constrain orignal $x_i$ to have value in $\{0,1\}$, we construct extra $n$ equations as 
+$$x_i(1-x_i)=0$$.
+\end{exercise}
 
 \end{document}
