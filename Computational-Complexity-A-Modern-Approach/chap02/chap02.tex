@@ -115,7 +115,45 @@
 	\begin{exercise}{2.9}
 		To show taht the relation $\leq_p$ is not symmetric, we let $L=\{0,1\}^*$ and $L'=SAT$. It is easy to show that $L\leq_p L'$ by transform every $x\in L$ to a tautology such as $x\vee \neq x$. However, $L'\not\leq_p L$ iff we can solve $SAT$ in polynomial time.
 	\end{exercise}
+	
+        \begin{exercise}{2.13}
+	\begin{itemize}
+\item [(a)]
+Parsimonious (Page 50, 2.3.6): 
+%The size of certificate of $x$ and certificate of $f(x)$ is the same. $u$ is a certificate for $x$ if $x\in L$ and $u\in \{0,1\}^{p(x)}$ satisfy $M(x,u) = 1$, for some polynomial $p$ and polynomial Turing machine $M$.\\
+%where $v = g(u)$ satisfy the above two relationships.
+To make the number of solutions for a instance in $L$ is the same as its corresponding SAT instance, we just need to modify the Turing machine $M$ so that it clears up its work tape before outputting a 1 and moves both heads to one end of the tape. Then the final snapshot and head locations are unique. 
+\item[(b)]Show a parsimonious reduction from SAT to 3SAT.\\
+For a SAT instance $\phi$, which has $n$ variables $x_{1}, \cdots, x_{n}$, $m$ clauses $c_{1},\cdots, c_{m}$, and the maximal size of clause is $k$. We construct a 3SAT instance $\phi'$, which has at most $n + k^{2}$ variables $x_{1},\cdots, x_{n}$ and $y_{1},\cdots , y_{s}$, where $s\leq k^{2}$.
 
+Firstly, for a clause $c_{j} = v_{1} \vee v_{2} \vee \cdots \vee v_{k}$, which equals to 
+\begin{equation}(v_{1} \vee v_{2} \vee y_{1} )\wedge (\bar{y}_{1} \vee v_{3} \vee y_{2})
+\wedge \cdots \wedge(\bar{y}_{k-1}\vee v_{k - 1} \vee v_{k})
+\label{EqSAT}\end{equation}
+
+Execute this partition process for every clauses, this gives $\phi'$. There will be at most  $n + k(k - 1)$ variables and at most $m + k(k - 1)$ clauses. Obviously, the process of the reduction is polynomial time.
+
+To make the reduction parsimonious, we revise the reduction a little.
+Change Eq. \ref{EqSAT} to
+\begin{equation}
+(F \vee v_{1} \vee y_{1} )\wedge (\bar{y}_{1} \vee v_{2} \vee y_{2})\vee \cdots \vee
+\wedge (\bar{y}_{k}\vee v_{k} \vee F) \wedge (\bar{v}_{1} \vee \bar{y}_{1} \vee F) \wedge ( y_{1} \vee \bar{y}_{2}\vee F) \cdots \wedge (\bar{v}_{k-1} \vee \bar{y}_{k} \vee F)\wedge 
+(  \bar{v}_{k}\vee \bar{y}_{k}\vee F)
+\label{EqSAT1}\end{equation}
+Thus $\phi'$ has at most $m(3k - 2)$ clauses and $n + k^{2}$ variables.
+
+Now we prove the number of solutions for $\phi$ is the same as solutions for $\phi'$.
+
+For a solution $v_{1}, v_{2}, \cdots, v_{n}$ for $\phi$. Let the corresponding $x_{1} = v_{1},\cdots, x_{n} = v_{n}$. Since the clauses in $\phi'$ is consisted of $m$ clause string like Eq. \eqref{EqSAT1}. Then for any clause string $j$ (for which $1
+\leq j \leq m$), we assigned $y$ from left to right. For a clause $(\bar{y}_{i}\vee v_{i} \vee y_{i+1})$, if the first two variables are false, then assign $y_{i+1}$ to be true, otherwise assign $y_{i}$ to be false, since clause $(y_{i}\vee \bar{v}_{i} \vee F)$ and $({y}_{i}\vee \bar{y}_{i+1} \vee F)$ need to be satisfied. Obviously, in this assignments, the assignment of $y_{j}$ is fixed. Then we will get a satisfying assignment $x_{1},\cdots, x_{n}, y_{1},\cdots, y_{s}$ for $\phi'$.
+
+For a solution $x_{1} = v_{1},\cdots, x_{n}= v_{n}, y_{1}=u_{1},\cdots, y_{s}= u_{s}$ for $\phi'$, we just need to let $x_{1} = v_{1},\cdots, x_{n}= v_{n}$ for $\phi$.
+
+Since the mapping is monomorphism. Thus the number of solutions for $\phi$ and $\phi'$ is the same.
+\end{itemize} 
+\end{exercise}
+	
+	
 	\begin{exercise}{2.15}
 		\begin{itemize}
 			\item Note that the \textsf{CLIQUE} problem on the input $\langle G,k\rangle$ is equivalent to the \textsf{INDSET} problem on the input $\langle \bar G, k\rangle$. The complement graph of a given graph can be constructed in polynomial-times. I.e., \textsf{CLIQUE} and \textsf{INDSET} are polynomial-time reducible to one anther, which implies \textsf{CLIQUE} is \textbf{NP}-complete.
@@ -141,7 +179,18 @@
 		To constrain orignal $x_i$ to have value in $\{0,1\}$, we construct extra $n$ equations as 
 		$$x_i(1-x_i)=0$$.
 	\end{exercise}
-
+        
+	\begin{exercise}{2.24}
+	Since $\bar{L} \in NP$, then by the definition of NP, exists $p: \mathbb{N}\rightarrow \mathbb{N}$ and a polynomial TM $M$ s.t. for every $x \in \{0,1\}^{*}$,
+$$x \in \bar{L} \Leftrightarrow \exists u \in \{0,1\}^{p(|x|)} \text{ s.t. } M(x,u) = 1$$
+which means
+$$x \in L \Leftrightarrow \forall u \in \{0,1\}^{p(|x|)} \text{ s.t. } M(x,u) = 0$$
+Let $M'$ output $1$ if $M$ output $0$, and output $0$ if $M$ output $1$.
+Then $M'$ satisfies
+$$x \in L \Leftrightarrow \forall u \in \{0,1\}^{p(|x|)} \text{ s.t. } M'(x,u) = 1$$
+That's implies definition 2.20.
+\end{exercise}
+	
 	\begin{exercise}{2.26}
 		Suppose $\textsf{3SAT} \leq_p \textsf{TAUTOLOGY}$ and $ \leq_p \textsf{TAUTOLOGY} \leq_p \textsf{3SAT}$. For any $L \in \textbf{NP}$, that $L \leq_q \in \textsf{3SAT}$ implies $\bar L \leq_q \in \overline{\textsf{3SAT}}$. Thus, we have $\bar L \leq_q \in \overline{\textsf{3SAT}} \leq_p \textsf{TAUTOLOGY} \leq_p \textsf{3SAT}$, which means $L \in \textbf{coNP}$. Besides, for any $L \in \textbf{coNP}$, $L \leq_p \textsf{TAUTOLOGY} \leq_p \textsf{3SAT}$. Combining them, $\textbf{NP} = \textbf{coNP}$ can be shown.
 
