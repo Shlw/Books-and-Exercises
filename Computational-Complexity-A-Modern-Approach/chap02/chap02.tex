@@ -1,7 +1,3 @@
-% !TeX encoding = UTF-8
-% !TeX program = XeLaTeX
-% !TeX spellcheck = LaTeX
-
 \documentclass[a4paper]{article}
 
 \usepackage{amsmath,amsfonts,amssymb}
@@ -54,20 +50,34 @@
 
 \maketitle
 
-\begin{exercise}{2.1}
-    hhh
-\end{exercise}
+	\begin{exercise}{2.1}
+	    hhh
+	\end{exercise}
 
-\begin{exercise}{2.4}
-	The problem linear programming is corresponding to the following language:
-	\[
-		\mathsf{LP} := \{\langle A,b \rangle \mid A \in \mathbb{R}^{m\times n}, b \in \mathbb{R}^m, \exists v \in \mathbb{R}^n: Av \leq b\}.
-	\]
-	Consider the following polynomial-time algorithm $M$: Given a pair $\langle A,b \rangle$ and a string $u \in \{0,1\}^*$, output $1$ if and only if $u$ encodes a non-empty subset $S \subseteq [m]$ such that for all $v$ in the affine subspace
-	\[
-		V = \{v \in \mathbb{R}^n \mid \forall i \in S: A_i v = b_i\},
-	\]
-	$Av \leq b$ holds. We claim it can be verify in polynomial time. By Gauss algorithm, the basis $\{v_1,\ldots,v_k\}$ and bias $b'$ of $V$ can be computed. It just need to be checked that for all $i\in [k]$, $A v_i = 0$ and $Ab' \leq b$. Clearly, $\langle A,b \rangle$ is in $\mathsf{LP}$ if and only if there exists a string $u$ such that $M(\langle A,b \rangle, u) = 1$. Note that a subset of $[m]$, as the certificate, can be encoded with $m$ bits. Thus, $\mathsf{LP}$ is in $\mathbf{NP}$
-\end{exercise}
+	\begin{exercise}{2.4}
+		The problem linear programming is corresponding to the following language:
+		\[
+			\mathsf{LP} := \{\langle A,b \rangle \mid A \in \mathbb{R}^{m\times n}, b \in \mathbb{R}^m, \exists v \in \mathbb{R}^n: Av \leq b\}.
+		\]
+		Consider the following polynomial-time algorithm $M$: Given a pair $\langle A,b \rangle$ and a string $u \in \{0,1\}^*$, output $1$ if and only if $u$ encodes a non-empty subset $S \subseteq [m]$ such that for all $v$ in the affine subspace
+		\[
+			V = \{v \in \mathbb{R}^n \mid \forall i \in S: A_i v = b_i\},
+		\]
+		$Av \leq b$ holds. We claim it can be verify in polynomial time. By Gauss algorithm, the basis $\{v_1,\ldots,v_k\}$ and bias $b'$ of $V$ can be computed. It just need to be checked that for all $i\in [k]$, $A v_i = 0$ and $Ab' \leq b$. Clearly, $\langle A,b \rangle$ is in $\mathsf{LP}$ if and only if there exists a string $u$ such that $M(\langle A,b \rangle, u) = 1$. Note that a subset of $[m]$, as the certificate, can be encoded with $m$ bits. Thus, $\mathsf{LP}$ is in $\mathbf{NP}$
+	\end{exercise}
+
+	\begin{exercise}{2.15}
+		\begin{itemize}
+			\item Note that the \textsf{CLIQUE} problem on the input $\langle G,k\rangle$ is equivalent to the \textsf{INDSET} problem on the input $\langle \bar G, k\rangle$. The complement graph of a given graph can be constructed in polynomial-times. I.e., \textsf{CLIQUE} and \textsf{INDSET} are polynomial-time reducible to one anther, which implies \textsf{CLIQUE} is \textbf{NP}-complete.
+
+			\item Given a 3-CNF formula $\phi$ with $m$ clauses $C_1, \ldots, C_m$ on variable set $\{x_1,\ldots,x_n\}$, construc a graph $G = (V,E)$ where $V = \{v_{x_i}, v_{\overline{x_i}} \mid i \in [n]\} \cup \{v_{C_{i,1}}, v_{C_{i,2}}, v_{C_{i,3}} \mid i\in [m]\}$. Connect $v_{x_i}$ and $v_{\overline{x_i}}$ for all $i\in [n]$. Connect $v_{C_{i,1}}$, $v_{C_{i,2}}$ and $v_{C_{i,3}}$ pairwise for all $i \in [m]$. For $i \in [m]$ and $j \in [3]$, connect $v_{C_{i,j}}$ and $v_{x_k}$ if $j$-th literal in $C_i$ is $x_k$ and connect $v_{C_{i,j}}$ and $v_{\overline{x_k}}$ if it is $\overline{x_k}$. If $\phi$ is satisfiable with an assignment $y$, a $2m+n$-size vertex cover can be constructed. For all $i\in [n]$, $S$ gathers $v_{x_i}$ if $y_i$ is true, or gathers $v_{\overline{x_i}}$ otherwise. For each $i \in [m]$, $S$ gathers two of $v_{C_{i,1}}$, $v_{C_{i,2}}$ and $v_{C_{i,3}}$ with a vertex, which represents the satisfied literal in the assignment $y$ not gathered (such vertex must exist since each clause is satisfied). Clearly, $S$ covers all the edge in $G$. If there exists a vertex cover $S$ with size of $n+2m$, exact one vertex in $\{v_{x_i}, v_{\overline{x_i}}\}$ and exact two vertices in $\{v_{C_{j,1}}, v_{C_{j,2}}, v_{C_{j,3}}\}$ are gathered for all $i \in [n]$ and $j\in [m]$ due to the structure of $G$. Construct an assignment $y$ satisfying $\phi$. For all $i\in [n]$, if $v_{x_i}$ is gathered by $S$, set $y_i$ as true, or as false otherwise. Consider each $i\in [m]$, the not gathered vertex in $\{v_{C_{i,j}}\mid j\in [3]\}$ is incident to a edge which must be covered by anther vertex $v_{x_k}$ (or $v_{\overline{x_k}}$). $x_k$ (or $\overline{x_k}$) can satisfy $C_i$ and its value is true in $y$. Thus, $y$ satisfies $\phi$. Combining the fact that the construction of $G$ from $\phi$ can be done efficiently, \textsf{3SAT} can be reduced to \textsf{VERTEX COVER} polynomially, which means \textsf{VERTEX COVER} is \textbf{NP}-hard. Furthermore, it is easy to see the vertex covering can be checked within polynomial times. Thus, \textsf{VERTEX COVER} is \textbf{NP}-complete.		
+		\end{itemize}
+	\end{exercise}
+
+	\begin{exercise}{2.26}
+		Suppose $\textsf{3SAT} \leq_p \textsf{TAUTOLOGY}$ and $ \leq_p \textsf{TAUTOLOGY} \leq_p \textsf{3SAT}$. For any $L \in \textbf{NP}$, that $L \leq_q \in \textsf{3SAT}$ implies $\bar L \leq_q \in \overline{\textsf{3SAT}}$. Thus, we have $\bar L \leq_q \in \overline{\textsf{3SAT}} \leq_p \textsf{TAUTOLOGY} \leq_p \textsf{3SAT}$, which means $L \in \textbf{coNP}$. Besides, for any $L \in \textbf{coNP}$, $L \leq_p \textsf{TAUTOLOGY} \leq_p \textsf{3SAT}$. Combining them, $\textbf{NP} = \textbf{coNP}$ can be shown.
+
+		Note that $\textsf{3SAT}$ is \textbf{NP}-complete and $\textsf{TAUTOLOGY}$ i s \textbf{coNP}-complete. If $\textbf{NP} = \textbf{coNP}$, they will be polynomial-time reducible to one another.
+	\end{exercise}
 
 \end{document}
