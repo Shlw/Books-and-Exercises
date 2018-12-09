@@ -50,9 +50,54 @@
 
 \maketitle
 
-<<<<<<< HEAD
 	\begin{exercise}{2.1}
 	    hhh
+	\end{exercise}
+
+	\begin{exercise}{2.2}
+		\textbf{Solution.}
+		\begin{itemize}
+			\item 2COL is in NP.
+
+			Given a colouring scheme $C$ for graph $G(V,E)$, where $|V| = n, |E| = m$, we can verify whether $C$ in $O(m)$ time by checking each of edges $e = (u,v)$ whether their color are the same, if there exists $u,v$ whose color is the same, then the colouring scheme $C$ is illegal, otherwise accept $C$.
+
+			2COL is the same as bipartite problem. To find whether a graph can be 2COL. That is, we need only prove there are not exists odd cycle in graph G.
+			\item 3COL is in NP. The verify method is the same as 2COL problem.
+			\item Connectivity is in NP. 
+			Given a graph G, we can decide whether which is connected by a nondeterministic Turing machine in $O(n)$ time.
+			\begin{itemize}
+				\item Random select a vertex $u\in G(V,E)$, if degree$(u) = 0$, reject. Otherwise:
+				\item Let $S = \{u\}$, do:
+				%\item \quad Add $u$ to vertex set $S$.
+				\item \quad Nondeterministic goto all of neighbour of $u$, and add all of its neighbour to $S$, for any neighbour of $u$, recursively and nondeterministic execute step 3 until for two adjacent step $|S|$ is fixed. 
+				\item If $|S| = n$, accept, otherwise reject. 
+			\end{itemize}
+			The process can be executed at most with depth $n$, and thus the time if $O(n)$ to check whether $G$ is connected by a nondeterministic Turing machine.
+		\end{itemize}
+
+		\begin{itemize}
+			\item 2COL is in P. %A graph can be 2COL iff it has no odd cycle. 
+			\begin{itemize}
+				\item For every connected sub-graph of $G$, random select a vertex $v\in V$, color $v$ to red, let step$(v) = 0$, push $v$ into queue $Q$\;
+				\item \quad Pop $v$ from $Q$, for any $u \in N(v)$, if $v$ has been coloured, and step$(u)=$ step$(v)$, then reject. If $v$ has not been coloured, do:
+				\item \quad \quad Push $u$ to $Q$, step$(u)=step(v) + 1$ (mod $2$);
+				\item \quad \quad If step$(u)=0$, color $u$ to red, otherwise color $u$ to blue.
+				\item \quad go to step (2) until $Q$ is empty.
+			\end{itemize}
+			Time complexity: $O(m)$.
+			\item Connectivity is in P.
+			\begin{itemize}
+				\item Random select a vertex $v\in P$, if degree($v$) = 0, reject. Otherwise add $S = \{v\}$.
+				\item Using depth first method adding all of neighbours of $u$ into $S$.
+				\item Execute step 2 until $|S| = n$ or $|S|$ fixed.
+				\item If $|S|< n$ reject, otherwise accept.
+			\end{itemize}
+			Time complexity: $O(m)$.
+		\end{itemize}
+	\end{exercise}
+
+	\begin{exercise}{2.3}
+	    LINEQ can be solved with Gaussian elimination method, which is in P.
 	\end{exercise}
 
 	\begin{exercise}{2.4}
@@ -67,6 +112,10 @@
 		$Av \leq b$ holds. We claim it can be verify in polynomial time. By Gauss algorithm, the basis $\{v_1,\ldots,v_k\}$ and bias $b'$ of $V$ can be computed. It just need to be checked that for all $i\in [k]$, $A v_i = 0$ and $Ab' \leq b$. Clearly, $\langle A,b \rangle$ is in $\mathsf{LP}$ if and only if there exists a string $u$ such that $M(\langle A,b \rangle, u) = 1$. Note that a subset of $[m]$, as the certificate, can be encoded with $m$ bits. Thus, $\mathsf{LP}$ is in $\mathbf{NP}$
 	\end{exercise}
 
+	\begin{exercise}{2.9}
+		To show taht the relation $\leq_p$ is not symmetric, we let $L=\{0,1\}^*$ and $L'=SAT$. It is easy to show that $L\leq_p L'$ by transform every $x\in L$ to a tautology such as $x\vee \neq x$. However, $L'\not\leq_p L$ iff we can solve $SAT$ in polynomial time.
+	\end{exercise}
+
 	\begin{exercise}{2.15}
 		\begin{itemize}
 			\item Note that the \textsf{CLIQUE} problem on the input $\langle G,k\rangle$ is equivalent to the \textsf{INDSET} problem on the input $\langle \bar G, k\rangle$. The complement graph of a given graph can be constructed in polynomial-times. I.e., \textsf{CLIQUE} and \textsf{INDSET} are polynomial-time reducible to one anther, which implies \textsf{CLIQUE} is \textbf{NP}-complete.
@@ -75,89 +124,28 @@
 		\end{itemize}
 	\end{exercise}
 
+
+
+	\begin{exercise}{2.20}
+		To show that $REALQUADEQ$ is \textbf{NP}-complete, we make reduction from $3SAT$ to $REALQUADEQ$.
+		Given a SAT instance, which has $n$ variables and $m$ clauses, we construct $REALQUADEQ$ which has $n+m$ variables and $n+m$ quadratic equations. For example, given
+		\begin{align*}
+			& x_1\vee x_2\vee x_3\\
+			&\neg x_2\vee x_4\vee x_3\\
+		\end{align*}
+		for $m$ clause, we add $m$ new variables as $y_i$ and construct $m$ equation as 
+		\begin{align*}
+			&x_1^2+x_2^2+x^3-y_1^2=1\\
+			&(1-x_2)^2+x_4^2+x_3^2-y_2^2=1\\
+		\end{align*}
+		To constrain orignal $x_i$ to have value in $\{0,1\}$, we construct extra $n$ equations as 
+		$$x_i(1-x_i)=0$$.
+	\end{exercise}
+
 	\begin{exercise}{2.26}
 		Suppose $\textsf{3SAT} \leq_p \textsf{TAUTOLOGY}$ and $ \leq_p \textsf{TAUTOLOGY} \leq_p \textsf{3SAT}$. For any $L \in \textbf{NP}$, that $L \leq_q \in \textsf{3SAT}$ implies $\bar L \leq_q \in \overline{\textsf{3SAT}}$. Thus, we have $\bar L \leq_q \in \overline{\textsf{3SAT}} \leq_p \textsf{TAUTOLOGY} \leq_p \textsf{3SAT}$, which means $L \in \textbf{coNP}$. Besides, for any $L \in \textbf{coNP}$, $L \leq_p \textsf{TAUTOLOGY} \leq_p \textsf{3SAT}$. Combining them, $\textbf{NP} = \textbf{coNP}$ can be shown.
 
 		Note that $\textsf{3SAT}$ is \textbf{NP}-complete and $\textsf{TAUTOLOGY}$ i s \textbf{coNP}-complete. If $\textbf{NP} = \textbf{coNP}$, they will be polynomial-time reducible to one another.
 	\end{exercise}
-=======
-\begin{exercise}{2.2}
-\textbf{Solution.}
-\begin{itemize}
-\item 2COL is in NP.
-
-Given a colouring scheme $C$ for graph $G(V,E)$, where $|V| = n, |E| = m$, we can verify whether $C$ in $O(m)$ time by checking each of edges $e = (u,v)$ whether their color are the same, if there exists $u,v$ whose color is the same, then the colouring scheme $C$ is illegal, otherwise accept $C$.
-
-2COL is the same as bipartite problem. To find whether a graph can be 2COL. That is, we need only prove there are not exists odd cycle in graph G.
-\item 3COL is in NP. The verify method is the same as 2COL problem.
-\item Connectivity is in NP. 
-Given a graph G, we can decide whether which is connected by a nondeterministic Turing machine in $O(n)$ time.
-\begin{itemize}
-\item Random select a vertex $u\in G(V,E)$, if degree$(u) = 0$, reject. Otherwise:
-\item Let $S = \{u\}$, do:
-%\item \quad Add $u$ to vertex set $S$.
-\item \quad Nondeterministic goto all of neighbour of $u$, and add all of its neighbour to $S$, for any neighbour of $u$, recursively and nondeterministic execute step 3 until for two adjacent step $|S|$ is fixed. 
-\item If $|S| = n$, accept, otherwise reject. 
-\end{itemize}
-The process can be executed at most with depth $n$, and thus the time if $O(n)$ to check whether $G$ is connected by a nondeterministic Turing machine.
-\end{itemize}
-
-\begin{itemize}
-\item 2COL is in P. %A graph can be 2COL iff it has no odd cycle. 
-\begin{itemize}
-\item For every connected sub-graph of $G$, random select a vertex $v\in V$, color $v$ to red, let step$(v) = 0$, push $v$ into queue $Q$\;
-\item \quad Pop $v$ from $Q$, for any $u \in N(v)$, if $v$ has been coloured, and step$(u)=$ step$(v)$, then reject. If $v$ has not been coloured, do:
-\item \quad \quad Push $u$ to $Q$, step$(u)=step(v) + 1$ (mod $2$);
-\item \quad \quad If step$(u)=0$, color $u$ to red, otherwise color $u$ to blue.
-\item \quad go to step (2) until $Q$ is empty.
-\end{itemize}
-Time complexity: $O(m)$.
-\item Connectivity is in P.
-\begin{itemize}
-\item Random select a vertex $v\in P$, if degree($v$) = 0, reject. Otherwise add $S = \{v\}$.
-\item Using depth first method adding all of neighbours of $u$ into $S$.
-\item Execute step 2 until $|S| = n$ or $|S|$ fixed.
-\item If $|S|< n$ reject, otherwise accept.
-\end{itemize}
-Time complexity: $O(m)$.
-\end{itemize}
-\end{exercise}
-
-\begin{exercise}{2.3}
-    LINEQ can be solved with Gaussian elimination method, which is in P.
-\end{exercise}
-
-\begin{exercise}{2.4}
-	The problem linear programming is corresponding to the following language:
-	\[
-		\mathsf{LP} := \{\langle A,b \rangle \mid A \in \mathbb{R}^{m\times n}, b \in \mathbb{R}^m, \exists v \in \mathbb{R}^n: Av \leq b\}.
-	\]
-	Consider the following polynomial-time algorithm $M$: Given a pair $\langle A,b \rangle$ and a string $u \in \{0,1\}^*$, output $1$ if and only if $u$ encodes a non-empty subset $S \subseteq [m]$ such that for all $v$ in the affine subspace
-	\[
-		V = \{v \in \mathbb{R}^n \mid \forall i \in S: A_i v = b_i\},
-	\]
-	$Av \leq b$ holds. We claim it can be verify in polynomial time. By Gauss algorithm, the basis $\{v_1,\ldots,v_k\}$ and bias $b'$ of $V$ can be computed. It just need to be checked that for all $i\in [k]$, $A v_i = 0$ and $Ab' \leq b$. Clearly, $\langle A,b \rangle$ is in $\mathsf{LP}$ if and only if there exists a string $u$ such that $M(\langle A,b \rangle, u) = 1$. Note that a subset of $[m]$, as the certificate, can be encoded with $m$ bits. Thus, $\mathsf{LP}$ is in $\mathbf{NP}$
-\end{exercise}
->>>>>>> 92c06ff1e880923c4c59072182f0bf59a0f4fb10
-
-\begin{exercise}{2.9}
-	To show taht the relation $\leq_p$ is not symmetric, we let $L=\{0,1\}^*$ and $L'=SAT$. It is easy to show that $L\leq_p L'$ by transform every $x\in L$ to a tautology such as $x\vee \neq x$. However, $L'\not\leq_p L$ iff we can solve $SAT$ in polynomial time.
-\end{exercise}
-
-\begin{exercise}{2.20}
-To show that $REALQUADEQ$ is \textbf{NP}-complete, we make reduction from $3SAT$ to $REALQUADEQ$.
-Given a SAT instance, which has $n$ variables and $m$ clauses, we construct $REALQUADEQ$ which has $n+m$ variables and $n+m$ quadratic equations. For example, given
-\begin{align*}
-& x_1\vee x_2\vee x_3\\
-&\neg x_2\vee x_4\vee x_3\\
-\end{align*}
-for $m$ clause, we add $m$ new variables as $y_i$ and construct $m$ equation as 
-\begin{align*}
-&x_1^2+x_2^2+x^3-y_1^2=1\\
-&(1-x_2)^2+x_4^2+x_3^2-y_2^2=1\\
-\end{align*}
-To constrain orignal $x_i$ to have value in $\{0,1\}$, we construct extra $n$ equations as 
-$$x_i(1-x_i)=0$$.
-\end{exercise}
 
 \end{document}
