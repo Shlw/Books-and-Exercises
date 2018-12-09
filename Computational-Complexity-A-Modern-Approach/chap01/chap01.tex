@@ -10,6 +10,7 @@
 \usepackage{geometry}
 \usepackage{ntheorem}
 \usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
 \usepackage{caption,subcaption}
 
 \geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
@@ -65,7 +66,7 @@
 	To simulate one step of $M$, procedure goes as follows:
     \begin{enumerate}
         \item Now the head locates at the leftmost.
-            Then sweep to the rightmost and record the $k$ original heads, i.e., symbols with $\widehat{ }$. 
+            Then sweep to the rightmost and record the $k$ original heads, i.e., symbols with $\widehat{\ }$. 
             This takes $2kT(n)$ steps.
         \item Use $M$'s transition function to determine the new state, symbol, and head.
         \item Sweep the tape back from right to left to update the tape. 
@@ -73,6 +74,47 @@
     \end{enumerate}
 	During the three steps, there some minor steps maybe needed for updating head movement. 
 	Therefore, $\widetilde{M}$ perform at most $5kT(n)^2$. 
+\end{exercise}
+
+\begin{exercise}[1.6]
+    Define a transducer: read an input and write an output every time step. 
+    Firstly, each computation can be simulated by a transducer with same cost by 
+    simulating the buffer of input and do some trivial operations on output.
+
+    Secondly, we will prove given a TM transducer $M$ with only one tape in time $T(n)$, 
+    we can simulate $M$ with oblivious TM using two tapes in time $O(T(n)\log T(n))$.
+
+    The brute force method is to using one tape and each time from current position to the leftmost and 
+    then return back to the rightmost; meanwhile, each time the position of one step further than 
+    the rightmost (or leftmost) position, and then return back to original marker. 
+    This can be done in $T(n)^{2}$ as \textbf{Exercise 1.5}. 
+    One improvement is to increase a tape as a stack to conserve some recursive information.
+
+    There are two sub-procedure.
+    \begin{itemize}
+        \item Compress(j): Shift to right and left the number of $n=2^{j}-1$ from original mark, 
+            and write on one of them, depending on record in stack.
+        \item Expand(j): The inverse of Compress(j). Using the record in the top of stack, 
+            it preforms the reverse cyclic shift and then removed the record on the top of stack.
+    \end{itemize}
+    The overall procedure is to call Phase($j$) for $j=0,1,2,\cdots$.
+    \begin{center}
+    \begin{algorithm}[H]
+    \caption{Function Phase($j$)}
+    \If{$j=0$}{
+        Turn left and right end and update the symbol of head position and move the left or right\;
+    }\Else{
+        Compress($j$)\;
+        Compress($j$)\;
+        Phase($j-1$)\;
+        Compress($j$)\;
+        Phase($j-1$)\;
+        Expand($j$)\;
+        Expand($j$)\;
+    }
+    \end{algorithm}
+    \end{center}
+    The time complexity is $O(T\log T)$ since $M$ can be simulated in the first $j = \log n$ steps.
 \end{exercise}
 
 \begin{exercise}[1.7]
@@ -96,7 +138,10 @@
     \[
         \mathcal L = \{0^i \# x \mid x\in \{0,1\}^*, |x| \geq i, x_i = 1\}.
     \]
-    Design a 2-tapes (input and work tapes, IT \& WT) Turing machine $M := (Q,\Sigma,\Gamma,q_0,q_\text{acc},q_\text{rej},\delta)$, where $\Sigma := \{0,1,\#\}$ and $\Gamma := \Sigma \cup \{b\}$. The transforming function
+    Design a 2-tapes (input and work tapes, IT \& WT) Turing machine 
+    $M := (Q,\Sigma,\Gamma,q_0,q_\text{acc},q_\text{rej},\delta)$, 
+    where $\Sigma := \{0,1,\#\}$ and $\Gamma := \Sigma \cup \{b\}$. 
+    The transforming function
     \begin{align*}
         \delta : Q\times \Gamma^2 &\to Q\times \Gamma^2 \times \{S,L,R\}^2\\
         \left(\begin{array}{l}
@@ -118,9 +163,9 @@
             \delta(q_0,\#,b) = (q_1,\#,b,S,L),\\
             
             \forall a \in \Gamma\backslash\{1\}: \delta(q_1,a,b) = (q_\text{rej},a,b,S,S), \quad
-            \delta(q_1,1,b) = (q_\text{acc},1,b,S,S) \quad \text{and }\\
+            \delta(q_1,1,b) = (q_\text{acc},1,b,S,S),\\
 
-            \forall a \in \Sigma: \delta(q_1,a,0) = (q_1,a,0,R,L)
+            \forall a \in \Sigma: \delta(q_1,a,0) = (q_1,a,0,R,L).
         \end{array}
     \]
     For the input with the length of $n$, $M$ halts after $O(n)$ steps. Note that the STAY action can be simulated by 2 RIGHT or LEFT steps. Combining Claim 1.3, it can be shown that $\mathcal L \in P$.
@@ -146,29 +191,27 @@
             For example, if the original alphabet is $\bin$, and at a specific time the string in the tape is $001$, 
             then we encode this as $010110$. The encoding for the left two elements are similar. 
             Notice that $3$ consecutive $1$ will only show as a separator, which is unambiguous.
-
-\item[(d)] According to (c), we can encode the initial configuration into a string. By using method in the description of Exercise 13, we can encode this string into an integer $m_{M,x}$. Thus 
-$$INIT_{M,x}(n)=\forall_i COMPARE(n,m,i,i)$$.
-\item[(e)] Suppose $\{n_i\}$ encoded all the string $<b,state>$ such that $M$ will halt at this configuration. Then 
-$$
-HALT_M(n)=\exists_i \forall_x COMPARE(n,n_i,x,x)
-$$   
-\item[(f)] Precompute all the string $x,y$ where $x$ represent a configuration of $M$ and $y$ is the configuration obtained by a single computation step of $M$. Suppose $\{n_i\}$,$\{n_i\}$ are the corresponding integers encoded $x,y$.
-Then 
-$$
-NEXT(n,m)=\exists_i\forall_x COMPARE(n,n_i,x,x)\wedge COMPARE(m,m_i,x,x)
-$$
-\item[(g)] 
-$$
-VALID_M(m,t)=\exists_i\forall_j (j>t-1)\vee(j<1)\vee NEXT(m_j,m_{j+1})
-$$
-\item[(h)] 
-$$
-HALT_{M,x}=\exists_m VALID(m,t)\wedge INIT_{M,x}(m[1])\wedge HALT_M(m[t])
-$$
-\item[(i)] 
-$$HALT(M,x)=\exists_t HALT_{M,x}(t)$$.
-
+        \item[(d)] According to (c), we can encode the initial configuration into a binary string. 
+            By Exercise 13, we can encode this string into an integer $m_{M,x}$. 
+            Thus 
+            $$
+            \text{INIT}_{M,x}(n)=\forall_i\text{COMPARE}(n,m,i,i).
+            $$
+        \item[(e)] Suppose $\{n_i\}$ encoded all the string $<b,\text{state}>$ such that $M$ will halt at this configuration. 
+            Then 
+            $$
+            \text{HALT}_M(n)=\exists_i \forall_x\text{COMPARE}(n,n_i,x,x)
+            $$   
+        \item[(f)] Precompute all the string $x,y$ where $x$ represent a configuration of $M$ and 
+            $y$ is the configuration obtained by a single computation step of $M$. 
+            Suppose $\{n_i\}$,$\{n_i\}$ are the corresponding integers encoded $x,y$.
+            Then 
+            $$
+            \text{NEXT}(n,m)=\exists_i\forall_x\text{COMPARE}(n,n_i,x,x)\wedge\text{COMPARE}(m,m_i,x,x).
+            $$
+        \item[(g)] $\text{VALID}_M(m,t)=\exists_i\forall_j (j>t-1)\vee(j<1)\vee\text{NEXT}(m_j,m_{j+1})$.
+        \item[(h)] $\text{HALT}_{M,x}=\exists_m\text{VALID}(m,t)\wedge\text{INIT}_{M,x}(m[1])\wedge\text{HALT}_M(m[t])$.
+        \item[(i)] $\text{HALT}(M,x)=\exists_t\text{HALT}_{M,x}(t)$.
 	\end{itemize}
 \end{exercise}
 
