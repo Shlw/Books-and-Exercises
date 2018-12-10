@@ -20,7 +20,6 @@
 \newtheorem{conjecture}{conjecture}
 \newtheorem{definition}{Definition}
 \newtheorem{construction}{Construction}
-% \newtheorem*{exercise}{Exercise}
 \newtheorem*{proof}{Proof}
 \newtheorem*{answer}{Answer}
 \newtheorem*{refute}{Refute}
@@ -113,10 +112,10 @@
 	\end{exercise}
 
 	\begin{exercise}{2.9}
-		To show taht the relation $\leq_p$ is not symmetric, we let $L=\{0,1\}^*$ and $L'=SAT$. It is easy to show that $L\leq_p L'$ by transform every $x\in L$ to a tautology such as $x\vee \neq x$. However, $L'\not\leq_p L$ iff we can solve $SAT$ in polynomial time.
+		To show that the relation $\leq_p$ is not symmetric, we let $L=\{0,1\}^*$ and $L'=SAT$. It is easy to show that $L\leq_p L'$ by transform every $x\in L$ to a tautology such as $x\vee \neq x$. However, $L'\not\leq_p L$ iff we can solve $SAT$ in polynomial time.
 	\end{exercise}
 	
-        \begin{exercise}{2.13}
+    \begin{exercise}{2.13}
 	\begin{itemize}
 \item [(a)]
 Parsimonious (Page 50, 2.3.6): 
@@ -152,6 +151,16 @@ For a solution $x_{1} = v_{1},\cdots, x_{n}= v_{n}, y_{1}=u_{1},\cdots, y_{s}= u
 Since the mapping is monomorphism. Thus the number of solutions for $\phi$ and $\phi'$ is the same.
 \end{itemize} 
 \end{exercise}
+
+    \begin{exercise}{2.14}
+        If $M_1$ shows a polynomial-time Cook reduction from $L$ to $L'$ and $M_2$ shows a Cook reduction from $L'$ to $L''$,
+        then consider $M_3$ which simulates $M_2$ and calls $M_1$ every time $M_2$ uses its oracle. Thus $M_3$ shows 
+        $L$ is polynomial-time Cook reducible to $L''$, which indicates the transitivity.
+
+        Construct a polynomial-time TM $M$. Assume $\phi$ is an instance of 3SAT. 
+        $M$ runs TAUTOLOGY oracle on $\neg\phi$; if the output of the oracle is $b\in\bin$, $M$ outputs $b\oplus 1$.
+        Thus 3SAT is Cook reducible to TAUTOLOGY.
+    \end{exercise}
 	
 	
 	\begin{exercise}{2.15}
@@ -190,6 +199,12 @@ Then $M'$ satisfies
 $$x \in L \Leftrightarrow \forall u \in \{0,1\}^{p(|x|)} \text{ s.t. } M'(x,u) = 1$$
 That's implies definition 2.20.
 \end{exercise}
+
+    \begin{exercise}{2.25}
+        For any $L\in NP=P$, $\overline{L}\in P=NP$, which means $L\in coNP$.
+        For any $L\in coNP$, $\overline{L}\in NP=P$ and $L=\overline{\overline{L}}\in P=NP$, which means $L\in NP$.
+        Therefore $NP=coNP$.
+    \end{exercise}
 	
 	\begin{exercise}{2.26}
 		Suppose $\textsf{3SAT} \leq_p \textsf{TAUTOLOGY}$ and $ \leq_p \textsf{TAUTOLOGY} \leq_p \textsf{3SAT}$. For any $L \in \textbf{NP}$, that $L \leq_q \in \textsf{3SAT}$ implies $\bar L \leq_q \in \overline{\textsf{3SAT}}$. Thus, we have $\bar L \leq_q \in \overline{\textsf{3SAT}} \leq_p \textsf{TAUTOLOGY} \leq_p \textsf{3SAT}$, which means $L \in \textbf{coNP}$. Besides, for any $L \in \textbf{coNP}$, $L \leq_p \textsf{TAUTOLOGY} \leq_p \textsf{3SAT}$. Combining them, $\textbf{NP} = \textbf{coNP}$ can be shown.
