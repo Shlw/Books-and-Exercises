@@ -212,4 +212,13 @@ That's implies definition 2.20.
 		Note that $\textsf{3SAT}$ is \textbf{NP}-complete and $\textsf{TAUTOLOGY}$ i s \textbf{coNP}-complete. If $\textbf{NP} = \textbf{coNP}$, they will be polynomial-time reducible to one another.
 	\end{exercise}
 
+\begin{exercise}{2.31}
+The difference between SUBSET SUM and UNARY SUBSET SUM is the input size. In UNARY SUBSET SUM problem, given numbers $n_1,n_2,...,n_k$, the input size is $\sum_i n_i$. To show that UNARY is in P, we give an algorithm whose running time is $k*(\sum_i n_i)<(\sum_i n_i)^2$. The algorihtm uses dynamic programming and is
+similar to those for knapsack problem.
+
+Specifically, the algorithm takes a list $n_1,...,n_k$ as input, and output $0$ or $1$ depends on whether this exists a subset $\{n_{i_{m}}\}$ such that $\sum_m n_{i_m}=(\sum_i n_i)/2$. For convinience, we write $M$ for $(\sum_i n_i)/2$. We use a table $T(s,i)$, $1\leq s\leq M, 1\leq i\leq k$, to record whether there exists a subset of the first $i$ integers whose total sum is $s$. Then
+$$
+T(s,i+1)=max(T(s-n_i,i), T(s,i))
+$$
+\end{exercise}
 \end{document}
