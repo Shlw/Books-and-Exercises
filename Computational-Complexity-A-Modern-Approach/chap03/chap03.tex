@@ -54,16 +54,23 @@
 
 \maketitle
 
-\begin{exercise}{3.1}
-    hhh
+\begin{exercise}{3.2}
+    NP is closed under polynomial-time reduction, but we shall prove $\text{SPACE}(n)$ is not.
+
+    For any $L\in\text{SPACE}(n^2)$, define $L'=\cbra{x01^{|x|^2}\middle| x\in L}$.
+    Then $L'\in\text{SPACE}(n)$ and the reduction $x\in L\to x01^{|x|^2}\in L'$ is polynomial-time.
+    Assume $\text{NP}=\text{SPACE}(n)$, $L\in\text{SPACE}(n)$, which contradicts the Space Hierarchy Theorem.
 \end{exercise}
 
 \begin{exercise}{3.8}
-Similary to proof in Theorem 3.7, we use the property of unary language $U_B$. Recall that given a language $B$, it's corresponding unary language is
-$$
-U_B=\{1^n: \text{some string of length $n$ is in $B$}\}
-$$
-It'a easy to see $U_B\in NP^B$ by regarding the execution of nondeterministic Turing machine as enumerating all input of length $n$. So we next we prove with high probability, $U_B\not\in P^B$. It suffice to show that in polynomial time, any DTM $M$ on input $1^n$ can check at most $\frac{poly(n)}{2^n}$ strings thus output the right anwser with probability $\frac{poly(n)}{2^n}=o(1)$. Note that the condition ``with probability $1/2$, $B$ has no string of length $n$`` is necessary, otherwise simply $U_B=\{1^n, \forall n\}$.
+    Similar to proof in Theorem 3.7, we use the property of unary language $U_B$. 
+    Recall that given a language $B$, it's corresponding unary language is
+    $$
+    U_B=\{1^n: \text{some string of length $n$ is in $B$}\}
+    $$
+    It is easy to see $U_B\in NP^B$ by regarding the execution of nondeterministic Turing machine as enumerating all input of length $n$. So we next we prove with high probability, $U_B\not\in P^B$. 
+    It suffice to show that in polynomial time, any DTM $M$ on input $1^n$ can check at most $\frac{poly(n)}{2^n}$ strings thus output the right answer with probability $\frac{poly(n)}{2^n}=o(1)$. 
+    Note that the condition ``with probability $1/2$, $B$ has no string of length $n$'' is necessary, otherwise simply $U_B=\{1^n, \forall n\}$.
 
  
 
