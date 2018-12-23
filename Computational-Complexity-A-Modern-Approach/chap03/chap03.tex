@@ -54,6 +54,20 @@
 
 \maketitle
 
+
+\begin{exercise}{3.1}
+Reduction from Halt.
+
+$$M_{1}=\{\lfloor M \rfloor : M \text{ is a machine that runs in } 100n^{2} + 200 \text{ time}, \text{ where } n\text{ is the size of input.}\}$$
+Let $$M_{2} = \{\lfloor M \rfloor : M \text{ is a machine that runs in finite time }c.\}$$
+ Then $M_{2}\leq_{T} M_{1}$.
+
+Reduction: for a input $x$ of $M_{2}$. If $c< 100n^{2} + 200$, then add some steps to let $c = 100n^{2} + 200$, if $c > 100n^{2} + 200$, then add some additional input to let $x'=xy$, let the size of $x'$ equals to $100n'^{2} + 200$. Then execute $M_{1}$. 
+
+Thus for a Halt instance $M(\alpha, x)$, we can execute $M_{2}$ to find that whether $M_{2}$ can halt in finite step $c$.
+\end{exercise}
+
+
 \begin{exercise}{3.2}
     NP is closed under polynomial-time reduction, but we shall prove $\text{SPACE}(n)$ is not.
 
