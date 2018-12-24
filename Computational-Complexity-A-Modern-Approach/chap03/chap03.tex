@@ -76,6 +76,10 @@ Thus for a Halt instance $M(\alpha, x)$, we can execute $M_{2}$ to find that whe
     Assume $\text{NP}=\text{SPACE}(n)$, $L\in\text{SPACE}(n)$, which contradicts the Space Hierarchy Theorem.
 \end{exercise}
 
+\begin{exercise}{3.3}
+    The language given in the proof of Theorem 3.7 is in $\textbf{EXP}$. To determine the membership for all string, exclude all undetermined string with shorter length than $\ell_i$ from $B$ after each stage-$i$, where $\ell_i$ is the length of the longest determined string in $B$ after stage-$i$. Note that $\ell_i = i + c$ is enough for the proof of Theorem 3.7 with some constant $c$. Thus, stage-$i$ can be done by simulating $M_i$ on $1^{\ell_i}$ within time-$\tilde O(2^i)$. Given string $x$, generate $B$ with $|x|$ stages and check the membership during the generating processing, which is obviously in \textbf{EXP}.
+\end{exercise}
+
 \begin{exercise}{3.8}
     Similar to proof in Theorem 3.7, we use the property of unary language $U_B$. 
     Recall that given a language $B$, it's corresponding unary language is
