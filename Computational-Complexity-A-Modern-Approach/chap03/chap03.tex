@@ -81,14 +81,27 @@ Thus for a Halt instance $M(\alpha, x)$, we can execute $M_{2}$ to find that whe
 \end{exercise}
 
 \begin{exercise}{3.8}
-    Similar to proof in Theorem 3.7, we use the property of unary language $U_B$. 
     Recall that given a language $B$, it's corresponding unary language is
     $$
-    U_B=\{1^n: \text{some string of length $n$ is in $B$}\}
+    U_B=\{1^n| \exists x\in \{0,1\}^n, x\in B \}
     $$
-    It is easy to see $U_B\in NP^B$ by regarding the execution of nondeterministic Turing machine as enumerating all input of length $n$. So we next we prove with high probability, $U_B\not\in P^B$. 
-    It suffice to show that in polynomial time, any DTM $M$ on input $1^n$ can check at most $\frac{poly(n)}{2^n}$ strings thus output the right answer with probability $\frac{poly(n)}{2^n}=o(1)$. 
-    Note that the condition ``with probability $1/2$, $B$ has no string of length $n$'' is necessary, otherwise simply $U_B=\{1^n, \forall n\}$.
+   It's obvious that $U_B\in NP^B$. And
+$$
+Pr(NP^B=P^B)\leq Pr(U_B\in P^B)= \max_{poly(n) M^B} Pr(\forall n, M^B(1^n)=U_B(1^n))
+$$
+ $\max$ means we select the best possible polynomial time oracle Turing machine.
+
+For a specific polynomial time machine $M^B$ on input $1^n$, it at most uses $B$ oracle for polynomial times and know at most $\frac{poly(n)}{2^n}$ fraction of $n$-bit string whether it belongs to $B$. Thus
+\begin{align*}
+Pr(M^B(1^n)=U_B(1^n))&=Pr(U_B(1^n)=0)Pr(M^B(1^n)=0|U_B(1^n)=0)+Pr(U_B(1^n)=1)Pr(M^B(1^n)=1|U_B(1^n)=1)\\
+&\leq\frac{1}{2}\cdot 1+\frac{1}{2}\cdot \frac{poly(n)}{2^n}\\
+&\leq\frac{2}{3};
+\end{align*}
+Thus
+$$
+ Pr(\forall n, M^B(1^n)=U_B(1^n))=\lim_{n\rightarrow \infty} c\cdot(\frac{2}{3})^n=0
+$$
+ Thus $Pr(NP^B=P^B)=0$.
 
  
 
