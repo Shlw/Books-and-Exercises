@@ -54,8 +54,13 @@
 
 \maketitle
 
-\begin{exercise}{4.1}
-    hhh
+\begin{exercise}{4.4}
+    Let $\texttt{\sf SCD}=\cbra{\llcorner G\lrcorner\middle| G\text{ is a strongly connected digraph}}$.
+    First, $\texttt{\sf SCD}\in NL$, since we can enumerate all vertex pair $(s,t)$ and run $\texttt{\sf PATH}(G,s,t)$.
+
+    Second, we construct a log-space reduction from \texttt{\sf PATH} to show \texttt{\sf SCD} is $NL$-hard.
+    The reduction simply adds two directed edge $i\to s,t\to i$ for any $i\neq s,t$. 
+    It is easy to verify its validity.
 \end{exercise}
 
 \end{document}
