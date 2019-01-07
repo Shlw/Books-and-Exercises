@@ -54,6 +54,11 @@
 
 \maketitle
 
+
+\begin{exercise}{4.3}
+Since $L$ is not the empty set or $\{0,1\}^{*}$, there exists $x\in L$ and $y\not\in L$. In the following, we prove that $path(s,t)\leq_{p} L$. We can solve path$(s,t)$ in polynomial-time, and if it the yes case, we corresponding to $x$ in $L$, otherwise corresponding to $y$ in $L$.
+\end{exercise}
+
 \begin{exercise}{4.4}
     Let $\texttt{\sf SCD}=\cbra{\llcorner G\lrcorner\middle| G\text{ is a strongly connected digraph}}$.
     First, $\texttt{\sf SCD}\in NL$, since we can enumerate all vertex pair $(s,t)$ and run $\texttt{\sf PATH}(G,s,t)$.
