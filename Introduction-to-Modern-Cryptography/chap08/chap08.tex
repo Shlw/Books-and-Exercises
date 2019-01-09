@@ -1,0 +1,193 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+% Author : Shlw
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{refute}{Refute}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator{\lequiv}{\ \Leftrightarrow\ }
+\DeclareMathOperator{\Image}{\mathop{Im}}
+\newcommand{\rawE}{\mathop{\mathbb E}}
+\newcommand{\E}[1]{\mathop{\mathbb E}_{#1}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\Enc}{\mathrm{Enc}}
+\newcommand{\hc}{\mathrm{hc}}
+\newcommand{\Gen}{\mathrm{Gen}}
+\newcommand{\Ext}{\mathrm{Ext}}
+\newcommand{\Dec}{\mathrm{Dec}}
+\newcommand{\Mac}{\mathrm{Mac}}
+\newcommand{\Vrfy}{\mathrm{Vrfy}}
+\newcommand{\PrivK}{\mathrm{PrivK}}
+\newcommand{\Macforge}{\mathrm{Mac}\text{-}\mathrm{forge}}
+\newcommand{\Macsforge}{\mathrm{Mac}\text{-}\mathrm{sforge}}
+\newcommand{\Encforge}{\mathrm{Enc}\text{-}\mathrm{Forge}}
+\newcommand{\Invert}{\mathrm{Invert}}
+\newcommand{\Feistel}{\mathrm{Feistel}}
+\newcommand{\Hashcoll}{\mathrm{Hash}\text{-}\mathrm{coll}}
+\newcommand{\negl}{\mathrm{negl}}
+\newcommand{\ppt}{{\sc ppt} }
+\newcommand{\eav}{\mathrm{eav}}
+\newcommand{\out}{\mathrm{out}}
+\newcommand{\mult}{\mathrm{mult}}
+\newcommand{\cpa}{\mathrm{cpa}}
+\newcommand{\cca}{\mathrm{cca}}
+\newcommand{\Used}{\mathrm{Used}}
+\newcommand{\Asked}{\mathrm{Asked}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Xcal}{\mathcal{X}}
+\newcommand{\Ycal}{\mathcal{Y}}
+\newcommand{\Zcal}{\mathcal{Z}}
+\newcommand{\Ocal}{\mathcal{O}}
+\newcommand{\Dcal}{\mathcal{D}}
+\newcommand{\Pcal}{\mathcal{P}}
+\newcommand{\Gset}{\mathbb{G}}
+\newcommand{\Nset}{\mathbb{N}}
+\newcommand{\Zset}{\mathbb{Z}}
+\newcommand{\Hset}{\mathbb{H}}
+
+\title{Exercise Set --- Chapter $8$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{8.1} 
+    Assume $e_1,e_2\in\Gset$ are two identities, then
+    $$
+    e_1=e_1\circ e_2=e_2.
+    $$
+    For any $g\in\Gset$, assume $h_1,h_2\in\Gset$ are two inverses of $g$ and $e$ is the identity, then
+    $$
+    h_2=h_2\circ e=h_2\circ(g\circ h_1)=(h_2\circ g)\circ h_1=e\circ h_1=h_1.
+    $$
+\end{exercise}
+
+\begin{exercise}{8.3}
+\begin{itemize}
+    \item $\Gset$ is finite. ($|\Gset|=n$)
+        \begin{proof}
+            By definition, $\langle g\rangle=\cbra{g^0,g^1,g^2,\cdots}$. 
+            It suffices to verify the definition of group as follows:
+            \begin{itemize}
+                \item Closure: $g^i\circ g^j=g^{i+j}\in\Gset$.
+                \item Identity: $e=g^0\in\Gset$.
+                \item Inverse: $g^{-1}=g^{n-1}\in\Gset$.
+                \item Associativity: $g^i\circ(g^j\circ g^k)=g^{i+j+k}=(g^i\circ g^j)\circ g^k$.
+            \end{itemize}
+        \end{proof}
+    \item $\Gset$ is infinite.
+        \begin{counterexample}
+            Assume $\Gset=(\Zset,+)$ and $g=1$. Then $\langle g\rangle=\cbra{0,1,2,\cdots}$.
+            Apparently, $1\in\langle g\rangle$ does not have inverse, which is $-1\in\Gset$.
+        \end{counterexample}
+\end{itemize}
+\end{exercise}
+
+\begin{exercise}{8.8}
+    It suffices to verify the definition of group as follows:
+    \begin{itemize}
+        \item Closure: $(u,v)\circ_{\Gset\times\Hset}(x,y)=(u\circ_\Gset x,v\circ_\Hset y)\in\Gset\times\Hset$.
+        \item Identity: $e_{\Gset\times\Hset}=(e_\Gset,e_\Hset)\in\Gset\times\Hset$.
+        \item Inverse: $(u,v)^{-1}=(u^{-1},v^{-1})\in\Gset\times\Hset$.
+        \item Associativity: $(u,v)\circ_{\Gset\times\Hset}((x,y)\circ_{\Gset\times\Hset} (a,b))=
+            (u\circ_\Gset x\circ_\Gset a,v\circ_\Hset y\circ_\Hset b)=
+            ((u,v)\circ_{\Gset\times\Hset}(x,y))\circ_{\Gset\times\Hset}(a,b)$.
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{8.14}
+    Construct $\Acal'$ as follows:
+    \begin{enumerate}
+        \item $\Acal'$ is given $y,N,e$.
+        \item Pick an arbitrary $r\in\Zset^*_N$ and let $t=y\cdot r^{-e}$.
+        \item Run $\Acal(t)$ and get $k$. If $k^e=t$, output $k\cdot r$; 
+            otherwise repeat from step $2$.
+        \item If $\Acal(t)$ is called for $500$ times yet still no valid answer, 
+            $\Acal'$ fails.
+    \end{enumerate}
+    Since $y^{1/e}=(t\cdot r^{e})^{1/e}=k\cdot r$, $\Acal'$ is correct if it successfully outputs.
+    On the other hand, $f_e:\Zset^*_N\to\Zset^*_N,f_e(x)=x^e$ is a bijection, thus
+    $t$ is uniform in $\Zset^*_N$.
+    Therefore, for any $x\in\Zset^*_N$, we have
+    \begin{align*}
+        \Pr\sbra{\Acal'\pbra{\sbra{x^e\mod N}}=x}&=1-\Pr_{t\sim\Zset^*_N}\sbra{\Acal\pbra{\sbra{t\mod N}}=t^{1/e}}^{500}\\
+        &=1-\Pr_{u\sim\Zset^*_N}\sbra{\Acal\pbra{\sbra{u^e\mod N}}=u}^{500}\\
+        &=1-0.99^{500}\geq 0.99.
+    \end{align*}
+    Since $\Acal$ is called for at most $500$ times, 
+    sampling algorithm and multiplication is polynomial,
+    the running time $t'$ of $\Acal'$ is polynomial in $t$ and $\|N\|$.
+\end{exercise}
+
+\begin{exercise}{8.16}
+    After tedious calculation, there are $16$ points on $E$:
+    $$
+    \cbra{\Ocal}\cup\cbra{(9,0),(0,\pm 1),(1,\pm 2),(3,\pm 1),(5,\pm 2),(6,\pm 3),(8,\pm 1),(10,\pm 3)}.
+    $$
+\end{exercise}
+
+\begin{exercise}{8.19}
+    This problem can be solved in polynomial time, since $x\in\Zset_{p-1}^*$ has inverse.
+\end{exercise}
+
+\begin{exercise}{8.20}
+    It is easy to see
+    $$
+    H^s(x)=y^{\sum_{i=1}^{3n}e^{i-1}x_i}.
+    $$
+    Assume $H^s(m)=H^s(m')$, then 
+    \begin{itemize}
+        \item If $H^s(m)=y^{1+et},H^s(m')=y^{et'}$, then $y^{1/e}\equiv y^{t'-t}\mod N$. 
+        \item If $H^s(m)=y^{et},H^s(m')=y^{et'}$, then reduce to $y^t\equiv y^{t'}\mod N$.
+        \item If $H^s(m)=y^{1+et},H^s(m')=y^{1+et'}$, then reduce to $y^t\equiv y^{t'}\mod N$.
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{8.21 (a)}
+    Assume $H^s(x)=H^s(x')$ and $g$ is the generator.
+    Then $H^s(x)=H^s(x')$ is equivalent to $\sum_{i=1}^t (x_i-x_i')\log_g h_i\equiv 0\mod q$.
+    Simply guess one of the different coordinates and set the corresponding $h$ as $y$ from discrete-logarithm problem.
+\end{exercise}
+
+\end{document}
