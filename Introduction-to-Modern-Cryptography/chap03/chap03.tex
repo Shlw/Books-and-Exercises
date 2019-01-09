@@ -1,0 +1,501 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+% Author : Shlw
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{refute}{Refute}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator{\lequiv}{\ \Leftrightarrow\ }
+\newcommand{\rawE}{\mathop{\mathbb E}}
+\newcommand{\E}[1]{\mathop{\mathbb E}_{#1}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\Enc}{\mathrm{Enc}}
+\newcommand{\Gen}{\mathrm{Gen}}
+\newcommand{\Dec}{\mathrm{Dec}}
+\newcommand{\Mac}{\mathrm{Mac}}
+\newcommand{\Vrfy}{\mathrm{Vrfy}}
+\newcommand{\PrivK}{\mathrm{PrivK}}
+\newcommand{\Macforge}{\mathrm{Mac}\text{-}\mathrm{forge}}
+\newcommand{\Macsforge}{\mathrm{Mac}\text{-}\mathrm{sforge}}
+\newcommand{\Encforge}{\mathrm{Enc}\text{-}\mathrm{Forge}}
+\newcommand{\negl}{\mathrm{negl}}
+\newcommand{\ppt}{{\sc ppt} }
+\newcommand{\eav}{\mathrm{eav}}
+\newcommand{\out}{\mathrm{out}}
+\newcommand{\mult}{\mathrm{mult}}
+\newcommand{\cpa}{\mathrm{cpa}}
+\newcommand{\cca}{\mathrm{cca}}
+\newcommand{\Used}{\mathrm{Used}}
+\newcommand{\Asked}{\mathrm{Asked}}
+
+\title{Exercise Set --- Chapter $3$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{3.4}
+    Let $\Pi=(\Gen,\Enc,\Dec)$ be a private-key encryption scheme and $\mathcal A$ be an arbitrary \ppt adversary.
+    Then
+    \begin{align*}
+        &\Pr\sbra{\PrivK_{\mathcal A,\Pi}^{\eav}(n)=1}\leq\frac12+\negl_{\mathcal A}(n)\\
+        \lequiv &
+        \frac12\pbra{\Pr\sbra{\PrivK_{\mathcal A,\Pi}^{\eav}(n,0)=1}+\Pr\sbra{\PrivK_{\mathcal A,\Pi}^{\eav}(n,1)=1}}
+        \leq\frac12+\negl_{\mathcal A}(n)\\
+        \lequiv &
+        \frac12\pbra{1-\Pr\sbra{\out_{\mathcal A}\pbra{\PrivK_{\mathcal A,\Pi}^\eav(n,0)}=1}
+        +\Pr\sbra{\out_{\mathcal A}\pbra{\PrivK_{\mathcal A,\Pi}^\eav(n,1)}=1}}
+        \leq\frac12+\negl_{\mathcal A}(n)\\
+        \lequiv &
+        \Pr\sbra{\out_{\mathcal A}\pbra{\PrivK_{\mathcal A,\Pi}^\eav(n,1)}=1}
+        -\Pr\sbra{\out_{\mathcal A}\pbra{\PrivK_{\mathcal A,\Pi}^\eav(n,0)}=1}
+        \leq 2\negl_{\mathcal A}(n).
+    \end{align*}
+    Let $\overline{\mathcal A}$ be the \ppt adversary identical with $\mathcal A$ except the output is flipped.
+    Thus
+    \begin{align*}
+        &\Pr\sbra{\PrivK_{\overline{\mathcal A},\Pi}^{\eav}(n)=1}\leq\frac12+\negl_{\overline{\mathcal A}}(n)\\
+        \lequiv &
+        \Pr\sbra{\out_{\overline{\mathcal A}}\pbra{\PrivK_{\overline{\mathcal A},\Pi}^\eav(n,1)}=1}
+        -\Pr\sbra{\out_{\overline{\mathcal A}}\pbra{\PrivK_{\overline{\mathcal A},\Pi}^\eav(n,0)}=1}
+        \leq 2\negl_{\overline{\mathcal A}}(n)\\
+        \lequiv &
+        \Pr\sbra{\out_{\mathcal A}\pbra{\PrivK_{\mathcal A,\Pi}^\eav(n,1)}=0}
+        -\Pr\sbra{\out_{\mathcal A}\pbra{\PrivK_{\mathcal A,\Pi}^\eav(n,0)}=0}
+        \leq 2\negl_{\overline{\mathcal A}}(n)\\
+        \lequiv &
+        \Pr\sbra{\out_{\mathcal A}\pbra{\PrivK_{\mathcal A,\Pi}^\eav(n,0)}=1}
+        -\Pr\sbra{\out_{\mathcal A}\pbra{\PrivK_{\mathcal A,\Pi}^\eav(n,1)}=1}
+        \leq 2\negl_{\overline{\mathcal A}}(n).
+    \end{align*}
+    Therefore
+    \begin{align*}
+        &\Big|
+        \Pr\sbra{\out_{\mathcal A}\pbra{\PrivK_{\mathcal A,\Pi}^\eav(n,0)}=1}
+        -\Pr\sbra{\out_{\mathcal A}\pbra{\PrivK_{\mathcal A,\Pi}^\eav(n,1)}=1}
+        \Big|\leq\negl(n)\\
+        \lequiv & 
+        \max\cbra{\Pr\sbra{\PrivK_{\mathcal A,\Pi}^{\eav}(n)=1},
+        \Pr\sbra{\PrivK_{\overline{\mathcal A},\Pi}^{\eav}(n)=1}}
+        \leq\frac12+\frac12\negl(n),\\
+    \end{align*}
+    which indicates the equivalence of Definition $3.8$ and $3.9$.
+\end{exercise}
+
+\begin{exercise}{3.6}
+Let $\ell'$ be the expansion factor of $G'$.
+\begin{enumerate}
+\item[(a)] $G'(s):=G(s_1\cdots s_{\lfloor n/2\rfloor})$, where $s=s_1\cdots s_n$, is not necessarily a PRG.
+\begin{counterexample}
+    Assume the expansion factor of $G$ is $\ell(n)=2n+1$, then if $|s|=2k+1$, $|G'(s)|=2k+1$ as well, 
+    which violates the requirement $\ell'(n)>n$.
+
+    But if $\ell'(n)>n$, $G'$ is indeed a PRG. See Theorem \ref{ap3} in Appendix.
+\end{counterexample}
+\item[(b)] $G'(s):=G(0^{|s|}\|s)$ is not necessarily a PRG.
+\begin{counterexample}
+    Assume $G''$ is a PRG with expansion factor $\ell''(n)>2n$ and $G$ is defined as
+    $$
+        G(s):=G''(s_1\cdots s_{\lfloor n/2\rfloor})\|G''(s_{\lfloor n/2\rfloor+1}\cdots s_n),
+    $$
+    where $s=s_1\cdots s_n$. 
+    Then $\ell(n)=\ell''(\lfloor n/2\rfloor)+\ell''(n-\lfloor n/2\rfloor)>2n$ and $G$ is a PRG by Theorem \ref{ap1} in Appendix.
+
+    Design a \ppt algorithm $\mathcal D$ which outputs $1$ if and only if the first half is 
+    $G''(0^{|s|})$. Therefore, assume $|s|=n$, we have a significant separation
+    $$
+        \Big|\Pr\sbra{\mathcal D(G(s))=1}-\Pr\sbra{\mathcal D(r)=1}\Big|=1-2^{-\ell''(n)}.
+    $$
+\end{counterexample}
+\item[(c)] $G'(s):=G(s)\|G(s+1)$ is not necessarily a PRG.
+\begin{proof}
+    Assume $G''$ is a PRG with expansion factor $\ell''(n)>2n$ and $G$ is defined as
+    $$
+        G(s):=G''(s_1\cdots s_{\lfloor n/2\rfloor})\|G''(s_{\lfloor n/2\rfloor+1}\cdots s_n),
+    $$
+    where $s=s_1\cdots s_n$. 
+    Then $\ell(n)=\ell''(\lfloor n/2\rfloor)+\ell''(n-\lfloor n/2\rfloor)>2n$ and $G$ is a PRG by Theorem \ref{ap1} in Appendix.
+    Let $s'=s+1$, hence
+    $$
+    G'(s)=G''(s_1\cdots s_{\lfloor n/2\rfloor})\|G''(s_{\lfloor n/2\rfloor+1}\cdots s_n)
+    \|G''(s'_1\cdots s_{\lfloor n/2\rfloor}')\|G''(s'_{\lfloor n/2\rfloor+1}\cdots s'_n).
+    $$
+
+    Design a \ppt algorithm $\mathcal D$ which outputs $1$ if and only if the first part equals the third part.
+    Therefore, assume $|s|=n$, we have a significant separation
+    \begin{align*}
+        \Pr\sbra{\mathcal D(G(s))=1}-\Pr\sbra{\mathcal D(r)=1}\geq1-2^{-\lceil n/2\rceil}-2^{-\ell''(\lfloor n/2\rfloor)}.
+    \end{align*}
+\end{proof}
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}{3.11}
+    Assume $F$ is a length-preserving PRF.
+    Let $\Pi=(\Gen,\Enc,\Dec)$ be a private-key encryption scheme, where
+    \begin{itemize}
+        \item $\Gen$ generates a random key from $\bin^n$ given input $1^n$.
+        \item $\Enc$ is a deterministic algorithm, where if $k,m_i\in\bin^{n},\forall i\in[t]$,
+            $$
+            \Enc_k(m_1,m_2,\cdots,m_t)=(F_k(1)\oplus m_1,\cdots,F_k(i)\oplus m_i,\cdots,F_k(t)\oplus m_t).
+            $$
+        \item $\Dec$ is a deterministic algorithm, where if $k,c_i\in\bin^{n},\forall i\in[t]$,
+            $$
+            \Dec_k(c_1,c_2,\cdots,c_t)=(F_k(1)\oplus c_1,\cdots,F_k(i)\oplus m_i,\cdots,F_k(t)\oplus m_t).
+            $$
+    \end{itemize}
+    Then $\Pi$ is an indistinguishable multiple encryption in the presence of an eavesdropper by Lemma \ref{ap2} in Appendix.
+
+    On the other hand, given access to $\Enc_k$, the adversary may ask $\Enc_k(0,0,\cdots,0)$ which gives
+    $\bm c^*=(F_k(1),\cdots,F_k(t))$. Then it can easily distinguish $\bm c_0=\bm c^*\oplus(m_{0,1},\cdots m_{0,t})$ 
+    and $\bm c_1=\bm c^*\oplus(m_{1,1},\cdots,m_{1,t})$, which indicates $\Pi$ is not CPA-secure.
+\end{exercise}
+
+\begin{exercise}{3.17}
+    Without loss of generality, assume $F$ is a length-preserving PRP.
+    Define $F'$ as
+    $$
+        F'_k(r)=\begin{cases}
+            0^n & r=k\\
+            F_k(k) & r=F^{-1}_k(0^n)\\
+            F_k(r) & \text{otherwise}.
+        \end{cases}
+    $$
+
+    Firstly, $F'$ is a permutation, since
+    $$
+        F'^{-1}_k(r)=\begin{cases}
+            k & r=0^n\\
+            F^{-1}_k(0^n) & r=F_k(k)\\
+            F^{-1}_k(r) & \text{otherwise}.
+        \end{cases}
+    $$
+
+    Secondly, to show that $F'$ is not a SPRP, construct a \ppt algorithm $\mathcal D_1$ as follows:
+    \begin{enumerate}
+        \item $\mathcal D_1$ is given $1^n$ and oracles $\mathcal O,\mathcal O^{-1}:\bin^n\to\bin^n$.
+        \item Query $k:=\mathcal O^{-1}(0^n)$. Then uniformly select $m\in\bin^n$ and query $c:=\mathcal O(m)$.
+        \item Output $1$ if $c=F_k(m)$, and $0$ otherwise.
+    \end{enumerate}
+    Therefore, if $\mathcal O$ is $F'$, we have
+    \begin{align*}
+        \Pr\sbra{\mathcal D_1^{F'_k(\cdot),F'^{-1}_k(\cdot)}(1^n)=1}\geq 1-2^{n-1}.
+    \end{align*}
+    If $\mathcal O$ is FRP $f$, we have
+    \begin{align*}
+        \Pr\sbra{\mathcal D_1^{f(\cdot),f^{-1}(\cdot)}(1^n)=1}=
+        \sum_{k,m}2^{-2n}\Pr\sbra{f(m)=F_k(m)\middle|f^{-1}(0^n)=k}\leq \frac{1}{2^n-1}.
+    \end{align*}
+
+    Thirdly, we shall prove $F'$ is pseudorandom.
+    For any \ppt algorithm $\mathcal D$, let $\mathcal D_R$ be algorithm $\mathcal D$ when given random tape $R$;
+    and $q(n)$ be the upper bound of potential queries from $\mathcal D$.
+    Then
+    \begin{align*}
+        &\abs{\Pr\sbra{\mathcal D^{F'_k(\cdot)}(1^n)=1}-\Pr\sbra{\mathcal D^{F_k(\cdot)}(1^n)=1}}\\
+        \leq&\sum_R
+        \Pr\sbra{R}\sum_v
+        2^{-n}
+        \abs{\Pr\sbra{\mathcal D_R^{F'_v(\cdot)}(1^n)=1}-\Pr\sbra{\mathcal D_R^{F_v(\cdot)}(1^n)=1}}
+    \end{align*}
+    For any fixed $R$ and $v$, $\mathcal D_R^{F_v(\cdot)},\mathcal D_R^{F'_v(\cdot)}$ are deterministic algorithms.
+    Therefore, let
+    $$
+    S_R=\cbra{v\middle|\mathcal D_R^{F_v(\cdot)}(1^n)\text{ does not query $v$ and $F_v^{-1}(0^n)$}}.
+    $$
+    When $v\in S_R$, $\mathcal D_R^{F'_v(\cdot)}(1^n)$ does not query $v$ and $F_v^{-1}(0^n)$ as well;
+    and $\mathcal D_R^{F'_v(\cdot)}(1^n)=\mathcal D_R^{F_v(\cdot)}(1^n)$. Hence
+    \begin{align*}
+        &\abs{\Pr\sbra{\mathcal D^{F'_k(\cdot)}(1^n)=1}-\Pr\sbra{\mathcal D^{F_k(\cdot)}(1^n)=1}}\\
+        \leq&\sum_R
+        \Pr\sbra{R}\sum_{v\notin S_R}
+        2^{-n}
+        \abs{\Pr\sbra{\mathcal D_R^{F'_v(\cdot)}(1^n)=1}-\Pr\sbra{\mathcal D_R^{F_v(\cdot)}(1^n)=1}}\\
+        \leq&\sum_R\Pr\sbra{R}\times 2^{-n}\times\pbra{2^n-\abs{S_R}}.
+    \end{align*}
+
+    Now for any $\mathcal D_R$, develop a new \ppt algorithm $\mathcal B$ as follows:
+    \begin{enumerate}
+        \item $\mathcal B$ is given $1^n$ and oracle $\mathcal O:\bin^n\to\bin^n$.
+        \item Run $\mathcal D_R(1^n)$. Whenever $\mathcal D_R$ queries $r$,
+            \begin{itemize}
+                \item if $\mathcal O(r)=0^n$, output $1$ and terminate;
+                \item otherwise, uniformly select $m\in\bin^n$ and query $c:=\mathcal O(m)$.
+                    \begin{itemize}
+                        \item If $c=F_r(m)$, output $1$ and terminate;
+                        \item otherwise, return $\mathcal O(r)$ to $\mathcal D_R$.
+                    \end{itemize}
+            \end{itemize}
+        \item When $\mathcal D_R$ gives $b\in\bin$, always output $0$.
+    \end{enumerate}
+    When $\mathcal O$ is PRP $F$,
+    $$
+    \Pr\sbra{\mathcal B^{F_k(\cdot)}(1^n)=1}=\Pr\sbra{k\notin S_R}
+    =2^{-n}\times\pbra{2^n-\abs{S_R}}.
+    $$
+    When $\mathcal O$ is FRP $f$, applying union bound, we have
+    $$
+    \Pr\sbra{\mathcal B^{f(\cdot)}(1^n)=1}\leq q(n)\times\pbra{2^{-n}+2^{-n}}=q(n)2^{-n+1}.
+    $$
+    On the other hand, since $F$ is PRP, there exists a negligible function $\negl$ such that
+    \begin{align*}
+        2^{-n}\times\pbra{2^n-\abs{S_R}}\leq
+        q(n)2^{-n+1}+\Pr\sbra{\mathcal B^{F_k(\cdot)}(1^n)=1}-\Pr\sbra{\mathcal B^{f(\cdot)}(1^n)=1}
+        \leq q(n)2^{-n+1}+\negl(n).
+    \end{align*}
+
+    Thus,
+    \begin{align*}
+        &\abs{\Pr\sbra{\mathcal D^{F'_k(\cdot)}(1^n)=1}-\Pr\sbra{\mathcal D^{f(\cdot)}(1^n)=1}}\\
+        \leq
+        &\abs{\Pr\sbra{\mathcal D^{F'_k(\cdot)}(1^n)=1}-\Pr\sbra{\mathcal D^{F_k(\cdot)}(1^n)=1}}
+        +\abs{\Pr\sbra{\mathcal D^{F_k(\cdot)}(1^n)=1}-\Pr\sbra{\mathcal D^{f(\cdot)}(1^n)=1}}\\
+        \leq&\pbra{\sum_R\Pr\sbra{R}\times 2^{-n}\times\pbra{2^n-\abs{S_R}}}+\negl(n)\\
+        \leq&\pbra{\sum_R\Pr\sbra{R}\times\Big(q(n)2^{-n+1}+\negl(n)\Big)}+\negl(n)\\
+        \leq&q(n)2^{-n+1}+2\negl(n),
+    \end{align*}
+    which proves $F'$ is PRP.
+\end{exercise}
+
+\noindent\textbf{Remark:} $F'_k(r):=F_k(r)\oplus F_k(k)$ is not a PRP because $F''_k(r)$ is PRP, where
+$$
+    F''_k(r)=\begin{cases}
+        F_k(0^n)\oplus 1 & r=k\\
+        F_k(k) & r=F_k^{-1}\pbra{F_k(0^n)\oplus 1}\\
+        F_k(r) & \text{otherwise}.
+    \end{cases}
+$$
+
+\begin{exercise}{3.18}
+For $k,c\in\bin^n$, the decryption $\Dec_k(c)$ is defined as the second half of $F_k^{-1}(c)$.
+Now we shall prove the CPA-security for message of length $n/2$.
+\begin{proof}
+    Let $\Pi$ be the fixed-length encryption scheme proposed in the exercise and $\widetilde\Pi$
+    be the scheme same as $\Pi$ except that FRP $f$ is used in place of $F_k$.
+    For any \ppt adversary $\mathcal A$ of $\Pi$, develop a \ppt algorithm $\mathcal D$ as follows:
+    \begin{enumerate}
+        \item $\mathcal D$ is given input $1^n$ and access to oracle $\mathcal O:\bin^n\to\bin^n$.
+        \item Run $\mathcal A(1^n)$. Whenever $\mathcal A$ queries the encryption of $m\in\bin^{n/2}$, 
+            choose a uniform $r\in\bin^{n/2}$ and return $\mathcal O(r\|m)$ to $\mathcal A$.
+        \item When $\mathcal A$ outputs $m_0,m_1\in\bin^{n/2}$, choose a uniform bit $b\in\bin$ and
+            uniform $r^*\in\bin^{n/2}$, then return $\mathcal O(r^*\|m_b)$ to $\mathcal A$.
+        \item Continue answering the encryption query from $\mathcal A$ until $\mathcal A$ gives a bit $b'$.
+            Output $1$ if $b'=b$, and $0$ otherwise.
+    \end{enumerate}
+    Assume $\mathcal A$ makes $q(n)$ queries.
+    Let $\Used$ denote $r^*$ is chosen in some encryption query.
+    \begin{itemize}
+        \item If $\mathcal O$ is a FRP, we have
+            \begin{align*}
+                \Pr\sbra{\mathcal D^{f(\cdot)}(1^n)=1}&=\Pr\sbra{\PrivK_{\mathcal A,\widetilde\Pi}^\cpa(n)=1}\\
+                &=\Pr\sbra{\PrivK_{\mathcal A,\widetilde\Pi}^\cpa(n)=1,\Used}
+                +\Pr\sbra{\overline\Used}\Pr\sbra{\PrivK_{\mathcal A,\widetilde\Pi}^\cpa(n)=1\middle|\overline\Used}\\
+                &\leq\Pr\sbra{\Used}+\Pr\sbra{\PrivK_{\mathcal A,\widetilde\Pi}^\cpa(n)=1\middle|\overline\Used}\\
+                &\leq q(n)2^{-n/2}+\frac12.
+            \end{align*}
+        \item If $\mathcal O$ is a PRP, we have
+            $$
+            \Pr\sbra{\mathcal D^{F_k(\cdot)}(1^n)=1}=\Pr\sbra{\PrivK_{\mathcal A,\Pi}^\cpa(n)=1}.
+            $$
+    \end{itemize}
+    Combining the definition of PRP, there exists a negligible function $\negl$ such that
+    \begin{align*}
+        \Pr\sbra{\PrivK_{\mathcal A,\Pi}^\cpa(n)=1}&\leq\frac12+q(n)2^{-n/2}+\Pr\sbra{\mathcal D^{F_k(\cdot)}(1^n)=1}
+        -\Pr\sbra{\mathcal D^{f(\cdot)}(1^n)=1}\\
+        &\leq\frac12+q(n)2^{-n/2}+\negl(n),
+    \end{align*}
+    which indicates the CPA-security of $\Pi$.
+\end{proof}
+The CCA-secure part is equivalent to Exercise $4.25$.
+\end{exercise}
+
+\begin{exercise}{3.29}
+\begin{construction}
+    Construct $\Pi=(\Enc,\Dec)$, where
+    \begin{itemize}
+        \item $\Enc_{k_1,k_2}(m)=(\Enc_1(k_1,r),\Enc_2(k_2,m\oplus r))$. Here $r$ is uniformly picked from $\bin^{|m|}$.
+        \item $\Dec_{k_1,k_2}(c_1,c_2)=\Dec_1(k_1,c_1)\oplus\Dec_2(k_2,c_2)$.
+    \end{itemize}
+\end{construction}
+\begin{proof}
+    Without loss of generality, assume $\Pi_2$ is CPA-secure. For any \ppt adversary $\mathcal A$ of $\Pi$, develop
+    a \ppt adversary $\mathcal A_2$ of $\Pi_2$ as follows:
+    \begin{enumerate}
+        \item $\mathcal A_2$ is given $1^n$ and oracle access to $\Enc_2(k_2,\cdot)$, where $k_2$ is not explicit. 
+            Then uniformly pick $k_1\in\{0,1\}^n$.
+        \item Build oracle $\Enc_{k_1,k_2}(\cdot)$ as the construction shows. 
+            Give oracle $\Enc_{k_1,k_2}(\cdot)$ to $\mathcal A$ and start to run $\mathcal A(1^n)$.
+        \item When $\mathcal A$ outputs $m_0,m_1$, choose $r\in\bin^{|m_0|}$ uniformly.
+            Let $m'_0=m_0\oplus r,m'_1=m_1\oplus r$. $\mathcal A_2$ gives $m'_0,m'_1$ to the CPA experiment, and obtain
+            challenge text $c$.
+        \item Return $(\Enc_1(k_1,r),c)$ and oracle access $\Enc_{k_1,k_2}(\cdot)$ to $\mathcal A$ until it
+            answers $b\in\{0,1\}$. Then $\mathcal A_2$ outputs $b$ as well.
+    \end{enumerate}
+    Therefore, the CPA experiment of $\Pi_2$ actually simulates the CPA experiment of $\Pi$.
+    Combining the CPA-security of $\Pi_2$, there exists a negligible function $\negl$ such that
+    $$
+        \Pr\sbra{\PrivK_{\mathcal A,\Pi}^\cpa(n)=1}=\Pr\sbra{\PrivK_{\mathcal A_2,\Pi_2}^\cpa(n)=1}\leq\frac12+\negl(n),
+    $$
+    which proves $\Pi$ is CPA-secure.
+\end{proof}
+\end{exercise}
+
+\newpage
+\section*{Appendix}
+\begin{theorem}\label{ap1}
+    Assume $G_1,G_2$ are two PRGs, then $G$ is also a PRG, where
+    $$
+        G(s):=G_1(s_1\cdots s_{\lfloor n/2\rfloor})\|G_2(s_{\lfloor n/2\rfloor+1}\cdots s_n).
+    $$
+\end{theorem}
+\begin{proof}
+    For any \ppt algorithm $\mathcal D$, we have
+    \begin{align*}
+        \Pr\sbra{\mathcal D(G(s))=1}
+        =&\Pr\sbra{\mathcal D(G_1(\hat s)\|G_2(\tilde s))=1}\\
+        =&\sum_{u}\Pr\sbra{G_2(\tilde s)=u}
+        \Pr\sbra{\mathcal D(G_1(\hat s)\|u)=1}\\
+        =&\sum_{u}\Pr\sbra{G_2(\tilde s)=u}
+        \Pr\sbra{\mathcal D_u(G_1(\hat s))=1}.
+    \end{align*}
+    Since $G_1$ is PRG, then for any \ppt algorithm $\mathcal D'$, there exists negligible function $\negl$ such that
+    $$
+    \Big|\Pr_{|s|=n}\sbra{\mathcal D'(G_1(s))=1}-\Pr\sbra{\mathcal D'(r)=1}\Big|\leq\negl(n).
+    $$
+    Therefore
+    \begin{align*}
+        \negl(\lfloor n/2\rfloor)&\geq
+        \Big|\Pr\sbra{\mathcal D(G(s))=1}-\sum_{u}\Pr\sbra{G_2(\tilde s)=u}\Pr\sbra{\mathcal D_u(\hat r)=1}\Big|\\
+        &=
+        \Big|\Pr\sbra{\mathcal D(G(s))=1}-\Pr\sbra{\mathcal D(\hat r\|G_2(\tilde s))=1}\Big|\\
+        &=
+        \Big|\Pr\sbra{\mathcal D(G(s))=1}-\sum_{v}\Pr\sbra{\hat r=v}\Pr\sbra{\mathcal D(v\|G_2(\tilde s))=1}\Big|\\
+        &=
+        \Big|\Pr\sbra{\mathcal D(G(s))=1}-\sum_{v}\Pr\sbra{\hat r=v}\Pr\sbra{\mathcal D_v(G_2(\tilde s))=1}\Big|
+    \end{align*}
+    Since $G_2$ is PRG, then for any \ppt algorithm $\mathcal D'$, there exists negligible function $\negl'$ such that
+    $$
+    \Big|\Pr\sbra{\mathcal D'(G_2(s))=1}-\Pr\sbra{\mathcal D'(r)=1}\Big|\leq\negl'(n).
+    $$
+    Thus
+    \begin{align*}
+        \negl(\lfloor n/2\rfloor)+\negl'(\lceil n/2\rceil)&\geq
+            \Big|\Pr\sbra{\mathcal D(G(s))=1}-\sum_{v}\Pr\sbra{\hat r=v}\Pr\sbra{\mathcal D_v(\tilde r)=1}\Big|\\
+        &=
+            \Big|\Pr\sbra{\mathcal D(G(s))=1}-\sum_{v}\Pr\sbra{\hat r=v}\Pr\sbra{\mathcal D(v\|\tilde r)=1}\Big|\\
+        &=
+            \Big|\Pr\sbra{\mathcal D(G(s))=1}-\Pr\sbra{\mathcal D(r)=1}\Big|,
+    \end{align*}
+    which indicates $G$ is a PRG. 
+\end{proof}
+
+\begin{lemma}\label{ap2}
+    Assume $F$ is a length-preserving PRF.
+    Let $\Pi=(\Gen,\Enc,\Dec)$ be a private-key encryption scheme, where
+    \begin{itemize}
+        \item $\Gen$ generates a random key from $\bin^n$ given input $1^n$.
+        \item $\Enc$ is a deterministic algorithm, where if $k,m_i\in\bin^{n},\forall i\in[t]$,
+            $$
+            \Enc_k(m_1,m_2,\cdots,m_t)=(F_k(1)\oplus m_1,\cdots,F_k(i)\oplus m_i,\cdots,F_k(t)\oplus m_t).
+            $$
+        \item $\Dec$ is a deterministic algorithm, where if $k,c_i\in\bin^{n},\forall i\in[t]$,
+            $$
+            \Dec_k(c_1,c_2,\cdots,c_t)=(F_k(1)\oplus c_1,\cdots,F_k(i)\oplus m_i,\cdots,F_k(t)\oplus m_t).
+            $$
+    \end{itemize}
+    Then $\Pi$ is an indistinguishable multiple encryption in the presence of an eavesdropper.
+\end{lemma}
+\begin{proof}
+    Let $\widetilde\Pi$ be an encryption scheme same as $\Pi$ except that a FRF $f$ is used instead of $F_k$.
+    For any \ppt adversary $\mathcal A$ of $\Pi$, develop a \ppt algorithm $\mathcal D$ as follows:
+    \begin{enumerate}
+        \item $\mathcal D$ is given input $1^n$ and access to oracle $\mathcal O:\bin^n\to\bin^n$.
+        \item Run $\mathcal A(1^n)$ to obtain $\bm m_0=(m_{0,1},\cdots,m_{0,t})$ and $\bm m_1=(m_{1,1},\cdots,m_{1,t})$.
+        \item Generate a uniform bit $b$ from $\bin$.
+        \item Return $\bm c_b=(\mathcal O(1)\oplus m_{b,1},\cdots,\mathcal O(t)\oplus m_{b,t})$ to $\mathcal A$.
+        \item Check the answer $b'$ of $\mathcal A$. Output $1$ if $b'=b$, and $0$ otherwise.
+    \end{enumerate}
+    Therefore, if $\mathcal O$ is a FRF $f$,     
+    we have $\mathcal O(i)\sim\bin^n$. 
+    Thus $\mathcal O(i)\oplus m\sim\bin^n$ holds for any $i,m\in\bin^n$, 
+    indicating the distribution of $\bm c_0$ is identical with $\bm c_1$. 
+    Therefore 
+    $$
+    \Pr\sbra{\mathcal D^{f(\cdot)}(1^n)=1}=\Pr\sbra{\PrivK_{\mathcal A,\widetilde\Pi}^\mult(n)=1}=\frac12.
+    $$
+    On the other hand, if $\mathcal O$ is a PRF $F_k$, we have
+    $$
+    \Pr\sbra{\mathcal D^{F_k(\cdot)}(1^n)=1}=\Pr\sbra{\PrivK_{\mathcal A,\Pi}^\mult(n)=1}.
+    $$
+    Combining the definition of PRF, there exists a negligible function $\negl$ such that
+    \begin{align*}
+        \Pr\sbra{\PrivK_{\mathcal A,\Pi}^\mult(n)=1}&=\Pr\sbra{\mathcal D^{F_k(\cdot)}(1^n)=1}
+        -\Pr\sbra{\mathcal D^{f(\cdot)}(1^n)=1}+\frac12\leq\frac12+\negl(n),
+    \end{align*}
+    which gives the indistinguishability of $\Pi$.
+\end{proof}
+
+\begin{theorem}\label{ap3}
+    Assume $G$ is a PRG with expansion factor $\ell$, 
+    define $G'$ as $G'(s)=G(s_1\cdots s_{\lfloor n/2\rfloor})$, where $s=s_1\cdots s_n$.
+    If the expansion factor $\ell'$ of $G'$ satisfies $\ell'(n)>n$, $G'$ is a PRG.
+\end{theorem}
+\begin{proof}
+    Since $G$ is a PRG, there exists a negligible function $\negl$ such that
+    for any \ppt algorithm $\mathcal D$, we have
+    \begin{align*}
+        &\abs{\Pr_{|s|=n}\sbra{\mathcal D(G'(s))=1}-\Pr_{|r|=\ell'(n)}\sbra{\mathcal D(r)=1}}\\
+        =&
+        \abs{\Pr_{s_1,\cdots,s_{\lfloor n/2\rfloor}}\sbra{\mathcal D(G(s_1\cdots s_{\lfloor n/2\rfloor}))=1}
+        -\Pr_{|r|=\ell(\lfloor n/2\rfloor)}\sbra{\mathcal D(r)=1}}\\
+        =&
+        \abs{\Pr_{|s|=\lfloor n/2\rfloor}\sbra{\mathcal D(G(s))=1}
+        -\Pr_{|r|=\ell(\lfloor n/2\rfloor)}\sbra{\mathcal D(r)=1}}\\
+        \leq&\negl(\lfloor n/2\rfloor),
+    \end{align*}
+    which gives $G'$ is a PRG.
+\end{proof}
+
+\end{document}
