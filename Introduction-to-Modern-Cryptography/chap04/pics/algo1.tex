@@ -1,0 +1,63 @@
+\begin{minipage}{\textwidth}
+    \centering
+    \begin{minipage}{0.46\textwidth}
+        \centering
+        \scriptsize
+        \begin{algorithm}[H]
+            \caption{Experiment $1$}
+            \DontPrintSemicolon
+            \SetKwFunction{enc}{Encrypt}
+            \SetKwFunction{dec}{Decrypt}
+            \SetKwProg{func}{Function}{}{}
+
+            $M,C,S,T\gets\varnothing$\;
+            \func{\enc{$m\in\bin^{n/2}$}}{
+                $r\sim\bin^{n/2},u\gets m\|r$\;
+                \If{$u\notin M$}{
+                    $c\sim\bin^n\backslash C$\;
+                    $M\gets M\cup\{u\},C\gets C\cup\{c\}$\;
+                    $S[u]\gets c,T[c]\gets u$\;
+                }
+                \KwRet $S[u]$\;
+            }
+            \func{\dec{$c\in\bin^{n}$}}{
+                \If{$c\notin C$}{
+                    $u\sim\bin^n\backslash M$\;
+                    $M\gets M\cup\{u\},C\gets C\cup\{c\}$\;
+                    $S[u]\gets c,T[c]\gets u$\;
+                }
+                \KwRet first half of $T[c]$\;
+            }
+        \end{algorithm}
+    \end{minipage}
+    \begin{minipage}{0.46\textwidth}
+        \centering
+        \scriptsize
+        \begin{algorithm}[H]
+            \caption{Experiment $2$}
+            \DontPrintSemicolon
+            \SetKwFunction{enc}{Encrypt}
+            \SetKwFunction{dec}{Decrypt}
+            \SetKwProg{func}{Function}{}{}
+
+            $M,C,S,T,R\gets\varnothing$\;
+            \func{\enc{$m\in\bin^{n/2}$}}{
+                $r\sim\bin^{n/2}\backslash R,u\gets m\|r$\;
+                \If{$u\notin M$}{
+                    $c\sim\bin^n$\;
+                    $M\gets M\cup\{u\},C\gets C\cup\{c\}$\;
+                    $S[u]\gets c,T[c]\gets u,R\gets R\cup\{r\}$\;
+                }
+                \KwRet $S[u]$\;
+            }
+            \func{\dec{$c\in\bin^{n}$}}{
+                \If{$c\notin C$}{
+                    $u\gets m\|r\sim\bin^{n/2}\times(\bin^{n/2}\backslash R)$\;
+                    $M\gets M\cup\{u\},C\gets C\cup\{c\}$\;
+                    $S[u]\gets c,T[c]\gets u,R\gets R\cup\{r\}$\;
+                }
+                \KwRet first half of $T[c]$\;
+            }
+        \end{algorithm}
+    \end{minipage}
+\end{minipage}

@@ -1,0 +1,281 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+% Author : Shlw
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{refute}{Refute}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator{\lequiv}{\ \Leftrightarrow\ }
+\newcommand{\rawE}{\mathop{\mathbb E}}
+\newcommand{\E}[1]{\mathop{\mathbb E}_{#1}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\Enc}{\mathrm{Enc}}
+\newcommand{\Gen}{\mathrm{Gen}}
+\newcommand{\Dec}{\mathrm{Dec}}
+\newcommand{\Mac}{\mathrm{Mac}}
+\newcommand{\Vrfy}{\mathrm{Vrfy}}
+\newcommand{\PrivK}{\mathrm{PrivK}}
+\newcommand{\Macforge}{\mathrm{Mac}\text{-}\mathrm{forge}}
+\newcommand{\Macsforge}{\mathrm{Mac}\text{-}\mathrm{sforge}}
+\newcommand{\Encforge}{\mathrm{Enc}\text{-}\mathrm{Forge}}
+\newcommand{\negl}{\mathrm{negl}}
+\newcommand{\ppt}{{\sc ppt} }
+\newcommand{\eav}{\mathrm{eav}}
+\newcommand{\out}{\mathrm{out}}
+\newcommand{\mult}{\mathrm{mult}}
+\newcommand{\cpa}{\mathrm{cpa}}
+\newcommand{\cca}{\mathrm{cca}}
+\newcommand{\Used}{\mathrm{Used}}
+\newcommand{\Asked}{\mathrm{Asked}}
+
+\title{Homework Set $2$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{4.1}
+    Let $\mathcal M$ be the message space.
+    For any message $m$ and tag $u$, 
+    consider a \ppt adversary $\mathcal A_{m,u}$ of $\Pi$, which simply outputs $(m,u)$.
+    Therefore,
+    \begin{align*}
+        \E{m,u}\Pr\sbra{\Macforge_{\mathcal A_{m,u},\Pi}(n)=1}
+        &=\E{m,u}\Pr\sbra{\Mac_k(m)=u}\\
+        &=2^{-t(n)}\times|\mathcal M|^{-1}\times\sum_{u,m}\Pr\sbra{\Mac_k(m)=u}\\
+        &=2^{-t(n)}.
+    \end{align*}
+    Since $\Pi$ is a secure MAC and $\mathcal M$ is finite, for any fixed $c\in\mathbb N$
+    $$
+    2^{-t(n)}\leq\E{m,u}\Pr\sbra{\Macforge_{\mathcal A_{m,u},\Pi}(n)=1}\leq\frac{1}{n^c},
+    $$
+    which gives $t(n)=\omega(\log n)$.
+\end{exercise}
+
+\begin{exercise}{4.6}
+    $\Pi=(\Gen,\Mac,\Vrfy)$ is not secure.
+
+    Consider the following \ppt adversary $\mathcal A$:
+    \begin{enumerate}
+        \item Ask the tag of $0^{n-1}\|0^{n-1}$, thus obtaining $c_0=F_k(0^n)$.
+        \item Ask the tag of $1^{n-1}\|1^{n-1}$, thus obtaining $c_1=F_k(1^n)$.
+        \item Output $(0^{n-1}\|1^{n-1},c_0\|c_1)$.
+    \end{enumerate}
+    Therefore, $\Pr\sbra{\Macforge_{\mathcal A,\Pi}(n)=1}=1$.
+\end{exercise}
+
+\begin{exercise}{4.12}
+The advantage is 
+\begin{itemize}
+    \item to process while reading message;
+    \item to have fewer blocks thus accelerating the procedure;
+    \item to be able to authenticate potentially longer message.
+\end{itemize}
+\begin{proof}[New Construction $4.7$ is secure]
+    Consider an arbitrary \ppt adversary $\mathcal A$, which makes at most $q(n)$ queries.
+    Let $(m_1,\cdots,m_d)$ be the output message and $(r,t_1,\cdots,t_d)$ be the output tag.
+    $\mathrm{Repeat}$ denotes $r$ is used more than once during query;
+    $\mathrm{NewBlock}$ denotes there exists $m_i\in[d-1]$ such that $r\|0\|i\|m_i$ is new
+    or $r\|1\|d\|m_d$ is new.
+    Therefore, 
+    \begin{align*}
+        &\Pr\sbra{\Macforge_{\mathcal A,\Pi}(n)=1}\\
+        =&\Pr\sbra{\Macforge_{\mathcal A,\Pi}(n)=1,\mathrm{Repeat}}
+        +\Pr\sbra{\Macforge_{\mathcal A,\Pi}(n)=1,\overline{\mathrm{Repeat}},\mathrm{NewBlock}}\\
+        &+\Pr\sbra{\Macforge_{\mathcal A,\Pi}(n)=1,\overline{\mathrm{Repeat}},\overline{\mathrm{NewBlock}}}\\
+        \leq&\Pr\sbra{\mathrm{Repeat}}
+        +\Pr\sbra{\Macforge_{\mathcal A,\Pi}(n)=1,\mathrm{NewBlock}}
+        +\Pr\sbra{\Macforge_{\mathcal A,\Pi}(n)=1,\overline{\mathrm{Repeat}},\overline{\mathrm{NewBlock}}}.
+    \end{align*}
+    It is easy to see
+    $$
+        \Pr\sbra{\mathrm{Repeat}}\leq\sum_{i=1}^{q(n)}\sum_{j\neq i}2^{-n/4}\leq\frac{q^2(n)}{2^{n/4}}.
+    $$
+    On the other hand, if $\mathrm{NewBlock}$ and $\mathrm{Repeat}$ do not occur but the forgery is valid,
+    there exists a query identical with $(m_1,\cdots,m_d)$, which is a contradiction. Thus
+    $$
+    \Pr\sbra{\Macforge_{\mathcal A,\Pi}(n)=1,\overline{\mathrm{Repeat}},\overline{\mathrm{NewBlock}}}=0. 
+    $$
+    
+    Let $\widetilde\Pi$ be the MAC same as $\Pi$ except that a FRF $f$ is used in place of $F$.
+    Let $\ell$ be the expansion factor of $F$.
+    Develop a \ppt algorithm $\mathcal D$ as follows:
+    \begin{enumerate}
+        \item $\mathcal D$ is given $1^n$ and oracle $\mathcal O$.
+        \item Run $\mathcal A(1^n)$. Whenever $\mathcal A$ asks to authenticate message $m'=(m'_1,\cdots,m'_l)$,
+            generate $r'\in\{0,1\}^{n/4}$ uniformly and return $(r',\mathcal O(r'\|0\|1\|m'_1),\cdots,
+            \mathcal O(r'\|1\|l\|m'_l))$. Then store $m'$ in memory.
+        \item When $\mathcal A$ outputs $m=(m_1,\cdots,m_d)$ and $(r,t_1,\cdots,t_d)$,
+            \begin{itemize}
+                \item if $m$ is in memory, 
+                    or $(r,\mathcal O(r\|0\|1\|m_1),\cdots,\mathcal O(r\|1\|d\|m_d))\neq(r,t_1,\cdots,t_d)$,
+                    or $\mathrm{NewBlock}$ does not occur,
+                    output $0$;
+                \item otherwise,
+                    output $1$.
+            \end{itemize}
+    \end{enumerate}
+    Hence, 
+    \begin{gather*}
+    \Pr\sbra{\mathcal D^{F_k(\cdot)}(1^n)=1}=\Pr\sbra{\Macforge_{\mathcal A,\Pi}(n)=1,\mathrm{NewBlock}}\\
+    \Pr\sbra{\mathcal D^{f(\cdot)}(1^n)=1}=\Pr\sbra{\Macforge_{\mathcal A,\widetilde\Pi}(n)=1,\mathrm{NewBlock}}.
+    \end{gather*}
+    Since in new block, the successful rate is extremely low under FRF, which gives
+    \begin{gather*}
+    \Pr\sbra{\mathcal D^{f(\cdot)}(1^n)=1}=\Pr\sbra{\Macforge_{\mathcal A,\widetilde\Pi}(n)=1,\mathrm{NewBlock}}\leq 
+        2^{-\ell(n)}\leq 2^{-n}.
+    \end{gather*}
+    Combining the definition of PRF, there exists a negligible function $\negl$ such that
+    \begin{align*}
+        \Pr\sbra{\Macforge_{\mathcal A,\Pi}(n)=1,\mathrm{NewBlock}}\leq 2^{-n}+\Pr\sbra{\mathcal D^{F_k(\cdot)}(1^n)=1}
+        -\Pr\sbra{\mathcal D^{f(\cdot)}(1^n)=1}\leq 2^{-n}+\negl(n).
+    \end{align*}
+    As a result, 
+    \begin{align*}
+        &\Pr\sbra{\Macforge_{\mathcal A,\Pi}(n)=1}\\
+        \leq&\Pr\sbra{\mathrm{Repeat}}
+        +\Pr\sbra{\Macforge_{\mathcal A,\Pi}(n)=1,\mathrm{NewBlock}}
+        +\Pr\sbra{\Macforge_{\mathcal A,\Pi}(n)=1,\overline{\mathrm{Repeat}},\overline{\mathrm{NewBlock}}}\\
+        \leq&\frac{q^2(n)}{2^{n/4}}+2^{-n}+\negl(n),
+    \end{align*}
+    which proves the security of new Construction $4.7$.
+\end{proof}
+\end{exercise}
+
+\begin{exercise}{4.25}
+
+\begin{proof}[Not authenticated]
+    Since $F_k$ is permutation, every ciphertext $c\in\bin^n$ is valid.
+    Therefore, a \ppt adversary which simply outputs ciphertext $0^n$ will pass the $\Encforge$ experiment.
+\end{proof}
+
+\begin{proof}[CCA-secure]
+    Let $\Pi$ be the proposed scheme and $\widetilde\Pi$
+    be same as $\Pi$ except that FRP $f$ is used in place of $F$.
+    For any \ppt adversary $\mathcal A$ of $\Pi$, develop a \ppt algorithm $\mathcal D$ as follows:
+    \begin{enumerate}
+        \item $\mathcal D$ is given input $1^n$ and access to oracle $\mathcal O:\bin^n\to\bin^n$ and 
+            $\mathcal O^{-1}$.
+        \item Run $\mathcal A(1^n)$. Whenever $\mathcal A$ queries the 
+            \begin{itemize}
+                \item encryption of $m\in\bin^{n/2}$, 
+                    choose a uniform $r\in\bin^{n/2}$ and return $\mathcal O(m\|r)$ to $\mathcal A$.
+                \item decryption of $c\in\bin^{n}$, 
+                    return the second half of $\mathcal O^{-1}(c)$ to $\mathcal A$.
+            \end{itemize}
+        \item When $\mathcal A$ outputs $m_0,m_1\in\bin^{n/2}$, choose a uniform bit $b\in\bin$ and
+            uniform $r^*\in\bin^{n/2}$, then return $c^*=\mathcal O(m_b\|r^*)$ to $\mathcal A$.
+        \item Continue answering the encryption (decryption) query from $\mathcal A$ as long as it does not ask to
+            decrypt $c^*$ until $\mathcal A$ gives a bit $b'$.
+            Output $1$ if $b'=b$, and $0$ otherwise.
+    \end{enumerate}
+    When $\mathcal O$ is a FRP, we have
+        $$
+        \Pr\sbra{\mathcal D^{f(\cdot),f^{-1}(\cdot)}(1^n)=1}=\Pr\sbra{\PrivK_{\mathcal A,\widetilde\Pi}^\cca(n)=1}.
+        $$
+    When $\mathcal O$ is a SPRP, we have
+        $$
+        \Pr\sbra{\mathcal D^{F_k(\cdot),F_k^{-1}(\cdot)}(1^n)=1}=\Pr\sbra{\PrivK_{\mathcal A,\Pi}^\cca(n)=1}.
+        $$
+    Combining the definition of SPRP, there exists a negligible function $\negl$ such that
+    $$
+        \Pr\sbra{\PrivK_{\mathcal A,\Pi}^\cca(n)=1}\leq\negl(n)+\Pr\sbra{\PrivK_{\mathcal A,\widetilde\Pi}^\cca(n)=1}.
+    $$
+
+    Now, write the encryption and decryption oracle of $\PrivK_{\mathcal A,\widetilde\Pi}^\cca$ explicitly 
+    in Experiment $1$.
+
+    \input{./pics/algo1.tex}
+
+    Applying Lemma \ref{ap} in Appendix for multiple times and introducing randomness recorder $R$, 
+    Experiment $1$ is indistinguishable from Experiment $2$.
+    Then the $\mathtt{if}$ condition is always satisfied in $\mathtt{Encrypt}$, which gives rise to 
+    Experiment $3$. Then using Lemma \ref{ap} to remove the dependence of $R$, we have Experiment $4$.
+
+    \input{./pics/algo2.tex}
+
+    Now, eliminate redundant variables and calls to obtain Experiment $5$.
+    We may always assume $\mathcal A$ never asks the decryption of ciphertext which $\mathcal A$ has obtained,
+    which means the $\mathtt{if}$ condition is always satisfied in $\mathtt{Decrypt}$.
+    Hence we gets Experiment $6$.
+
+    \input{./pics/algo3.tex}
+
+    Note that by Lemma \ref{ap}, Experiment $6$ and $1$ are indistinguishable, which means there is a negligible function
+    $\negl'$ such that
+    \begin{align*}
+        \Pr\sbra{\PrivK_{\mathcal A,\widetilde\Pi}^\cca(n)=1}&=\Pr\sbra{\text{Experiment $1$ outputs $1$}}\\
+        &\leq\Pr\sbra{\text{Experiment $6$ outputs $1$}}+\negl'(n)\\
+        &\leq\frac12+\negl'(n).
+    \end{align*}
+    Therefore, the CCA-security of $\Pi$ naturally follows from
+    \begin{align*}
+        \Pr\sbra{\PrivK_{\mathcal A,\Pi}^\cca(n)=1}
+        &\leq\negl(n)+\Pr\sbra{\PrivK_{\mathcal A,\widetilde\Pi}^\cca(n)=1}\\
+        &=\frac12+\negl'(n)+\negl(n).
+    \end{align*}
+\end{proof}
+\end{exercise}
+
+\newpage
+\section*{Appendix}
+
+\begin{lemma}\label{ap}
+    Assume $\mathcal A$ is a \ppt algorithm and $x\sim S$ is an assignment in $\mathcal A$, where $S$ is a constant.
+    Then change this assignment into $x\sim S\backslash X$, where $X$ is maintained during $\mathcal A$ 
+    and always of size negligible to $S$.
+    The new algorithm $\mathcal A'$ is indistinguishable from $\mathcal A$.
+\end{lemma}
+\begin{proof}
+    Since $\mathcal A$ is \ppt algorthm, assume it calls the assignment at most $q$ times.
+    Hence
+    $$
+        \Pr\sbra{\mathcal A'\text{ runs like }\mathcal A}\geq
+            1-q\times \Pr\sbra{\text{$x\sim S$ falls into $x\in X$}}=1-\text{negligible possibility},
+    $$
+    which indicates the indistinguishability between $\mathcal A$ and $\mathcal A'$. 
+\end{proof}
+
+\end{document}
