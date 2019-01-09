@@ -1,0 +1,453 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+% Author : Shlw
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{refute}{Refute}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator{\lequiv}{\ \Leftrightarrow\ }
+\DeclareMathOperator{\Image}{\mathop{Im}}
+\newcommand{\rawE}{\mathop{\mathbb E}}
+\newcommand{\E}[1]{\mathop{\mathbb E}_{#1}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\Enc}{\mathrm{Enc}}
+\newcommand{\hc}{\mathrm{hc}}
+\newcommand{\half}{\mathrm{half}}
+\newcommand{\lsb}{\mathrm{lsb}}
+\newcommand{\Gen}{\mathrm{Gen}}
+\newcommand{\Ext}{\mathrm{Ext}}
+\newcommand{\Dec}{\mathrm{Dec}}
+\newcommand{\Mac}{\mathrm{Mac}}
+\newcommand{\Vrfy}{\mathrm{Vrfy}}
+\newcommand{\PrivK}{\mathrm{PrivK}}
+\newcommand{\PubK}{\mathrm{PubK}}
+\newcommand{\KEM}{\mathrm{KEM}}
+\newcommand{\Encaps}{\mathrm{Encaps}}
+\newcommand{\GenRSA}{\mathrm{GenRSA}}
+\newcommand{\Decaps}{\mathrm{Decaps}}
+\newcommand{\Macforge}{\mathrm{Mac}\text{-}\mathrm{forge}}
+\newcommand{\Macsforge}{\mathrm{Mac}\text{-}\mathrm{sforge}}
+\newcommand{\Encforge}{\mathrm{Enc}\text{-}\mathrm{Forge}}
+\newcommand{\Invert}{\mathrm{Invert}}
+\newcommand{\Feistel}{\mathrm{Feistel}}
+\newcommand{\Hashcoll}{\mathrm{Hash}\text{-}\mathrm{coll}}
+\newcommand{\negl}{\mathrm{negl}}
+\newcommand{\ppt}{{\sc ppt}~}
+\newcommand{\eav}{\mathrm{eav}}
+\newcommand{\out}{\mathrm{out}}
+\newcommand{\mult}{\mathrm{mult}}
+\newcommand{\cpa}{\mathrm{cpa}}
+\newcommand{\cca}{\mathrm{cca}}
+\newcommand{\Used}{\mathrm{Used}}
+\newcommand{\Asked}{\mathrm{Asked}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Dcal}{\mathcal{D}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\Ocal}{\mathcal{O}}
+\newcommand{\Pcal}{\mathcal{P}}
+\newcommand{\Xcal}{\mathcal{X}}
+\newcommand{\Ycal}{\mathcal{Y}}
+\newcommand{\Zcal}{\mathcal{Z}}
+\newcommand{\Gset}{\mathbb{G}}
+\newcommand{\Nset}{\mathbb{N}}
+\newcommand{\Zset}{\mathbb{Z}}
+\newcommand{\Hset}{\mathbb{H}}
+
+\title{Exercise Set --- Chapter $11$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{11.1}
+    Show that for any valid key pairs $(sk_1,pk),(sk_2,pk)$, 
+    we have 
+    $$\cbra{\Enc_{pk}(0)}\cap\cbra{\Enc_{pk}(1)}=\varnothing.$$
+\end{exercise}
+
+\begin{exercise}{11.2}
+    Assume the length of the ciphertext is at most $C\log n$, then devise an adversary $\Acal$ as follows:
+    \begin{enumerate}
+        \item Output $m_0=0,m_1=1$ and get $c$.
+        \item Choose a uniform bit $b\in\bin$. Run $n^{C+1}$ times $\Enc_{pk}(b)$; if some time it hits $c$, output b.
+        \item Output $b\oplus 1$.
+    \end{enumerate}
+    By dividing all possible ciphertexts into possibility over $\frac1{n^C}$ and below $\frac1{n^C}$,
+    the total success rate is significant.
+\end{exercise}
+
+\begin{exercise}{11.3}
+\begin{itemize}
+    \item[(a)]
+        \begin{construction}
+            Assume $\Pi_1=(\Gen,\Enc,\Dec)$ is a one-way public-key encryption scheme and $H$ is a random oracle, 
+            construct a CPA-secure KEM 
+            $\Pi=(\Gen,\Encaps,\Decaps)$, where
+            \begin{gather*}
+                \Encaps_{pk}(1^n)=(\Enc_{pk}(k),H(k)), \quad k\sim\bin^n\\
+                \Decaps_{sk}(c)=H(\Dec_{sk}(c)).
+            \end{gather*}
+        \end{construction}
+        \begin{proof}[CPA-security]
+            Consider an arbitrary \ppt adversary $\Acal$ of $\Pi$, assume it queries $H$ for at most $q(n)$ times and never queries the same key.
+            Let $\Asked$ be the event $\Acal(pk,\Enc_{pk}(k),t)$ queries $H(k)$, then
+            \begin{align*}
+                \Pr\sbra{\KEM_{\Acal,\Pi}^\cpa(n)=1}\leq\Pr\sbra{\Asked}
+                +\Pr\sbra{\KEM_{\Acal,\Pi}^\cpa(n)=1\middle|\overline{\Asked}}.
+            \end{align*}
+            Since $H$ is random oracle, 
+            $$
+            \Pr\sbra{\KEM_{\Acal,\Pi}^\cpa(n)=1\middle|\overline{\Asked}}=\frac12.
+            $$
+            Then develop a \ppt adversary $\Acal_1$ of $\Pi_1$ as follows:
+            \begin{enumerate}
+                \item $\Acal_1$ is given $pk,c$ and run $\Acal(pk,c,h)$, where $h$ is chosen uniformly 
+                    (since $H$ is totally random). 
+                \item Whenever $\Acal$ makes a query $k_i$ to $H$, answer it with a uniform $n$-bit string.
+                \item In the end, assume $\Acal$ makes $t\leq q(n)$ queries.
+                    Choose a uniform index $i\in[t]$ and output $k_t$.
+            \end{enumerate}
+            Since $\Pi_1$ is one-way, there exists a negligible function $\negl$ such that
+            \begin{align*}
+                \negl(n)\geq\Pr\sbra{\Acal_1\text{ succeeds}}=
+                \Pr\sbra{\Asked,k_i=k}\geq\frac1t\Pr\sbra{\Asked}\geq\frac{1}{q(n)}\Pr\sbra{\Asked}.
+            \end{align*}
+            Thus 
+            $$
+            \Pr\sbra{\KEM_{\Acal,\Pi}^\cpa(n)=1}\leq\frac12+q(n)\negl(n),
+            $$
+            which proves the CPA-security of $\Pi$.
+        \end{proof}
+    \item[(b)] Deterministic public-key encryption scheme can be one-way.
+        \begin{proof}
+            Consider the deterministic public-key encryption scheme $\Pi=(\Gen,\Enc,\Dec)$, where
+            \begin{itemize}
+                \item $\Gen(1^n)$ calls $\GenRSA$ to obtain $(N,e,d)$, where $\phi(N)\geq 2^n$ and 
+                    $2^n/\phi(N)$ is not a negligible function.
+                    Construct an injective mapping $H:\bin^n\to\mathbb Z_N^*$,
+                    the inversion of which is also efficiently computable.
+                    Then $pk=(N,e,H)$ and $sk=d$.
+                \item $\Enc_{pk}(m)=\pbra{H(m)}^e,m\in\bin^n$.
+                \item $\Dec_{sk}(c)=H^{-1}\pbra{c^d}$.
+            \end{itemize}
+            For any \ppt adversary $\Acal$ of $\Pi$ in one-wayness experiment, develop an algorithm $\Bcal$ of RSA experiment:
+            \begin{enumerate}
+                \item $\Bcal$ is given $(N,e,y)$. 
+                \item Construct the mapping $H$ and $m\gets\Acal(N,e,H,y)$.
+                \item Output $H^{-1}(m)$.
+            \end{enumerate}
+            Under RSA assumption, there is a negligible function $\negl'$ such that
+            \begin{align*}
+                \negl'(n)&\geq\Pr\sbra{\mathrm{RSA}_{\Bcal,\GenRSA}(n)=1}\\
+                &\geq\Pr\sbra{x\in\Image H,\Acal(N,e,H,x^e)=H(x)}\\
+                &=\frac{2^n}{\phi(n)}\Pr\sbra{\Acal\text{ succeeds in one-wayness experiment}},
+            \end{align*}
+            which indicates the one-wayness of $\Pi$.
+        \end{proof}
+\end{itemize}
+\end{exercise}
+
+\begin{exercise}{11.4}
+    The public key is the transcript of the first round. The encryption consists of the whole two-round transcript and an
+    EAV-secure private-key encryption result. 
+\end{exercise}
+
+\begin{exercise}{11.5}
+    The ciphertext can be shuffled and fed back to decryption oracle.
+\end{exercise}
+
+\begin{exercise}{11.7}
+This scheme (denoted as $\Pi$ in the analysis) is not CPA-secure.
+\begin{proof}
+    Construct adversary $\Acal$, which simply outputs $m_0=0,m_1=1$ and 
+    gives answer $0$ iff $c_2\in\Gset$.
+    Firstly, $\Acal$ is \ppt algorithm, since quadratic residual over prime $q$ can be efficiently determined.
+    Secondly, using Legendre symbol 
+    $$
+    \pbra{\frac{a}{b}}=\begin{cases}
+        a^{\frac{b-1}{2}}\in\{\pm 1\}, & a\not\equiv 0\mod b,\\
+        0, & a\equiv 0\mod b,
+    \end{cases}
+    $$
+    where $b$ is an odd prime, it is easy to see $\pbra{\frac{p-1}{p}}=(-1)^q=-1$; thus $p-1\notin\Gset$.
+    Therefore, we have
+    \begin{align*}
+        \Pr\sbra{\PubK_{\Acal,\Pi}^\cpa(n)=1}&=1-\frac12\Pr_{r\sim\Zset_q}\sbra{\pbra{\frac{h^r+1}{p}}=1}
+            =1-\frac12\Pr_{k\sim\Gset}\sbra{\pbra{\frac{k+1}{p}}=1}\\
+        &=1-\frac{1}{4q}\sum_{k\in\Gset}\pbra{\pbra{\frac{k+1}{p}}+1}\\
+        &=1-\frac{1}{8q}\sum_{k=1}^{p-2}\pbra{\pbra{\frac{k}{p}}+1}\times\pbra{\pbra{\frac{k+1}{p}}+1}\\
+        &=1-\frac{1}{8q}\sum_{k=1}^{p-2}\pbra{\pbra{\frac{k^{-1}}{p}}+1}\times\pbra{\pbra{\frac{k+1}{p}}+1}\\
+        &=1-\frac{1}{4(p-1)}\pbra{p-2+\sum_{k=1}^{p-2}\pbra{\frac{k^{-1}}{p}}+
+            \sum_{k=2}^{p-1}\pbra{\frac{k}{p}}+
+            \sum_{k=1}^{p-2}\pbra{\frac{1+k^{-1}}{p}}}\\
+        &=1-\frac{1}{4(p-1)}\pbra{p-2+\sum_{k=1}^{p-2}\pbra{\frac{k}{p}}+
+            \sum_{k=2}^{p-1}\pbra{\frac{k}{p}}+
+            \sum_{k=2}^{p-1}\pbra{\frac{k}{p}}}\\
+        &=1-\frac{1}{4(p-1)}\pbra{p-2-\pbra{\frac{p-1}{p}}-2\pbra{\frac1p}}\\
+        &=1-\frac{1}{4(p-1)}\pbra{p-2-(-1)-2}\\
+        &=1-\frac{p-3}{4(p-1)}\\
+        &>\frac34.
+    \end{align*}
+\end{proof}
+\end{exercise}
+
+\begin{exercise}{11.8}
+\begin{itemize}
+    \item[(a)] 
+        \begin{proof}
+            Assume A chooses $b_A$ in step (2). If B is honest, $b_B$ is uniformly distributed in $\bin$, even though
+            $c_B\neq c_A$. Therefore, $b_A\oplus b_B$ is uniform in $\bin$.
+        \end{proof}
+    \item[(b)]
+        \begin{proof}
+            Assume the public key is $(\Gset,g,q,g^x)$. 
+            Then B can eavesdrop message $c_A=(g^y,g^{xy+b_A})$.
+            \begin{itemize}
+                \item If B wants $b_A\oplus b_B=0$, B outputs $c_B=(g^y\cdot g,g^{xy+b_A}\cdot g^x)\neq c_A$, thus
+                    $b_B=b_A$.
+                \item If B wants $b_A\oplus b_B=1$, B outputs $c_B=\pbra{\frac{1}{g^y},\frac{g}{g^{xy+b_A}}}\neq c_A$,
+                    thus $b_B=b_A\oplus 1$.
+            \end{itemize}
+        \end{proof}
+    \item[(c)] CCA-secure public-key encryption scheme should be used here.
+        \begin{definition}
+            Public-key encryption scheme $\Pi=(\Gen,\Enc,\Dec)$ is \emph{secure under coin flip}, if for any
+            \ppt adversary $\Acal$, there is a negligible function $\negl$ such that 
+            $$
+            \Pr\sbra{\PubK^{\mathrm{coin}}_{\Acal,\Pi}(n)=1}\leq\frac12+\negl(n),
+            $$
+            where $\PubK_{\Acal,\Pi}^{\mathrm{coin}}(n)$ describes the following experiment:
+            \begin{enumerate}
+                \item Run $\Gen(1^n)$ to obtain keys $(pk,sk)$.
+                \item A message $m\in\bin$ is chosen uniformly at random, and compute $c\gets \Enc_{pk}(m)$.
+                \item $\Acal$ is given $pk,c$ and output $t\in\bin,c'\neq c$.
+                \item If $\Dec_{sk}(c')\oplus m=t$, output $1$; otherwise output $0$.
+            \end{enumerate}
+        \end{definition}
+        \begin{proof}
+            Assume $\Pi$ is a CCA-secure public-key encryption scheme, we shall prove it is also secure under coin flip.
+            For any \ppt adversary $\Acal$ of coin-flip experiment, construct $\Bcal$ of CCA-security experiment:
+            \begin{enumerate}
+                \item $\Bcal$ is given $pk$ and oracle $\Dec_{sk}(\cdot)$.
+                \item Output $m_0=0,m_1=1$ and obtain $c=\Enc_{pk}(m_b)$ where $b\sim\bin$.
+                \item Run $\Acal(pk,c)$ and get $t\in\bin,c'\neq c$.
+                \item Let $u\gets\Dec_{sk}(c')$ and output $u\oplus t$.
+            \end{enumerate}
+            Therefore, there is a negligible function $\negl$ such that
+            \begin{align*}
+                \frac12+\negl(n)&\geq\Pr\sbra{\PubK_{\Bcal,\Pi}^\cca(n)=1}\\
+                &=\Pr\sbra{(t,c')\gets\Acal(pk,\Enc_{pk}(b)),\Dec_{sk}(c')=t\oplus b}\\
+                &=\Pr\sbra{\PubK_{\Acal,\Pi}^{\mathrm{coin}}(n)=1}.
+            \end{align*}
+        \end{proof}
+\end{itemize}
+\end{exercise}
+
+\begin{exercise}{11.10}
+    $(g^y,h^y\cdot m)\to (g^{y}\cdot g,h^{y}\cdot h\cdot\alpha m)$.
+\end{exercise}
+
+\begin{exercise}{11.13}
+\begin{definition}
+    Public-key encryption scheme $\Pi=(\Gen,\Enc,\Dec)$ is \emph{secure under multiple receivers}, if for any
+    \ppt adversary $\Acal$, there is a negligible function $\negl$ such that 
+    $$
+    \Pr\sbra{\PubK^{\mathrm{mult}\text{-}\mathrm{rcv}}_{\Acal,\Pi}(n)=1}\leq\negl(n),
+    $$
+    where $\PubK_{\Acal,\Pi}^{\mathrm{mult}\text{-}\mathrm{rcv}}(n)$ describes the following experiment:
+    \begin{enumerate}
+        \item Run $\Acal(1^n)$ to obtain $1^t,t\geq 1$, the number of receivers.
+        \item Run $\Gen(1^n)$ for $t$ times to obtain keys $(pk_i,sk_i),i\in[t]$.
+        \item $\Acal$ is given $pk_i,i\in[t]$ and returns $m_0,m_1$.
+        \item Choose a uniform bit $b\in\bin$ and give $c_i=\Enc_{pk_i}(m_b),i\in[t]$ to $\Acal$.
+        \item If $\Acal$ returns $b'=b$, output $1$; otherwise output $0$.
+    \end{enumerate}
+\end{definition}
+\begin{proof}
+    Assume $\Pi$ is a CPA-secure public-key encryption scheme, we shall prove it is also secure under multiple receivers.
+    For any \ppt adversary $\Acal$ of multiple-receiver experiment, construct $\Bcal$ of CPA-security experiment:
+    \begin{enumerate}
+        \item $\Bcal$ is given $pk$ and runs $\Acal(1^n)$ to obtain $t$.
+        \item Guess a uniform number $u\sim[t]$ and let $pk_i\gets\Gen(1^n),i\in[t]\backslash\{u\},pk_u=pk$.
+        \item Give $pk_i,i\in[t]$ to $\Acal$ and get $m_0,m_1$. Then output $m_0,m_1$ and get $c\gets\Enc_{pk}(m_b)$.
+        \item Output the bit $b'$ that $\Acal$ outputs after giving $c_i,i\in[t]$ to $\Acal$, where
+            $$
+            c_i=\begin{cases}
+                \Enc_{pk_i}(m_0), & i<u\\
+                c, & i=u\\
+                \Enc_{pk_i}(m_1), & i>u.
+            \end{cases}
+            $$
+    \end{enumerate}
+    Therefore, there is a negligible function $\negl$ such that
+    \begin{align*}
+        \frac12+\negl&\geq\Pr\sbra{\PubK_{\Bcal,\Pi}^\cpa(n)=1}\\
+        &=\frac1t\sum_{u=1}^t
+            \Pr\sbra{\Acal(\underbrace{\Enc_{pk_i}(m_0)}_{i<u},\Enc_{pk_u}(m_b),\underbrace{\Enc_{pk_i}(m_1)}_{i>u})=b}\\
+        &=\frac1{2t}\sum_{u=1}^t\pbra{
+            \Pr\sbra{\Acal(\underbrace{\Enc_{pk_i}(m_0)}_{i\leq u},\underbrace{\Enc_{pk_i}(m_1)}_{i>u})=0}
+            +\Pr\sbra{\Acal(\underbrace{\Enc_{pk_i}(m_0)}_{i<u},\underbrace{\Enc_{pk_i}(m_1)}_{i\geq u})=1}}\\
+        &=\frac12+\frac1{2t}\sum_{u=1}^t\pbra{
+            \Pr\sbra{\Acal(\underbrace{\Enc_{pk_i}(m_0)}_{i\leq u},\underbrace{\Enc_{pk_i}(m_1)}_{i>u})=0}
+            -\Pr\sbra{\Acal(\underbrace{\Enc_{pk_i}(m_0)}_{i<u},\underbrace{\Enc_{pk_i}(m_1)}_{i\geq u})=0}}\\
+        &=\frac12+\frac1{2t}\pbra{\Pr\sbra{\Acal(\Enc_{pk_i}(m_0))=0}-\Pr\sbra{\Acal(\Enc_{pk_i}(m_1))=0}}\\
+        &=\frac12+\frac1t\pbra{\Pr\sbra{\Acal(\Enc_{pk_i}(m_b))=b}-\frac12}\\
+    \end{align*}
+    Thus 
+    $$
+        \Pr\sbra{\PubK_{\Acal,\Pi}^{\mathrm{mult}\text{-}\mathrm{rcv}}(n)=1}
+        =\Pr\sbra{\Acal(\Enc_{pk_i}(m_b))=b}\leq\frac12+t\times\negl(n).
+    $$
+    Since $\Acal$ is \ppt algorithm, $t$ is polynomial in $n$; hence $\Pi$ is secure under multiple receivers.
+\end{proof}
+\end{exercise}
+
+\begin{exercise}{11.14}
+    The possibility is $\frac12$ that the highest bit of $r$ is $0$. Let $m_0=0,m_1=1$ and feed $c\cdot 2^e$ back to 
+    decryption oracle, then with probability $\frac12$ the adversary shall know $m_b$.
+\end{exercise}
+
+\begin{exercise}{11.15}
+This scheme is not CCA-secure.
+\begin{proof}
+    This scheme is deterministic even if $H$ is a random oracle, 
+    thus it can not be CPA-secure, let alone CCA-secure.
+\end{proof}
+\end{exercise}
+
+\begin{exercise}{11.17}
+    It is not CCA-secure. Assume $\Pi$ is El Gamal and $\Enc_{pk}(r)=(g^y,h^y\cdot r)$.
+    Then $(g^y\cdot g,h^y\cdot h\cdot r)$ is also a valid encryption of $r$.
+\end{exercise}
+
+\begin{exercise}{11.18}
+    Assume $\Acal$ is an adversary of this construction and output $m_0=0,m_1=1$.
+    On input $N,e,y$, $\Bcal$ chooses a uniform bit $b\in\bin$ and return $\Acal(y,b)\oplus b$; 
+    then $\Bcal$ shall be a \ppt algorithm of $\lsb$.
+\end{exercise}
+
+\begin{exercise}{11.19}
+    \begin{itemize}
+        \item[(a)]
+            We can compute $t=[r^s\mod N_1N_2N_3]$. Then $r$ can be obtained by computing $t^{1/3}$ over integer.
+        \item[(b)]
+            Let ciphertext be 
+            $$
+            \langle 
+            r_1^3\mod N_1,r_2^3\mod N_2,r_3^3\mod N_3,
+            H_1(r_1)\oplus m,H_2(r_2)\oplus m,H_3(r_3)\oplus m
+            \rangle.
+            $$
+        \item[(c)]
+            Let ciphertext be 
+            \begin{align*}
+                &\langle 
+            r_1^3\mod N_1,r_2^3\mod N_2,r_3^3\mod N_3,\\
+                &\hat H_1(r_1)\oplus(r_2\|r_3),\hat H_2(r_2)\oplus(r_1\|r_3),\hat H_3(r_3)\oplus(r_1\|r_2),\\
+                &H_1(r_1)\oplus H_2(r_2)\oplus H_3(r_3)\oplus m
+            \rangle.
+            \end{align*}
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{11.20}
+\begin{figure}[ht]
+    \centering
+    \begin{algorithm}[H]
+        \caption{Compute $x$ from $x^e\mod N$}
+        \DontPrintSemicolon
+        \KwIn{$N,e,y,\Acal$.}
+        \KwOut{$x$ such that $x^e\equiv y\mod N$.}
+        $\ell\gets 0,r\gets N,i\gets 0$\;
+        \While{$(\ell,r)$ has more than $1$ integer}{
+            $mid\gets\frac{\ell+r}2$\;
+            \lIf{$\Acal\pbra{N,e,y\cdot2^{(i+1)e}}=0$}{
+                $r\gets mid$
+            }\lElse{
+                $\ell\gets mid$
+            }
+            $i\gets i+1$\;
+        }
+        \KwRet the unique integer in $(\ell,r)$\;
+    \end{algorithm}
+\end{figure}
+The reason is that,
+if $x$ is known between $\frac{k}{2^i}N$ and $\frac{k+1}{2^i}N$ for some $0\leq k<2^i$, then 
+\begin{itemize}
+    \item if $x\in\pbra{\frac{2k}{2^{i+1}}N,\frac{2k+1}{2^{i+1}}N}$, then $u:=2^ix\mod N\in(0,\frac12N)$.
+        Thus 
+        \begin{align*}
+            \lsb\pbra{2^{i+1}x\mod N}=\lsb\pbra{2u\mod N}
+            =\lsb\pbra{2u}=0.
+        \end{align*}
+    \item if $x\in\pbra{\frac{2k+1}{2^{i+1}}N,\frac{2k+2}{2^{i+1}}N}$, then $u:=2^ix\mod N\in(\frac12N,N)$
+        Thus 
+        \begin{align*}
+            \lsb\pbra{2^{i+1}x\mod N}=\lsb\pbra{2u\mod N}
+            =\lsb\pbra{2u-N}=1.
+        \end{align*}
+\end{itemize}
+\end{exercise}
+
+\begin{exercise}{11.21}
+    Assume the public key is $\langle N,e\rangle$.
+    For any \ppt adversary $\Acal$ of $\half$, 
+    construct $\Bcal$ of $\lsb$ which simply outputs 
+    $\half\pbra{x\cdot\frac{N+1}{2}\mod N}=\Acal\pbra{N,e,y\cdot(\frac{N+1}{2})^e\mod N}$ 
+    on input $(N,e,y)$ and $y\equiv x^e\mod N$. 
+    \begin{itemize}
+        \item $\lsb(x)=0$, then $x=2u,u<N/2$. Thus 
+            $$
+            \half\pbra{x\cdot\frac{N+1}{2}\mod N}=\half(u(N+1)\mod N)=\half(u)=0.
+            $$
+        \item $\lsb(x)=1$, then $x=1+2u,u<N/2$. Thus 
+            $$
+            \half\pbra{x\cdot\frac{N+1}{2}\mod N}=\half\pbra{\frac{N+1}{2}+u}=1.
+            $$
+    \end{itemize}
+    Therefore, the hardness of $\lsb$ implies the hardness of $\half$.
+\end{exercise}
+
+\end{document}
