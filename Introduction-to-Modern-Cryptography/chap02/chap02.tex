@@ -1,0 +1,181 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+% Author : Shlw
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage{ifthen}
+\usepackage{tikz}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem*{proof}{Proof}
+\newtheorem{answer}{Answer}
+\newtheorem{refute}{Refute}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\newcommand{\rawE}{\mathop{\mathbb E}}
+\newcommand{\E}[1]{\mathop{\mathbb E}_{#1}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+
+\title{Exercise Set --- Chapter $2$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{2.3}
+    Let $\Pi=(\mathcal K,\mathcal M,\mathcal C,\mathrm{Gen},\mathrm{Enc},\mathrm{Dec})$, where
+    $\mathcal K=\cbra{0,1},\mathcal M=\cbra{0,1},\mathcal C=\cbra{01,10,11,00}$ and
+    \begin{itemize}
+        \item $\mathrm{Gen}:\varnothing\to\mathcal K$ is a randomized algorithm, 
+            which outputs $0$ and $1$ with equal probability.
+        \item $\mathrm{Enc}:\mathcal K\times\mathcal M\to\mathcal C$ is a randomized algorithm and
+            $$
+            \Pr\sbra{\mathrm{Enc}(k,m)=0(k\oplus m)}=\frac13,\quad
+            \Pr\sbra{\mathrm{Enc}(k,m)=1(k\oplus m)}=\frac23.
+            $$
+        \item $\mathrm{Dec}:\mathcal K\times\mathcal C\to\mathcal M$ is a deterministic algorithm and
+            $$
+            \mathrm{Dec}(k,c_1c_2)=k\oplus c_2.
+            $$
+    \end{itemize}
+    Apparently, $\Pr\sbra{M=b\mid C=cd}=\Pr\sbra{M=b},\forall b,c,d\in\{0,1\}$. 
+    Therefore $\Pi$ is a perfectly secret encryption scheme.\par
+    Assume the probability distribution over $\mathcal M$ is uniform, then
+    \begin{align*}
+        \Pr\sbra{C=00}=\frac13\times\frac12\neq\frac23\times\frac12=\Pr\sbra{C=10}.
+    \end{align*}
+\end{exercise}
+
+\begin{exercise}{2.11 (Construction)}
+        Assume $|\mathcal M|=n$ is sufficiently large and $\mathcal M=\cbra{m_1,m_2,\cdots,m_n}$.  Without loss of generality, assume $n\times 2^{-t}$ is an integer.  Construct an encryption scheme $\Pi=(\mathcal K,\mathcal M,\mathcal C,\mathrm{Gen},\mathrm{Enc},\mathrm{Dec})$ as follows.
+        \begin{itemize}
+            \item $|\mathcal K|=n'=n\times 2^{-t}$ and $\mathcal K=\cbra{k_1,k_2,\cdots,k_{n'}}$.
+            \item $|\mathcal C|=n$ and $\mathcal C=\cbra{c_1,c_2,\cdots,c_n}$.
+            \item $\mathrm{Gen}:\varnothing\to\mathcal K$ outputs any key with equal probability.
+            \item $\mathrm{Enc}:\mathcal K\times\mathcal M\to\mathcal C$ be a randomized algorithm, where
+                for any $i\in[n],j\in[n']$
+                \begin{align*}
+                    \Pr\sbra{\mathrm{Enc}(k_j,m_i)=c_\ell}=\begin{cases}
+                        2^{-t}, & \ell=i\oplus_{n} j\\
+                        \frac 1 n, & \ell=i\oplus_{n} n'\oplus_{n}t,1\leq t\leq n-n'\\
+                        0, & \it otherwise.
+                    \end{cases}
+                \end{align*}
+            \item $\mathrm{Dec}:\mathcal K\times\mathcal C\to\mathcal M$ be a deterministic algorithm, where
+                for any $\ell\in[n],j\in[n']$
+                \begin{align*}
+                    \mathrm{Dec}(k_j,c_\ell)=m_{\ell\ominus_{n} j}.
+                \end{align*}
+        \end{itemize}
+        Therefore, for any $m\in\mathcal M$, $\mathrm{Enc}_K(m)\sim \mathcal C$, 
+        which indicates $\Pi$ is perfectly secure.
+
+        On the other hand, for any $m_i\in\mathcal M$
+        \begin{align*}
+            \Pr\sbra{\mathrm{Dec}_K(\mathrm{Enc}_K(m_i))=m_i}
+            &=\sum_{k_j\in\mathcal K}\frac{1}{n'}\Pr\sbra{\mathrm{Dec}_{k_j}(\mathrm{Enc}_{k_j}(m_i))=m_i}\\
+            &\geq\sum_{k_j\in\mathcal K}\frac{1}{n'}
+            \Pr\sbra{\mathrm{Dec}_{k_j}(\mathrm{Enc}_{k_j}(m_i))=m_i,\mathrm{Enc}_{k_j}(m_i)=c_{i\oplus_{n}j}}\\
+            &\geq\sum_{k_j\in\mathcal K}\frac{1}{n'}\times 2^{-t}\times
+            \Pr\sbra{\mathrm{Dec}_{k_j}(c_{i\oplus_{n}j})=m_i\mid\mathrm{Enc}_{k_j}(m_i)=c_{i\oplus_{n}j}}\\
+            &=2^{-t}.
+        \end{align*}
+        Thus, we have achieved perfectly secure with $|\mathcal K|=n\times 2^{-t}<n=|\mathcal M|$.
+\end{exercise}
+
+\begin{exercise}{2.11 (Lower bound)}
+    \begin{theorem}
+        Assume a perfectly secure encryption scheme $\Pi=(\mathcal K,\mathcal M,\mathcal C,\mathrm{Gen},\mathrm{Enc},\mathrm{Dec})$ 
+        satisfies that for any $m\in\mathcal M$, $\Pr\sbra{\mathrm{Dec}_K(\mathrm{Enc}_K(m))=m}\geq2^{-t},t>0$. 
+        Then 
+        $$|\mathcal K|\geq\frac{|\mathcal M|}{2^t}.$$
+    \end{theorem}
+    \begin{proof}
+        Since $\Pi$ is perfectly secure, 
+        $\Delta\pbra{\mathrm{Enc}_K(m_1),\mathrm{Enc}_K(m_2)}=0$ holds for any $m_1,m_2\in\mathcal M$.
+        Therefore, fix $m_1\in\mathcal M$, by the definition of $\Delta$, we have
+        \begin{align*}
+            0&=\sum_{m_2\in\mathcal M}\Delta\pbra{\mathrm{Enc}_K(m_1),\mathrm{Enc}_K(m_2)}\\
+            &=\sum_{m_2\in\mathcal M}\sum_{c\in\mathcal C}
+                \max\cbra{\Pr\sbra{\mathrm{Enc}_K(m_1)=c}-\Pr\sbra{\mathrm{Enc}_K(m_2)=c},0}.
+        \end{align*}
+        Let 
+        $$
+        \mathcal M_c=\cbra{m\in\mathcal M\mid \exists k\in\mathcal K,\mathrm{Dec}_k(c)=m}.
+        $$
+        Then $|\mathcal M_c|\leq |\mathcal K|$. Thus let $\overline{\mathcal M}_c=\mathcal M\backslash\mathcal{M}_c$, we have
+        $|\overline{\mathcal M}_c|\geq|\mathcal M|-|\mathcal K|$. Therefore
+        \begin{align*}
+            0&=\sum_{m_2\in\mathcal M}\sum_{c\in\mathcal C}
+                \max\cbra{\Pr\sbra{\mathrm{Enc}_K(m_1)=c}-\Pr\sbra{\mathrm{Enc}_K(m_2)=c},0}\\
+            &\geq\sum_{c\in\mathcal C}\sum_{m_2\in\overline{\mathcal M}_c}
+                \max\cbra{\Pr\sbra{\mathrm{Enc}_K(m_1)=c}-\Pr\sbra{\mathrm{Enc}_K(m_2)=c},0}\\
+            &\geq\sum_{c\in\mathcal C}\sum_{m_2\in\overline{\mathcal M}_c}
+                \Pr\sbra{\mathrm{Enc}_K(m_1)=c}-\Pr\sbra{\mathrm{Enc}_K(m_2)=c}.
+        \end{align*}
+
+        On one hand, 
+        \begin{align*}
+            \sum_{c\in\mathcal C}\sum_{m_2\in\overline{\mathcal M}_c}\Pr\sbra{\mathrm{Enc}_K(m_1)=c}
+            &=\sum_{c\in\mathcal C}|\overline{\mathcal M}_c|\times\Pr\sbra{\mathrm{Enc}_K(m_1)=c}\\
+            &\geq \pbra{|\mathcal M|-|\mathcal K|}\times\sum_{c\in\mathcal C}\Pr\sbra{\mathrm{Enc}_K(m_1)=c}\\
+            &=|\mathcal M|-|\mathcal K|.
+        \end{align*}
+
+        On the other, let 
+        $$
+        S=\cbra{(c,m)\in\mathcal C\times\mathcal M\mid\forall k\in\mathcal K,\mathrm{Dec}_k(c)\neq m}
+        $$
+        and 
+        $$
+        \overline{\mathcal C}_m=\cbra{c\in\mathcal C\mid \forall k\in\mathcal K,\mathrm{Dec}_k(c)\neq m},
+        $$
+        we have
+        \begin{align*}
+            \sum_{c\in\mathcal C}\sum_{m_2\in\overline{\mathcal M}_c}\Pr\sbra{\mathrm{Enc}_K(m_2)=c}
+            &=\sum_{(c,m_2)\in S}\Pr\sbra{\mathrm{Enc}_K(m_2)=c}
+            =\sum_{m_2\in\mathcal M}\sum_{c\in \overline{\mathcal C}_{m_2}}\Pr\sbra{\mathrm{Enc}_K(m_2)=c}\\
+            &=\sum_{m_2\in\mathcal M}\Pr\sbra{\mathrm{Enc}_K(m_2)\in\overline{\mathcal C}_{m_2}}\\
+            &=\sum_{m_2\in\mathcal M}\Pr\sbra{\forall k\in\mathcal K,\mathrm{Dec}_k(\mathrm{Enc}_K(m_2))\neq m_2}\\
+            &\leq\sum_{m_2\in\mathcal M}\Pr\sbra{\mathrm{Dec}_K(\mathrm{Enc}_K(m_2))\neq m_2}\\
+            &\leq\sum_{m_2\in\mathcal M}1-2^{-t}=|\mathcal M|\times(1-2^{-t}).
+        \end{align*}
+
+        Therefore, 
+        \begin{align*}
+            0&\geq\sum_{c\in\mathcal C}\sum_{m_2\in\overline{\mathcal M}_c}
+                \Pr\sbra{\mathrm{Enc}_K(m_1)=c}-\Pr\sbra{\mathrm{Enc}_K(m_2)=c}\\
+            &\geq |\mathcal M|-|\mathcal K|-|\mathcal M|\times(1-2^{-t}).
+        \end{align*}
+        Then $|\mathcal K|\geq\frac{|\mathcal M|}{2^t}$.
+    \end{proof}
+\end{exercise}
+
+
+\end{document}
