@@ -54,6 +54,11 @@
 
 \maketitle
 
+
+\begin{exercise}{4.3}
+Since $L$ is not the empty set or $\{0,1\}^{*}$, there exists $x\in L$ and $y\not\in L$. In the following, we prove that $path(s,t)\leq_{p} L$. We can solve path$(s,t)$ in polynomial-time, and if it the yes case, we corresponding to $x$ in $L$, otherwise corresponding to $y$ in $L$.
+\end{exercise}
+
 \begin{exercise}{4.4}
     Let $\texttt{\sf SCD}=\cbra{\llcorner G\lrcorner\middle| G\text{ is a strongly connected digraph}}$.
     First, $\texttt{\sf SCD}\in NL$, since we can enumerate all vertex pair $(s,t)$ and run $\texttt{\sf PATH}(G,s,t)$.
@@ -61,6 +66,36 @@
     Second, we construct a log-space reduction from \texttt{\sf PATH} to show \texttt{\sf SCD} is $NL$-hard.
     The reduction simply adds two directed edge $i\to s,t\to i$ for any $i\neq s,t$. 
     It is easy to verify its validity.
+\end{exercise}
+
+\begin{exercise}{4.11}
+We prove the corollary by the following two steps.
+\begin{itemize}
+\item[(i)] To prove $NSPACE(S(n))=CO-NSPACE(S(n))$, it suffices to prove that $NSPACE(S(n))\subset CONSPACE(S(n))$.
+
+ Because  if $NSPACE(S(n))\subset CONSPACE(S(n))$, then for every language $L\in CO-NSPACE(S(n))$, by definition, $\overline{L}\in NSPACE(S(n))\in CO-NSPACE(S(n))$.  Then $L=\overline{\overline{L}}\in NSPACE(S(n)).$ Then $CO-NSPACE(S(n))\subset NSPACE(S(n))$ and we conclude $CO-NSPACE(S(n))=NSPACE(S(n))$.
+
+\item[(ii)]
+$NSPACE(S(n))\subset CONSPACE(S(n))$ means if $L\in NSPACE(S(n))$, then $\overline{L}\in NSPACE(S(n))$. 
+
+To prove this, we construct Turing machine $M_{\overline{L}}$, such that for $x\in \overline{L}$, there exists a read-only-once certificate $u\in \{0,1\}^{poly(2^S(n))}$ such that $M_{\overline{L}}(x,u)=1$ and $M$ only use $S(n)$ space and only read $u$ for one time.
+
+Because $L\in NSPACE(S(n))$, there exists a non-deterministic $S(n)$ space turing machine $M$ such that $x\in L$ iff $M$ accepts $x$. If we use $G_{M,x}$ to represent the underlying configuration graph, it's equivalent to say $x\in L$ iff $C_{M,x,start}, C_{M,x,accept}$ are connected. Then $x\in\overline{L}$ iff $C_{M,x,start}, C_{M,x,accept}$ are disconnected. The construction for $M_{\overline{L}}$ and $u$ are similar to . Write
+$$
+C_i=\{ v\in G_{M,x}| v \text{is reachable by $C_{M,x,start}$ in $i$ steps} \}
+$$ and for convenience, we label the the configuration by $v_j, 0\leq j\leq 2^{O(S(n))}$, each vertices is represented by a $O(s(n)$ string. We consider the following two sub-routines.
+
+\begin{itemize}
+\item[(1)] Given $|C_i|$, we can construct a certificate to prove whether a given vertices $v\in C_{i+1}$ or not. The checking procedure uses $O(S(n))$ space. First, if someone claim $v\in C_{i+1}$ it's easy to verify by providing the path $v_0,...,v_k$ for $v_k=v, k\leq i$. If someone claim $v\not\in C_{i+1}$, he would provide the all the vertices $u_j$ in $C_{i+1}$ in descending order and its path connecting $v_0, v$ in $i$ steps. The checking procedure, that is $M_{\overline{L}}$, will
+    \begin{itemize}
+    \item[(a)] Maintain $u_j$ and check wether $u_{j}+1$  is greater than $u_j$. Using $O(S(n))$ space.
+    \item[(b)] Maintain a number to count the total number of certificates, which is supposed to $|C_{i}|$. Using $O(S(n))$ space.
+    \item[(c)] When reading $u\in C_{i+1}$, checking whether $v\in Neighbour(u)$. 
+    \end{itemize} 
+\item[(2)] Given $|C_i|$, we construct a certificate to prove the claimed $|C_{i+1}|$. This is done by listing the certificate for all $v\in G_{M,x}$, whether $v\in C_{i+1}$ or not, by using $(1)$.
+\end{itemize}
+\end{itemize}
+
 \end{exercise}
 
 \end{document}
