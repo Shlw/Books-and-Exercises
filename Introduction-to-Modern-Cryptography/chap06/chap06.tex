@@ -1,0 +1,204 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+% Author : Shlw
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{refute}{Refute}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator{\lequiv}{\ \Leftrightarrow\ }
+\newcommand{\rawE}{\mathop{\mathbb E}}
+\newcommand{\E}[1]{\mathop{\mathbb E}_{#1}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\Enc}{\mathrm{Enc}}
+\newcommand{\Gen}{\mathrm{Gen}}
+\newcommand{\Dec}{\mathrm{Dec}}
+\newcommand{\Mac}{\mathrm{Mac}}
+\newcommand{\Vrfy}{\mathrm{Vrfy}}
+\newcommand{\PrivK}{\mathrm{PrivK}}
+\newcommand{\Macforge}{\mathrm{Mac}\text{-}\mathrm{forge}}
+\newcommand{\Macsforge}{\mathrm{Mac}\text{-}\mathrm{sforge}}
+\newcommand{\Encforge}{\mathrm{Enc}\text{-}\mathrm{Forge}}
+\newcommand{\Hashcoll}{\mathrm{Hash}\text{-}\mathrm{coll}}
+\newcommand{\negl}{\mathrm{negl}}
+\newcommand{\ppt}{{\sc ppt} }
+\newcommand{\eav}{\mathrm{eav}}
+\newcommand{\out}{\mathrm{out}}
+\newcommand{\mult}{\mathrm{mult}}
+\newcommand{\cpa}{\mathrm{cpa}}
+\newcommand{\cca}{\mathrm{cca}}
+\newcommand{\Used}{\mathrm{Used}}
+\newcommand{\Asked}{\mathrm{Asked}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Dcal}{\mathcal{D}}
+\newcommand{\Pcal}{\mathcal{P}}
+
+\title{Exercise Set --- Chapter $6$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{6.1}
+\begin{itemize}
+    \item[(a)] The first $10$ bits output is $1,1,1,1,1,1,0,1,0,1$.
+    \item[(b)] This LFSR is maximal length.
+\end{itemize}
+\end{exercise}
+
+\begin{exercise}{6.6 (b)}
+\begin{construction}[Key-recovery attack]
+    Assume the first and third sub-keys are $k_1\bin^{64}$ and second sub-key is $k_2\bin^{64}$.
+    Enumerate all $2^{64}$ possible $k_1$. 
+
+    Since the S-boxes and mixing permutation are fixed,
+    for any fixed $k_1$ and input-output pair $(x,y)\in\bin^{64}\times\bin^{64}$, 
+    we are able to recover the intermediate result $\hat x$ before sub-key $k_2$ mixing in forward direction;
+    and $\hat y$ right after sub-key $k_2$ mixing in backward direction. Therefore, $k_2=\hat x\oplus\hat y$.
+
+    Heuristically, if $k_1$ is guessed wrong, $\Pr\sbra{\hat x_1\oplus\hat y_1=\hat x_2\oplus\hat y_2}\approx 2^{-64}$.
+    Therefore, after obtaining $2^{64}$ possible sub-key pairs $(k_1,k_2)$ with $(x_1,y_1)$, several additional 
+    input-output pairs suffice to eliminate all incorrect cases. Hence, this key-recovery attack runs roughly in $2^{64}$ time.
+\end{construction}
+\end{exercise}
+
+\begin{exercise}{6.13}
+In this problem, we assume $F_k(m)$ or $F^{-1}_k(c)$ takes one unit time given $k,m,c$.
+\begin{itemize}
+    \item[(a)] Assume three known input-output pairs are $(m_1,c_1),(m_2,c_2),(m_3,c_3)$.
+        \begin{construction}
+            Enumerate all $2^n$ possible $k_1$. For any fixed $k_1$, compute $u=F_{k_1}(m_1),v=F^{-1}_{k_1}(c_1)$;
+            then $v=F_{k_2}^{-1}(u)$. By assumption, we are able to obtain all suitable $k_2$ in constant time,
+            which indicates there are only constant number of suitable $k_2$.
+
+            Heuristically, if $k_1$ is guessed wrong, 
+            for any fixed $k_2$ satisfying $c_1=F_{k_1}(F_{k_2}^{-1}(F_{k_1}(m_1)))$,
+            we have $\Pr\sbra{c_i=F_{k_1}(F_{k_2}^{-1}(F_{k_1}(m_i)))}\approx 2^{-n},i=2,3$.
+            Since there are $O(2^n)$ possible key pairs, it suffices to eliminate 
+            all incorrect cases with $(m_2,c_2),(m_3,c_3)$ with high probability. 
+            Meanwhile, this algorithm runs roughly in $2^n$ time.
+        \end{construction}
+    \item[(b)]
+        \begin{construction}
+            Create a data structure $S$, where $S[m_2]$ is the set of all possible $k_2$ satisfying $m_2=F_{k_2}^{-1}(0^n)$.
+            Enumerate all $2^n$ possible $k_2$ and store $k_2$ in $S[F_{k_2}^{-1}(0^n)]$.
+            Whenever $m_2$ is asked, simply return $S[m_2]$.
+            Note that essentially, we view the described operations of $S$ are of constant time.
+            Hence this algorithm runs in $2^n$ time.
+        \end{construction}
+    \item[(c)]
+        \begin{construction}
+            Let $x=F^{-1}_{k_1}(0^n)$,
+            then $y=F'_{k_1,k_2}(x)=F_{k_1}(F^{-1}_{k_2}(F_{k_1}(x)))=F_{k_1}(F^{-1}_{k_2}(0^n))$.
+            Therefore, $k_2$ can be determined by querying $F^{-1}_{k_1}(y)=F^{-1}_{k_2}(0^n)$.
+            Note that this algorithm runs in constant time.
+        \end{construction}
+    \item[(d)]
+        \begin{construction}
+            First, preprocess as $(b)$ shows, which requests $0$ encryption of chosen input and runs in $2^n$ time.
+            Second, randomly generate $(m_1,c_1),(m_2,c_2),(m_3,c_3)$ and run algorithm in $(a)$ with gadget $(c)$ 
+            to recover entire key with high probability.
+            Since every calling on $(c)$ requires a single chosen plaintext encryption, the second step requests the 
+            encryption of roughly $2^n$ chosen inputs.
+            
+            To sum up, this key-recovery attack runs in roughly $2^n$ time and requests roughly $2^n$ chosen plaintext 
+            encryption.
+        \end{construction}
+\end{itemize}
+\end{exercise}
+
+\begin{exercise}{6.19}
+In the following analysis, we assume block cipher $F:\bin^n\times\bin^\ell\to\bin^\ell$;
+thus $h:\bin^{n+\ell}\to\bin^\ell$.
+\begin{itemize}
+    \item[(a)] $h(k,x)=F_k(x)$ is not collision resistant.
+        \begin{construction}
+            Let $k_1\neq k_2\in\bin^n$ and $x_1\in\bin^\ell$.
+            Since $F_{k_2}$ is a block cipher thus invertible, define $x_2=F_{k_2}^{-1}(F_{k_1}(x_1))$.
+            It is easy to see we have a collision $h(k_1,x_1)=h(k_2,x_2)$.
+        \end{construction}
+    \item[(b)] $h(k,x)=F_k(x)\oplus k\oplus x$ is collision resistant.
+        \begin{proof}
+            It suffices to show if adversary $\Acal$ makes $q<2^{\ell/2}$ queries upon ideal-cipher oracles,
+            it finds a collision with probability at most $q^2/2^\ell$.
+            
+            Let $(k_i,x_i,y_i),y_i=h(k_i,x_i)$ be the triplet $\Acal$ obtains in the $i$-th query.
+            Without loss of generality, assume $\Acal$ never asks what it already knows, i.e., 
+            $(k_i,x_i,y_i)\neq(k_j,x_j,y_j),\forall i\neq j$. In addition, assume $\Acal$ always checks the collision 
+            it finds, thus the collision is among the $q$ queries, i.e., $y_i=y_j,\exists i\neq j$.
+
+            If the $i$-th query is to get $F_{k_i}(x_i)$, let $h_i=F_{k_i}(x_i)\oplus k_i\oplus x_i$;
+            otherwise the query is to get $F_{k_i}^{-1}(y_i)$, let $h_i=y_i\oplus k_i\oplus F_{k_i}^{-1}(y_i)$.
+            Since $F$ is an ideal-cipher oracle, for any $k_i,x_i$ ($k_i,y_i$), $F_{k_i}(x_i)$ ($F^{-1}_{k_i}(y_i)$)
+            is uniformly distributed in $\bin^\ell\backslash S$, where $S=\{y_1,\cdots,y_{i-1}\}$ 
+            ($S=\{x_1,\cdots,x_{i-1}\}$). Thus, for any distinct $i,j$, $\Pr\sbra{h_i=h_j}\leq(2^\ell-q)^{-1}\leq 2^{-\ell+1}$.
+
+            Hence we have
+            \begin{align*}
+                \Pr\sbra{\text{$\Acal$ finds collision of $h$}}&=\Pr\sbra{\exists 1\leq i<j\leq q,h_i=h_j}\\
+                &\leq\sum_{i=1}^q\sum_{j=i+1}^q\Pr\sbra{h_i=h_j}\\
+                &\leq q^2/2^\ell.
+            \end{align*}
+        \end{proof}
+    \item[(c)] $h(k,x)=F_k(x)\oplus k$ is not collision resistant.
+        \begin{construction}
+            Let $k_1\neq k_2\in\bin^n$ and $x_1\in\bin^\ell$.
+            Since $F_{k_2}$ is a block cipher thus invertible, define $x_2=F_{k_2}^{-1}(F_{k_1}(x_1)\oplus k_1\oplus k_2)$.
+            It is easy to see we have a collision $h(k_1,x_1)=h(k_2,x_2)$.
+        \end{construction}
+\end{itemize}
+\end{exercise}
+
+\begin{exercise}{6.21}
+    Assume $F:\bin^n\times\bin^\ell\to\bin^\ell$ is a block cipher, then the Davies-Meyer construction is
+    $h:\bin^{n+\ell}\to\bin^\ell$.
+    By the proposed assumption, let without loss of generality the cost is $T$ (relatively small) to find fixed points of $F_k$
+    if $k$ falls into some easy case. 
+    Therefore, the adversary could simply try to find the easy key $k$ by exhaustive search, thus obtaining an
+    $O(2^n\times T)$ collision-finding algorithm. If $n$ is much smaller than $\ell$, this practice is way faster than 
+    $O(2^{\ell/2})$ time birthday attack.
+\end{exercise}
+
+\end{document}
