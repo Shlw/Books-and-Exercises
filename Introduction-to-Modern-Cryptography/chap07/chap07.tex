@@ -1,0 +1,374 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+% Author : Shlw
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{refute}{Refute}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator{\lequiv}{\ \Leftrightarrow\ }
+\DeclareMathOperator{\Image}{\mathop{Im}}
+\newcommand{\rawE}{\mathop{\mathbb E}}
+\newcommand{\E}[1]{\mathop{\mathbb E}_{#1}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\Enc}{\mathrm{Enc}}
+\newcommand{\hc}{\mathrm{hc}}
+\newcommand{\Gen}{\mathrm{Gen}}
+\newcommand{\Ext}{\mathrm{Ext}}
+\newcommand{\Dec}{\mathrm{Dec}}
+\newcommand{\Mac}{\mathrm{Mac}}
+\newcommand{\Vrfy}{\mathrm{Vrfy}}
+\newcommand{\PrivK}{\mathrm{PrivK}}
+\newcommand{\Macforge}{\mathrm{Mac}\text{-}\mathrm{forge}}
+\newcommand{\Macsforge}{\mathrm{Mac}\text{-}\mathrm{sforge}}
+\newcommand{\Encforge}{\mathrm{Enc}\text{-}\mathrm{Forge}}
+\newcommand{\Invert}{\mathrm{Invert}}
+\newcommand{\Feistel}{\mathrm{Feistel}}
+\newcommand{\Hashcoll}{\mathrm{Hash}\text{-}\mathrm{coll}}
+\newcommand{\negl}{\mathrm{negl}}
+\newcommand{\ppt}{{\sc ppt} }
+\newcommand{\eav}{\mathrm{eav}}
+\newcommand{\out}{\mathrm{out}}
+\newcommand{\mult}{\mathrm{mult}}
+\newcommand{\cpa}{\mathrm{cpa}}
+\newcommand{\cca}{\mathrm{cca}}
+\newcommand{\Used}{\mathrm{Used}}
+\newcommand{\Asked}{\mathrm{Asked}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Xcal}{\mathcal{X}}
+\newcommand{\Ycal}{\mathcal{Y}}
+\newcommand{\Zcal}{\mathcal{Z}}
+\newcommand{\Ocal}{\mathcal{O}}
+\newcommand{\Dcal}{\mathcal{D}}
+\newcommand{\Pcal}{\mathcal{P}}
+
+\bibliographystyle{plain}
+
+\title{Exercise Set --- Chapter $7$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{7.2}
+    First, $g$ is polynomial-time computable since $f$ is OWF.
+    Then, for any \ppt adversary $\Acal$ of $g$, develop a \ppt adversary $\Acal'$ of $f$ as follows:
+    \begin{enumerate}
+        \item $\Acal'$ is given $1^n,y$. Randomly select $x_2\sim\bin^n$.
+        \item Give $1^{2n},(y,x_2)$ to $\Acal$ and get $(x_1',x_2')$.
+        \item Output $x_1'$.
+    \end{enumerate}
+    Since $f$ is an OWF, there exists a negligible function $\negl$ such that
+    \begin{align*}
+        \Pr\sbra{\Invert_{\Acal,g}(2n)=1}=\Pr\sbra{\Invert_{\Acal',f}(n)=1}\leq\negl(n),
+    \end{align*}
+    which indicates the one-wayness of $g$.
+\end{exercise}
+
+\begin{exercise}{7.3}
+    Assume $f$ is an OWF and a polynomial-time algorithm $M_f$ computes $f$.
+    Therefore, the output length is bounded by some polynomial of input length,
+    i.e., there exists a polynomial $p$ such that $|f(x)|=|M_f(x)|\leq p(|x|)$.
+    Then assume $x\in\bin^{p(n)+1}$, define
+    $$
+    g(x)=f(\hat x)\|10^{p(n)-|f(\hat x)|}, \hat x=x_1x_2\cdots x_n,
+    $$
+    thus $g$ is length-preserving.
+
+    First, $g$ is polynomial-time computable since $f$ is OWF.
+    Then, for any \ppt adversary $\Acal$ of $g$, develop a \ppt adversary $\Acal'$ of $f$ as follows:
+    \begin{enumerate}
+        \item $\Acal'$ is given $1^n,y$. 
+        \item Give $1^{p(n)+1},y\|10^{p(n)-|y|}$ to $\Acal$ and get $x$.
+        \item Output $x_1x_2\cdots x_n$.
+    \end{enumerate}
+    Since $f$ is an OWF, there exists a negligible function $\negl$ such that
+    \begin{align*}
+        \Pr\sbra{\Invert_{\Acal,g}(p(n)+1)=1}=
+        \Pr\sbra{\Invert_{\Acal',f}(n)=1}\leq\negl(n),
+    \end{align*}
+    which indicates the one-wayness of $g$.
+\end{exercise}
+
+\begin{exercise}{7.6}
+$G$ is not necessarily a PRG.
+\begin{construction}
+    Assume $g:\bin^n\to\bin^n$ is a length-preserving OWF.
+    Define $f:\bin^{n+1}\to\bin^{n+1}$ as $f(x)=0\|g(x_1\cdots x_n)$ 
+    and $\hc:\bin^{n+1}\to\bin$ as $\hc(x)=x_{n+1}$.
+    It is easy to see $f$ is a length-preserving OWF and $\hc$ is its hard-core predicate. 
+    Then $G(x)=f(x)\|\hc(x)=0\|g(x_1\cdots x_n)\|\hc'(x_1\cdots x_n)$ is not a PRF, since
+    the first bit of $G(x)$ is always $0$.
+\end{construction}
+\end{exercise}
+
+\begin{exercise}{7.8}
+\begin{itemize}
+    \item $g(x)=f(f(x))$ is not necessarily an OWF.
+        \begin{construction}
+            Let $f'$ be an OWF and define $f$ as 
+            $$
+            f(x)=\begin{cases}
+                00 & x_1=x_2=\cdots=x_{\lfloor |x|/2\rfloor}=0\\
+                0^{|f'(x)|}\|f'(x) & \text{otherwise}.
+            \end{cases}
+            $$
+            First $f$ is polynomial-time computable since $f'$ is OWF.
+            Then for any \ppt adversary $\Acal$ of $f$, develop a \ppt adversary $\Acal'$ of $f'$ as follows:
+            \begin{enumerate}
+                \item $\Acal'$ is given $1^n,y$.
+                \item Give $1^n,0^{|y|}\|y$ to $\Acal$ and get $x$.
+                \item Output $x$.
+            \end{enumerate}
+            Since $f'$ is OWF, there exists a negligible function $\negl$ such that
+            \begin{align*}
+                &\Pr\sbra{\Invert_{\Acal,f}(n)=1}\\
+                \leq&\Pr\sbra{\forall i\leq\frac n 2,x_i=0}
+                +\Pr\sbra{\Invert_{\Acal,f}(n)=1\middle| \exists i\leq\frac n 2,x_i=1}\\
+                \leq&2^{-\lfloor n/2\rfloor}+\Pr\sbra{\Invert_{\Acal',f'}(n)=1}\\
+                \leq&2^{-\lfloor n/2\rfloor}+\negl(n),
+            \end{align*}
+            which indicates the one-wayness of $f$.
+
+            However, $g(x)=f(f(x))\equiv 00$, hence $g$ is not an OWF.
+        \end{construction}
+    \item $g'(x)=f(x)\|f(f(x))$ is an OWF.
+        \begin{proof}
+            First, $g'$ is polynomial-time computable since $f$ is OWF.
+            Then for any \ppt adversary $\Acal$ of $g$, develop a \ppt adversary $\Acal'$ of $f$ as follows:
+            \begin{enumerate}
+                \item $\Acal'$ is given $1^n,y$.
+                \item Give $1^n,y\|f(y)$ to $\Acal$ and get $x$.
+                \item Output $x$.
+            \end{enumerate}
+            Since $f$ is an OWF, there exists a negligible function $\negl$ such that
+            $$
+            \Pr\sbra{\Invert_{\Acal,g'}(n)=1}=
+            \Pr\sbra{\Invert_{\Acal,f}(n)=1}\leq\negl(n),
+            $$
+            which indicates the one-wayness of $g'$.
+        \end{proof}
+\end{itemize}
+\end{exercise}
+
+\begin{exercise}{7.11}
+\begin{itemize}
+    \item[(a)]
+        \begin{proof}
+            Based on \textbf{Exercise $7.3$}, assume without loss of generality $f$ is a length-preserving OWF.
+            Define language 
+            $$
+            L=\bigcup_{n=1}^{+\infty}\bigcup_{m=1}^n
+            \cbra{(y,x)\in\bin^n\times\bin^m\middle|\exists x'\in\bin^{n-m},f(x\|x')=y}.
+            $$
+            Since $f$ is polynomial-time computable, a polynomial-time NTM can simply guess $x'$ and  
+            check whether $f(x\|x')=y$. Hence $L\in\mathcal{NP}$.
+            
+            Assume $L\in\mathcal P$, there exists a polynomial-time DTM $M$ recognizes it.
+            Construct a \ppt adversary $\Acal$ of $f$ as follows:
+            \begin{enumerate}
+                \item $\Acal$ is given $1^n,y$.
+                \item Define $x^0=\varepsilon$. Then following the acsending order of $i$, 
+                    if $M(y,x^{i-1}\|0)=1$, let $x^i=x^{i-1}\|0$; otherwise let $x^i=x^{i-1}\|1$.
+                \item Output $x^n$.
+            \end{enumerate}
+            Since $\Acal$ calls $M$ for $n$ times, $\Acal$ is a \ppt algorithm.
+            On the other hand, the output of $\Acal$ is the preimage of input by the definition of $L$,
+            thus contradicting that $f$ is OWF.
+            Therefore, $L\in\mathcal{NP},L\notin\mathcal P$, which indicates $\mathcal P\neq\mathcal{NP}$.
+        \end{proof}
+    \item[(b)]
+        \begin{proof}
+            As a corollary of $(a)$, if $\mathcal P\neq\mathcal{NP}$, there is no OWF, thus $(3)$ holds naturally.
+
+            Assume $\mathcal P\neq\mathcal{NP}$, $\mathcal{NP}$-complete problem \textsc{Clique} is not polynomial-time 
+            computable. Therefore for any $G\in\bin^{n\times n},x\in\bin^n,k\in\bin^{\lceil\log n\rceil}$, define
+            $$
+            f(G,x,k)=\begin{cases}
+                (G,k,1) & |x|\geq k\land\Big(\forall i\neq j\in[n],
+                G_{i,i}=0\land G_{i,j}=G_{j,i}\land (x_i=x_j=1\Rightarrow G_{i,j}=1)\Big)\\
+                (G,k,0) & \text{otherwise}.
+            \end{cases}
+            $$
+            It is easy to see $f$ is computable in polynomial time, thus $(1)$ holds.
+            If $f$ is not hard to invert in the worst case, i.e., $(2)$ does not hold, 
+            there exists a \ppt algorithm $\Acal$ such that
+            \begin{align*}
+                1&=\Pr_{(G,x,k)}\sbra{\Acal(f(G,x,k))\in f^{-1}(f(G,x,k))}\\
+                &=\sum_{\text{random tape }R}\Pr[R]\Pr_{(G,x,k)}\sbra{\Acal_R(f(G,x,k))\in f^{-1}(f(G,x,k))}\\
+                &\leq\sum_{\text{random tape }R}\Pr[R]=1.
+            \end{align*}
+            Thus for any random tape $R$, deterministic algorithm $\Acal_R$ suffices to invert $f$, which
+            contradicts the hardness of \textsc{Clique}.
+        \end{proof}
+        \begin{proof}[Not weakly one-way]
+            It suffices to show there exists a \ppt algorithm $\Acal$ such that there is a negligible function $\negl$,
+            $$
+            \Pr_{(G,x,k)}\sbra{\Acal(f(G,x,k))\notin f^{-1}(f(G,x,k))}\leq\negl(n).
+            $$
+            $\Acal(G,k,b)$ is simply devised to output $(G,0^n,k)$, thus
+            \begin{align*}
+                &\Pr_{(G,x,k)}\sbra{\Acal(f(G,x,k))\notin f^{-1}(f(G,x,k))}\\
+                =&\Pr_{(G,x,k)}\sbra{|x|\geq k\land\Big(\forall i\neq j\in[n],
+                G_{i,i}=0\land G_{i,j}=G_{j,i}\land (x_i=x_j=1\Rightarrow G_{i,j}=1)\Big)}\\
+                \leq&\Pr_{(G,x,k)}\sbra{\forall i\in[n],G_{i,i}=0}\\
+                =&2^{-n}.\\
+            \end{align*}
+        \end{proof}
+\end{itemize}
+\end{exercise}
+
+\begin{exercise}{7.16}
+    Denote the input of two-round Feistel network as $(L_0,R_0)$.
+    Let $(L_1,R_1),(L_2,R_2)$ be the output after first and second layer respectively.
+    Therefore, 
+    \begin{gather*}
+        L_1=R_0,\quad R_1=L_0\oplus F_{k_1}(R_0),\\
+        L_2=R_1=L_0\oplus F_{k_1}(R_0),\quad R_2=L_1\oplus F_{k_2}(R_1).
+    \end{gather*}
+    Thus, construct a \ppt algorithm $\Dcal$ as follows:
+    \begin{enumerate}
+        \item $\Dcal$ is given $1^{2n}$ and oracle $\Ocal$.
+        \item $\Dcal$ asks $(L_2,R_2):=\Ocal(0^n,0^n)$ 
+            and $(L'_2,R'_2):=\Ocal(1^n,0^n)$.
+        \item If $L_2\oplus L'_2=1^n$, output $1$; otherwise output $0$.
+    \end{enumerate}
+    Therefore,
+    \begin{align*}
+        &\abs{\Pr\sbra{\Dcal^{\Feistel_{F_{k_2},F_{k_1}}(\cdot)}(1^{2n})=1}-\Pr\sbra{\Dcal^{f(\cdot)}(1^{2n})=1}}\\
+        =&1-\Pr\sbra{\Dcal^{f(\cdot)}(1^{2n})=1}\\
+        =&1-\frac{2^n}{2^{2n}-1},
+    \end{align*}
+    which indicates two-round Feistel network is not PRP.
+\end{exercise}
+
+\begin{exercise}{7.17}
+    For a three-round Feistel network, assume the input is $(L_0,R_0)$, the
+    output after first, second, and third layer are 
+    \begin{gather*}
+        (L_1,R_1)=(R_0,L_0\oplus f_1(R_0)),\\
+        (L_2,R_2)=(R_1,L_1\oplus f_2(R_1))=(L_0\oplus f_1(R_0),R_0\oplus f_2(R_1)),\\
+        (L_3,R_3)=(R_2,L_2\oplus f_3(R_2))=(R_0\oplus f_2(L_0\oplus f_1(R_0)),L_0\oplus f_1(R_0)\oplus f_3(L_3)).
+    \end{gather*}
+    Therefore, if the first query is to encrypt $(L_0^1,R_0^1)$ and get $(L_3^1,R_3^1)$,
+    consider the second query to decrypt $(L_3^1,R_3^2)$ and get $(L_0^2,R_0^2)$; thus we have
+    \begin{gather*}
+    (L_3^1,R_3^1)=(R_0^1\oplus f_2(L_0^1\oplus f_1(R_0^1)),L_0^1\oplus f_1(R_0^1)\oplus f_3(L_3^1))\\
+    (L_3^1,R_3^2)=(R_0^2\oplus f_2(L_0^2\oplus f_1(R_0^2)),L_0^2\oplus f_1(R_0^2)\oplus f_3(L_3^1)).
+    \end{gather*}
+    Let $L_0^3=R_3^1\oplus R_3^2\oplus L_0^1$ and $R_0^3=R_0^1$, hence the left half of output will be
+    \begin{align*}
+        L_3^3=R_0^3\oplus f_2(L_0^3\oplus f_1(R_0^3))=R_0^1\oplus f_2(L_0^2\oplus f_1(R_0^2)).
+    \end{align*}
+    Thus, the identity $L_3^3=L_3^1\oplus R_0^2\oplus R_0^1$ always holds if the permutation is generated by 
+    three-round Feistel network. On the other hand, it is easy to see that it holds with negligible probability 
+    if the permutation is fully random, which indicates three-round Feistel network is not SPRP.
+\end{exercise}
+
+\begin{exercise}{7.19}
+    For any \ppt adversary $\Acal$ which computes the inversion of input, develop a \ppt distinguisher $\Dcal$ as follow:
+    \begin{enumerate}
+        \item $\Dcal$ is given $y\in\bin^{n+1}$.
+        \item Run $\Acal(1^n,y)$ and obtain $x\in\bin^n$.
+        \item If $y=G(x)$, output $1$; otherwise output $0$.
+    \end{enumerate}
+    Thus, if $y$ is generated by $G$, we have
+    $$
+        \Pr_{x\sim\bin^n}\sbra{\Acal(1^n,G(x))\in G^{-1}(G(x))}=\Pr\sbra{\Dcal(G(s))=1}.
+    $$
+    Since $G:\bin^n\to\bin^{n+1}$, for any $r\in\Image G$ we have $\Pr\sbra{G(s)=r}\geq 2^{-n}$.
+    Hence
+    \begin{align*}
+        &\Pr_{r\sim\bin^{n+1}}\sbra{\Dcal(r)=1}\\
+        =&\sum_{r\in\bin^{n+1}}2^{-n-1}\Pr\sbra{\Dcal(r)=1}\\
+        =&\sum_{r\in\Image G}2^{-n-1}\Pr\sbra{\Acal(1^n,r)\in G^{-1}(r)}\\
+        \leq&\sum_{r\in\Image G}\frac12\Pr\sbra{G(s)=r}\Pr\sbra{\Acal(1^n,r)\in G^{-1}(r)}\\
+        =&\frac12\Pr\sbra{D(G(s))=1}.
+    \end{align*}
+    By the definition of PRG, there exists a negligible function $\negl$ such that
+    \begin{align*}
+        \Pr\sbra{\Dcal(G(s))=1}
+        &=\Pr\sbra{\Dcal(G(s))=1}-\Pr\sbra{\Dcal(r)=1}+\Pr\sbra{\Dcal(r)=1}\\
+        &\leq\negl(n)+\frac12\Pr\sbra{\Dcal(G(s))=1}.
+    \end{align*}
+    Thus
+    $$
+    \Pr\sbra{\Invert_{\Acal,G}(n)=1}=\Pr\sbra{\Dcal(G(s))=1}\leq2\negl(n),
+    $$
+    which proves the one-wayness of $G$.
+\end{exercise}
+
+\begin{exercise}{7.20}
+    Since $\Xcal\overset{c}{\equiv}\Ycal,\Ycal\overset{c}{\equiv}\Zcal$, for any \ppt distinguisher $\Dcal$, there
+    exists negligible functions $\negl_1,\negl_2$ such that
+    \begin{gather*}
+        \Big|\Pr\sbra{\Dcal(1^n,X_n)=1}-\Pr\sbra{\Dcal(1^n,Y_n)}\Big|\leq\negl_1(n)\\
+        \Big|\Pr\sbra{\Dcal(1^n,Y_n)=1}-\Pr\sbra{\Dcal(1^n,Z_n)}\Big|\leq\negl_2(n).
+    \end{gather*}
+    Therefore,
+    \begin{gather*}
+        \Big|\Pr\sbra{\Dcal(1^n,X_n)=1}-\Pr\sbra{\Dcal(1^n,Z_n)}\Big|\leq\negl_1(n)+\negl_2(n),
+    \end{gather*}
+    which is equivalent to $\Xcal\overset{c}{\equiv}\Zcal$.
+\end{exercise}
+
+\begin{exercise}{7.22}
+    Given any \ppt distinguisher $\Dcal$ of $\cbra{\Acal(X_n)}_{n\in\mathbb N},\cbra{\Acal(Y_n)}_{n\in\mathbb N}$, 
+    develop a \ppt distinguisher
+    $\Dcal'$ of $\Xcal,\Ycal$ as follows:
+    \begin{enumerate}
+        \item $\Dcal'$ is given $1^n,r$.
+        \item Give $1^n,\Acal(r)$ to $\Dcal$ and get $b\in\bin$.
+        \item Output $b$.
+    \end{enumerate}
+    Since $\Xcal\overset{c}{\equiv}\Ycal$, there exists a negligible function $\negl$ such that
+    $$
+        \abs{\Pr\sbra{\Dcal(\Acal(X_n))=1}-\Pr\sbra{\Dcal(\Acal(Y_n))=1}}
+        =\abs{\Pr\sbra{\Dcal'(X_n)=1}-\Pr\sbra{\Dcal'(Y_n)=1}}
+        \leq\negl(n),
+    $$
+    which means $\cbra{\Acal(X_n)}_{n\in\mathbb N}\overset{c}{\equiv}\cbra{\Acal(Y_n)}_{n\in\mathbb N}$.
+\end{exercise}
+
+\end{document}
