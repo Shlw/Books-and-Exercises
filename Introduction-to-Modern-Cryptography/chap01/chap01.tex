@@ -1,0 +1,97 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{refute}{Refute}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\bin}{\{0,1\}}
+
+\title{Exercise Set --- Chapter $1$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{1.3}
+    Let $\Sigma=\{a,b,\dots,z\}$ and $\Gamma=\{A,B,\dots,Z\}$.
+    Denote $[n]$ as $\{1,2,\dots,n\}$.
+    \begin{definition}[$\mathrm{Num}$]
+        $\mathrm{Num}:\Sigma\to\{0,1,\dots,25\}$ is $\mathrm{Num}(a)=0,\mathrm{Num}(b)=1,\cdots,\mathrm{Num}(z)=25.$
+    \end{definition}
+    \begin{definition}[$\mathrm{Cap}$]
+        $\mathrm{Cap}:\Sigma\to\Gamma$ is $\mathrm{Cap}(a)=A,\mathrm{Cap}(b)=B,\cdots,\mathrm{Cap}(z)=Z.$
+    \end{definition}
+    \begin{definition}[$\mathrm{RShift}$]
+        $\mathrm{RShift}:\Sigma\times\Sigma\to\Gamma$ is
+        $$
+        \mathrm{RShift}(\alpha,\beta)=\mathrm{Num}^{-1}(\mathrm{Num}(\alpha)+\mathrm{Num}(\beta)\mod 26).
+        $$
+    \end{definition}
+    \begin{definition}[$\mathrm{LShift}$]
+        $\mathrm{LShift}:\Sigma\times\Sigma\to\Gamma$ is
+        $$
+        \mathrm{LShift}(\alpha,\beta)=\mathrm{Num}^{-1}(\mathrm{Num}(\alpha)-\mathrm{Num}(\beta)\mod 26).
+        $$
+    \end{definition}
+
+    Assume the maximum possible length of plaintext is $\ell$.
+    Thus $\mathcal K=\bigcup_{i=1}^\ell\Sigma^i,\mathcal M=\bigcup_{i=1}^\ell\Sigma^i,\mathcal C=\bigcup_{i=1}^\ell\Gamma^i$.
+    \begin{definition}[$\mathrm{Gen}$]
+        $\mathrm{Gen}:\varnothing\to\mathcal K$ is a randomized algorithm,
+        which randomly outputs an element from $\mathcal K$ with uniform distribution.
+    \end{definition}
+    \begin{definition}[$\mathrm{Enc}$]
+        $\mathrm{Enc}:\mathcal K\times\mathcal M\to\mathcal C$ is a deterministic algorithm.
+        Assume $k\in\Sigma^i,m\in\Sigma^j,i,j\in[\ell]$. Let $\hat k=k^\ell$, then
+        $\mathrm{Enc}(k,m)=c$, where $c\in\Gamma^j$ and $c_t=\mathrm{Cap}(\mathrm{RShift}(m_t,\hat k_t)),t\in[j]$.
+    \end{definition}
+    \begin{definition}[$\mathrm{Dec}$]
+        $\mathrm{Dec}:\mathcal K\times\mathcal C\to\mathcal M$ is a deterministic algorithm.
+        Assume $k\in\Sigma^i,c\in\Gamma^j,i,j\in[\ell]$. Let $\hat k=k^\ell$, then
+        $\mathrm{Dec}(k,c)=m$, where $m\in\Sigma^j$ and $m_t=\mathrm{LShift}(\mathrm{Cap}^{-1}(c_t),\hat k_t),t\in[j]$.
+    \end{definition}
+\end{exercise}
+
+\end{document}
