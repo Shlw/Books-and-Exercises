@@ -1,0 +1,121 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+% Author : Shlw
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{refute}{Refute}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator{\lequiv}{\ \Leftrightarrow\ }
+\DeclareMathOperator{\Image}{\mathop{Im}}
+\newcommand{\rawE}{\mathop{\mathbb E}}
+\newcommand{\E}[1]{\mathop{\mathbb E}_{#1}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\Enc}{\mathrm{Enc}}
+\newcommand{\hc}{\mathrm{hc}}
+\newcommand{\half}{\mathrm{half}}
+\newcommand{\lsb}{\mathrm{lsb}}
+\newcommand{\Gen}{\mathrm{Gen}}
+\newcommand{\Ext}{\mathrm{Ext}}
+\newcommand{\Dec}{\mathrm{Dec}}
+\newcommand{\Mac}{\mathrm{Mac}}
+\newcommand{\Vrfy}{\mathrm{Vrfy}}
+\newcommand{\PrivK}{\mathrm{PrivK}}
+\newcommand{\PubK}{\mathrm{PubK}}
+\newcommand{\KEM}{\mathrm{KEM}}
+\newcommand{\Encaps}{\mathrm{Encaps}}
+\newcommand{\GenRSA}{\mathrm{GenRSA}}
+\newcommand{\Decaps}{\mathrm{Decaps}}
+\newcommand{\Macforge}{\mathrm{Mac}\text{-}\mathrm{forge}}
+\newcommand{\Macsforge}{\mathrm{Mac}\text{-}\mathrm{sforge}}
+\newcommand{\Encforge}{\mathrm{Enc}\text{-}\mathrm{Forge}}
+\newcommand{\Invert}{\mathrm{Invert}}
+\newcommand{\Feistel}{\mathrm{Feistel}}
+\newcommand{\Hashcoll}{\mathrm{Hash}\text{-}\mathrm{coll}}
+\newcommand{\negl}{\mathrm{negl}}
+\newcommand{\ppt}{{\sc ppt}~}
+\newcommand{\eav}{\mathrm{eav}}
+\newcommand{\out}{\mathrm{out}}
+\newcommand{\mult}{\mathrm{mult}}
+\newcommand{\cpa}{\mathrm{cpa}}
+\newcommand{\cca}{\mathrm{cca}}
+\newcommand{\Used}{\mathrm{Used}}
+\newcommand{\Asked}{\mathrm{Asked}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Dcal}{\mathcal{D}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\Ocal}{\mathcal{O}}
+\newcommand{\Pcal}{\mathcal{P}}
+\newcommand{\Xcal}{\mathcal{X}}
+\newcommand{\Ycal}{\mathcal{Y}}
+\newcommand{\Zcal}{\mathcal{Z}}
+\newcommand{\Gset}{\mathbb{G}}
+\newcommand{\Nset}{\mathbb{N}}
+\newcommand{\Zset}{\mathbb{Z}}
+\newcommand{\Hset}{\mathbb{H}}
+
+\title{Exercise Set --- Chapter $10$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{10.1}
+    The proof is similar with secure-KEM + secure-PrivK gives secure-PubK in chapter 11 (Theorem 11.12).
+\end{exercise}
+
+\begin{exercise}{10.4}
+    By the protocol, it is easy to see 
+    $$
+    w=u\oplus r=s\oplus t\oplus r=k\oplus r\oplus t\oplus r=k\oplus t,
+    $$
+    thus $k=w\oplus t$, which means Alice and Bob output the same key.
+
+    This protocol is not secure, since 
+    $u\oplus w\oplus s=u\oplus u\oplus r\oplus k\oplus r=k$, which means an eavesdropper 
+    can easily obtain the key from the communication.
+\end{exercise}
+
+\end{document}
