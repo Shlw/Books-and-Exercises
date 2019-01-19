@@ -54,8 +54,18 @@
 
 \maketitle
 
-\begin{exercise}{5.1}
-    hhh
+\begin{exercise}{5.3}
+    Assume $\tt 3SAT$ is polynomial-time reducible to $\overline{\tt 3SAT}$. Denote this reduction as $f$ and the TM checking
+    $\tt 3SAT$ as $M$, then
+    $$
+    \exists y,M(x,y)=1\iff \forall y,M(f(x),y)=0.
+    $$
+    Therefore
+    $$
+    \forall y,M(x,y)=0\iff\neg\pbra{\exists y,M(x,y)=1}\iff\neg\pbra{\forall y,M(f(x),y)=0}\iff\exists y,M(f(x),y)=1,
+    $$
+    which means $f$ is also the polynomial-time reduction from $\overline{\tt 3SAT}$ to $\tt 3SAT$.
+    Hence $\Sigma_1^p=\mathbf{NP}=\mathbf{coNP}=\Pi_1^p$ and $\mathbf{PH}$ collapses to $\mathbf{NP}$.
 \end{exercise}
 
 \end{document}
