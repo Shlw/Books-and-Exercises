@@ -68,6 +68,26 @@ Since $L$ is not the empty set or $\{0,1\}^{*}$, there exists $x\in L$ and $y\no
     It is easy to verify its validity.
 \end{exercise}
 
+\begin{exercise}{4.5}
+    Given a Boolean formula $\phi$ with $n$ variables $x_1, \ldots, x_n$ and $m$ clauses in 2-CNF (assuming $\phi$ contains only 2-clauses w.l.o.g), we construct a directed graph $G = (V,A)$ where $V = \{v_{x_1}, \ldots, v_{x_n}, v_{\overline{x_1}}, \ldots, v_{\overline{x_n}}\}$. $A$ is constructed as following: 
+    \begin{itemize}
+        \item Arc $v_{\overline{x_i}} \to v_{x_j}$ and $v_{\overline{x_j}} \to v_{x_i}$ are gathered in $E$ if there is clause $x_i \land x_j$ in $\phi$;
+        \item Arc $v_{x_i} \to v_{\overline{x_j}}$ and $v_{x_j} \to v_{\overline{x_i}}$ are gathered in $E$ if there is clause $\overline{x_i} \land \overline{x_j}$ in $\phi$;
+        \item Arc $v_{x_i} \to v_{x_j}$ and $v_{\overline{x_j}} \to v_{\overline{x_i}}$ are gathered in $E$ if there is clause $\overline{x_i} \land x_j$ in $\phi$.
+    \end{itemize}
+    It is clear that $\phi$ is satisfiable only if there exist no path form $v_{x_i}$ to $v_{\overline{x_i}}$ or $v_{\overline{x_i}}$ to $v_{x_i}$ for all $i \in [n]$. Note that $v_{x_i} \rightsquigarrow v_{\overline{x_i}}$ implies $v_{\overline{x_i}} \rightsquigarrow v_{x_i}$. So, it suffice to prove $\phi$ is satisfiable if $v_{x_i}$ and $v_{\overline{x_i}}$ are not in the same strongly connected component in $G$. Let $f:V \to \mathbb N$ be the topological sort for $G$, i.e., the topological sort for the condensation of $G$ such that $f(v) \geq f(w)$ if and only if $v \rightsquigarrow w$ in $G$. Define $y_i := 1$ if $f(v_{\overline{x_i}}) > f(v_{x_i})$, and $y_i := 0$ otherwise. Assume toward contradiction that $\phi(x = y) = 0$.
+    \begin{itemize}
+        \item If $y$ violates the clause $y_i \land y_j$, $f(v_{x_i}) \geq f(v_{\overline{x_i}})$ and $f(v_{x_j}) \geq f(v_{\overline{x_j}})$ hold. Thus, 
+        \[
+            f(v_{x_j}) \geq f(v_{\overline{x_j}}) \geq f(v_{x_i}) \geq f(v_{\overline{x_i}}) \geq f(v_{{x_j}})
+        \]
+        holds, which conflicts with our assumption.
+        \item An argument similar to the one use in the previous case shows that $y$ does not violates the clause $\overline{y_i} \land \overline{y_j}$ or clause $y_i \land \overline{y_j}$.
+    \end{itemize}
+
+    Note given $\phi$, $G$ can be constructed by a Log-space Turing machine. Combining the reduction and Lemma 4.18, 2SAT $\in \mathbf{NL}$ can be shown.
+\end{exercise}
+
 \begin{exercise}{4.11}
 We prove the corollary by the following two steps.
 \begin{itemize}
