@@ -76,4 +76,10 @@
     $$
 \end{exercise}
 
+\begin{exercise}{5.5}
+    $\mathbf{PSPACE} \subseteq \mathbf{AP}$ follows since $\mathsf{TQBF}$ is trivially in $\mathbf{AP}$, and every $\mathbf{PSPACE}$ language reduces to $\mathsf{TQBF}$. It suffices to show that $\mathbf{AP} \subseteq \mathbf{PSPACE}$.
+
+    Given $L \in \mathbf{AP}$, there exists an ATM $M$ computing $L$. Note that can a configuration of $M$ can be representation in polynomial bits. Simulate $M$ with a Turing machine. For the non-deterministic choices, the TM simulate each subsequent configuration recursively. Since the ATM halts in polynomial-time, the depth of the recursion is polynomial. Thus, the simulation needs polynomial-space.
+\end{exercise}
+
 \end{document}
