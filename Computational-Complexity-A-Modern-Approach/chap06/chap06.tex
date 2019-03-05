@@ -68,7 +68,11 @@ Prove a language has logspace-uniform circuits of polynomial size iff it is in P
 
 The proof is similar to Theorem 6.6 ($P \subseteq P/backslash poly$).
 
+\begin{itemize}
+\item $\Rightarrow$  If $L$ has logspace-uniform circuit of $s$ size, then we can gain $size(n), type(n,i)$ and $edge(n,i,j)$, then we can compute the results of the circuit with poly$(s)$ time, i.e., $L \in P$.
 
+\item $\Leftarrow$ Since $L$ can be simulated by an TM M in time $T(n)$ (in poly($n$)), then M can be simulated by an oblivious TM $M'$, which runs in time $T(n)^{2}$. Since  the snapshot $z_{i}$ is only related to time $T$ and $z_{i-1}$, thus we can compute $z_{i}$ in constant-sized circuit, then we have a $O(T(n))$ size circuit to compute L, and the circuit is logspace-uniform.
+\end{itemize}
 
 \end{exercise}
 
