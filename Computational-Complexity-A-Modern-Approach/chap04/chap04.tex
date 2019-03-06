@@ -4,6 +4,7 @@
 
 \documentclass[a4paper]{article}
 
+\usepackage[UTF8]{ctex}
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{mathrsfs}
 \usepackage{bm}
@@ -86,6 +87,10 @@ Since $L$ is not the empty set or $\{0,1\}^{*}$, there exists $x\in L$ and $y\no
     \end{itemize}
 
     Note given $\phi$, $G$ can be constructed by a Log-space Turing machine. Combining the reduction and Lemma 4.18, 2SAT $\in \mathbf{NL}$ can be shown.
+\end{exercise}
+
+\begin{exercise}{4.6}
+    证明在考虑对数空间规约的情况下，SAT仍然是NP完全的。只需要注意到库克定理中的oblivious TM，只根据输入长度和当前步骤决定，我们只需要用对数空间存储和更新此类信息，因此这个TM可以是对数空间实现的，因此SAT仍然是NP完全的。
 \end{exercise}
 
 \begin{exercise}{4.11}

@@ -4,6 +4,7 @@
 
 \documentclass[a4paper]{article}
 
+\usepackage[UTF8]{ctex}
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{mathrsfs}
 \usepackage{bm}
@@ -80,6 +81,12 @@
     $\mathbf{PSPACE} \subseteq \mathbf{AP}$ follows since $\mathsf{TQBF}$ is trivially in $\mathbf{AP}$, and every $\mathbf{PSPACE}$ language reduces to $\mathsf{TQBF}$. It suffices to show that $\mathbf{AP} \subseteq \mathbf{PSPACE}$.
 
     Given $L \in \mathbf{AP}$, there exists an ATM $M$ computing $L$. Note that can a configuration of $M$ can be representation in polynomial bits. Simulate $M$ with a Turing machine. For the non-deterministic choices, the TM simulate each subsequent configuration recursively. Since the ATM halts in polynomial-time, the depth of the recursion is polynomial. Thus, the simulation needs polynomial-space.
+\end{exercise}
+
+\begin{exercise}{5.6}
+    证明SAT$\notin TISP(n^c,n^d),c(c+d)<2$
+
+    反证法，不妨假设SAT$\in TISP(n^c,n^d)\to NTIME(n)\subseteq TISP(n^{c^{'}}.n^{d^{'}})$$c^{'}>c,d^{'}>d\to NTIME(n^\alpha)\subseteq TISP(n^{\alpha c^{'}}.n^{\alpha d^{'}})\subseteq \sum_2TIME(n^{\frac{\alpha(c^{'}+d^{'})}{2}})$$\subseteq NTIME(n^{\frac{c^{'}\alpha(c^{'}+d^{'})}{2}})\to \alpha \le \frac{c^{'}\alpha(c^{'}+d^{'}) }{2}\to c(c+d)>2$与已知矛盾，因此原命题得证。
 \end{exercise}
 
 \end{document}

@@ -4,6 +4,7 @@
 
 \documentclass[a4paper]{article}
 
+\usepackage[UTF8]{ctex}
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{mathrsfs}
 \usepackage{bm}
@@ -78,6 +79,13 @@ Thus for a Halt instance $M(\alpha, x)$, we can execute $M_{2}$ to find that whe
 
 \begin{exercise}{3.3}
     The language given in the proof of Theorem 3.7 is in $\textbf{EXP}$. To determine the membership for all string, exclude all undetermined string with shorter length than $\ell_i$ from $B$ after each stage-$i$, where $\ell_i$ is the length of the longest determined string in $B$ after stage-$i$. Note that $\ell_i = i + c$ is enough for the proof of Theorem 3.7 with some constant $c$. Thus, stage-$i$ can be done by simulating $M_i$ on $1^{\ell_i}$ within time-$\tilde O(2^i)$. Given string $x$, generate $B$ with $|x|$ stages and check the membership during the generating processing, which is obviously in \textbf{EXP}.
+\end{exercise}
+
+\begin{exercise}{3.4}
+    \begin{itemize}
+        \item [(a)] 给出superior的定义，判断DTIME($n^{1.1}$)是否superior DTIME($n$)，根据前面时间层级定理的证明，我们可以证明$\exists L\in DTIME(n^{1.1}), \forall L^{'}\in DTIME(n),\exists x,|x|\in(n,n^2),M_L(x)\ne M_{L^{'}}(x)$因此DTIME($n^{1.1}$)是superior DTIME($n$)的
+        \item [(b)] 我们并不能根据非确定性的时间层级定理证得同样的结论，因为在非确定性时间层级定理定理证明的过程中，只取反了一个元素，而不是像确定性时取反了所有元素，因此我们不能够保证取反的部分是在$[n,n^2]$内，因此无法根据前面证明得到相同结论。
+    \end{itemize}
 \end{exercise}
 
 \begin{exercise}{3.8}
