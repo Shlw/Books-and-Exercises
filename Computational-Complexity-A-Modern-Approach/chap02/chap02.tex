@@ -1,5 +1,6 @@
 \documentclass[a4paper]{article}
 
+\usepackage[UTF8]{ctex}
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{mathrsfs}
 \usepackage{bm}
@@ -115,6 +116,12 @@
 		To show that the relation $\leq_p$ is not symmetric, we let $L=\{0,1\}^*$ and $L'=SAT$. It is easy to show that $L\leq_p L'$ by transform every $x\in L$ to a tautology such as $x\vee \neq x$. However, $L'\not\leq_p L$ iff we can solve $SAT$ in polynomial time.
 	\end{exercise}
 	
+	\begin{exercise}{2.5}
+		证明所有素数二进制编码构成的语言属于 NP。​
+
+		根据 NP 的定义：$x\in L \iff\exists u\in (0,1)^{p|x|},M(u,x)=1$。对于任意一个质数 $n$，我们可以找到一个验证，对于任意的小于 $n$ 的素数 $q$ 都能找到一个 $a$ 满足 $a^{n-1}=1 \pmod n$ 且 $a^{\frac{n-1}{q}}\ne 1 \pmod n$。那么 $u=q_0a_0\dots q_ka_k$ 且 $u=O(\phi (n)\cdot\log n)=poly (n)$，因此所有素数的二进制编码构成的语言属于 NP。
+	\end{exercise}
+
     \begin{exercise}{2.13}
 	\begin{itemize}
 \item [(a)]
@@ -171,7 +178,15 @@ Since the mapping is monomorphism. Thus the number of solutions for $\phi$ and $
 		\end{itemize}
 	\end{exercise}
 
+	\begin{exercise}{2.16}
+		证明最大割是 NP 完全问题。最大割是 NP 问题的证明比较显然，我们可以非确定性的枚举所有点集划分的可能性，然后去判断是否割能达到 $k$。
 
+		证明最大割是 NP 难问题，将 partition 规约到 MAX-CUT 问题是一个比较简单的方法，按照课本中提到的用顶点覆盖去规约的方法如下：因为极小顶点覆盖的补集一定是极大顶点独立问题，因此我们可以将IS规约到MAX CUT。图构造过程：$V^{'}=V\cup\{x\}\cup V^{''},V^{''}=\{[e,u],[e,v]|e=uv\in E\},E^{'}=\{xv|v\in V\}\cup E^{''}$ $E^{''}=\{x[e,u],x[e,v],[e,u][e,v],[e,u]u,[e,v]v|e=uv\},k^{'}=k+4|E|$。这个结构的好处是，求完最大割后，如果$x$与$u,v$中任何一点在一边的话，在$x,u,v$这里的割一定是4，否则为3先证明，如果原问题中存在至少为k的独立集，那么一定有至少为$k+4|E|$的割。因为$S$是一个独立集，那么当$S$与$x$都不在同一侧的时候，这里有$k$条边，又因为$S$为独立集，所以不存在边，因此每一个边$uv$可以保证有一个和$x$同边，因此这里最多产生$4|E|$条边。
+
+		再证明，如果有一个大于$k+4|E|$的割，那么一定有一个至少为$k$的独立集假设现在的割为$S^{'}$与$V^{'}-S^{'} $  假设$E_c$为所有端点在两段的集合，$|E_c| >=k+4|E|$因为新加进的$[e,u]$这些边一组最多贡献4个割边，所以至少有$k$个边是不含$[e,u]$这个端点的，不含新加端点的边一定是$xv$，我们把和$x$在异端的点集合设为$S_c$ 因为$Sc$大于等于$k$，不妨令$|S_c|=k+l$
+
+		因为$|E_c|>= k+ 4|E| $联立可以有至多$l$组新加点造成的割为3，这些割不足3的代表边的两段都与$x$异端，因此我们只需要对着$l$组，任选一个点丢出$S_c$，那么剩下的点，一定没有公共边（对于原来可能存在边的都丢了一个）因此剩下的一定是一个独立集，并且点的个数为$k+l $减去小于$l$的点，因此大于等于$k$
+	\end{exercise}
 
 	\begin{exercise}{2.20}
 		To show that $REALQUADEQ$ is \textbf{NP}-complete, we make reduction from $3SAT$ to $REALQUADEQ$.
@@ -210,6 +225,16 @@ That's implies definition 2.20.
 		Suppose $\textsf{3SAT} \leq_p \textsf{TAUTOLOGY}$ and $ \leq_p \textsf{TAUTOLOGY} \leq_p \textsf{3SAT}$. For any $L \in \textbf{NP}$, that $L \leq_q \in \textsf{3SAT}$ implies $\bar L \leq_q \in \overline{\textsf{3SAT}}$. Thus, we have $\bar L \leq_q \in \overline{\textsf{3SAT}} \leq_p \textsf{TAUTOLOGY} \leq_p \textsf{3SAT}$, which means $L \in \textbf{coNP}$. Besides, for any $L \in \textbf{coNP}$, $L \leq_p \textsf{TAUTOLOGY} \leq_p \textsf{3SAT}$. Combining them, $\textbf{NP} = \textbf{coNP}$ can be shown.
 
 		Note that $\textsf{3SAT}$ is \textbf{NP}-complete and $\textsf{TAUTOLOGY}$ i s \textbf{coNP}-complete. If $\textbf{NP} = \textbf{coNP}$, they will be polynomial-time reducible to one another.
+	\end{exercise}
+
+	\begin{exercise}{2.27}
+		仿照NP的2.1定义形式给NEXP定义，并证明两个定义等价
+		\begin{itemize}
+			\item [1.] NEXP定义$x\in L \iff\exists u\in (0,1)^{\exp|x|},M(u,x)=1$其中M是一台指数时间的确定性图灵机。
+			\item [2.] 两个定义等价，NDTIME定义$\to$本题定义，$L\in $NEXP$\iff L$可以由非确定性图灵机在指数时间内求解，那么NTM每一步选择的$\delta$函数序列为$u$,则存在确定性图灵机可以利用这个序列$u$和原输入$x$在指数时间内可以验证，且$u$是指数范围内的。
+
+				本题定义$\to$NDTIME定义,非确定性产生验证$u$，新的非确定性图灵机停机当且仅当有一个验证$u$，验证$x$。又$\exp(n) =O(2^{n^c})\to L\in NTIME(2^{n^c})$。综上，两个定义等价。
+		\end{itemize}
 	\end{exercise}
 
 \begin{exercise}{2.31}
