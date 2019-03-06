@@ -12,6 +12,7 @@
 \usepackage{hyperref}
 \usepackage[ruled]{algorithm2e}
 \usepackage{caption,subcaption}
+%\usepackage{graphicx}
 
 \geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
 
@@ -81,4 +82,55 @@ The proof is similar to Theorem 6.6 ($P \subseteq P/backslash poly$).
     According to Theorem 6.19, if $\textbf{NP} \subseteq \textbf{P}_{\textbf{/poly}}$, then $\textbf{PH} = \mathbf{\Sigma}_2^p$. Thus, the conclusion of Exercise 6.5 also holds with $\mathbf{PH}$ replaced by $\mathbf{\Sigma}_2^p$. Otherwise, there exists $L \in \textbf{NP}$ such that $L \not\in \textbf{P}_{\textbf{/poly}}$. Namely, the circuit complexity is $\Omega(n^k)$ for any constant $k$.
 \end{exercise}
 
+\begin{exercise}{6.14}
+\textbf{Note:} Here $NC^1$ refers to log-space uniform $NC^1$, otherwise it will contain undecidable language such as $U_B=\{1^n\quad | \exists <M,x>, |<M,x>|=n, M\text{halts on input x}\}$.
+
+\textbf{Proof:} To prove $NC^1\subset L$, it suffice to show that we can evaluate a $O(\log n)$ depth, $poly(n)$ size circuits $\mathcal{C}_n$ by using $O(\log n)$ space. The circuit is presented by the adjacent table of its nodes. Specifically, the following 3 functions can be calculated by a $\log$-space Turing machine.
+\begin{itemize}
+\item[(1)] Size(n): Size of $\mathcal{C_n}$.
+\item[(2)] Type(n,i): the type of $i-th$ node in $\mathcal{C}_n$.
+\item[(3)] Neighbour(n,i): The left child, right child, father of the $i-th$ node.
+\end{itemize} 
+We give the evaluation algorithm in the following box, which takes the root(the output node) as input and return   
+the evaluation result, using $\log n$ space. 
+
+%\begin{figure}
+%\includegraphics[width=0.5]{NCEvaluation.png}
+%\end{figure}
+
+\begin{algorithm}[h!]
+\caption{Log-Space Algorithm for Evaluating $NC^1$}
+\KwData{Root of the circuit.}
+\KwResult{Output of the circuit.}
+p=root \# Current node\;
+q=None \# Last visited node\;
+s=stack() \# Store the intermediate value in the evaluation\;
+\While{p.type!="Input"}{\# p.type: "Input";"And","OR"\;
+p=p.left\;}
+s.push(p.val)\;
+\While{!s.empty()}{p=p.father\;
+\If{p==None}{return s.top() \#Completed the evaluation \;}
+\If{p.right.type=="Input" or P.right==q}
+{\If{p.right.type=="Input"}{
+s.push(p.right.val)\;
+}
+temp1=s.top()\;
+s.pop()\;
+temp2=s.top()\;
+s.pop()\;
+s.push(Eval(p.type,temp1,temp2))\;
+q=p \# Update the last visited node\;
+}
+\Else{
+\While{p.type!="Input"}{p=p.left\;
+}
+s.push(p.val)\;
+}
+}
+\end{algorithm}
+
+
+The algorithm is a modification of the Non-recursive post-order traversal. In the Non-recursive post-order traversal, the stack is used to record the unvisted nodes, thus takes $O(log n*log n)$ spaces(record one node needs $\log |\mathcal{C}_n|=O(\log n)$ bit). We circumvent this cost by using the information of the father of a node. Instead, we use the stack to store the intermediate value in the computation. In every layer, there are at least one intermidiate value. Thus the maximum usage of the stack is the depth, $O(\log n)$. The total space cost is $p,q,s$, $2*\log n+|s|=O(\log n)$.
+
+\end{exercise}
 \end{document}
