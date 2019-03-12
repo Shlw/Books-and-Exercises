@@ -82,6 +82,15 @@ The proof is similar to Theorem 6.6 ($P \subseteq P/backslash poly$).
     According to Theorem 6.19, if $\textbf{NP} \subseteq \textbf{P}_{\textbf{/poly}}$, then $\textbf{PH} = \mathbf{\Sigma}_2^p$. Thus, the conclusion of Exercise 6.5 also holds with $\mathbf{PH}$ replaced by $\mathbf{\Sigma}_2^p$. Otherwise, there exists $L \in \textbf{NP}$ such that $L \not\in \textbf{P}_{\textbf{/poly}}$. Namely, the circuit complexity is $\Omega(n^k)$ for any constant $k$.
 \end{exercise}
 
+
+\begin{exercise}{6.13}
+\begin{itemize}
+\item $\textbf{NC}^1 \subseteq formula$: copy the nodes  whose out-degree larger than $1$ and all its ancient nodes, then connect to its original neighbours. Repeat until the out-degree of each node is not larger than $1$. The depth is $O(\log n)$, so the number of nodes after above operations is $poly(n)$.
+\item $ formula \subseteq\textbf{NC}^1$: the circuit is a tree $T$. choose a sub-tree $T'$ whose nodes is more than $n/3$ and is less than $2/3$, denote the root of $T'$ as $v$.
+We have $T\equiv((T-T'+\{v=true\})\wedge T')\vee((T-T'+\{v=false\})\wedge \neg T')$, so the depth $d(n)\le d(2n/3)+3$, hence $d(n)=O(\log n)$
+\end{itemize}
+\end{exercise}
+
 \begin{exercise}{6.14}
 \textbf{Note:} Here $NC^1$ refers to log-space uniform $NC^1$, otherwise it will contain undecidable language such as $U_B=\{1^n\quad | \exists <M,x>, |<M,x>|=n, M\text{halts on input x}\}$.
 
