@@ -89,4 +89,16 @@
     反证法，不妨假设SAT$\in TISP(n^c,n^d)\to NTIME(n)\subseteq TISP(n^{c^{'}}.n^{d^{'}})$$c^{'}>c,d^{'}>d\to NTIME(n^\alpha)\subseteq TISP(n^{\alpha c^{'}}.n^{\alpha d^{'}})\subseteq \sum_2TIME(n^{\frac{\alpha(c^{'}+d^{'})}{2}})$$\subseteq NTIME(n^{\frac{c^{'}\alpha(c^{'}+d^{'})}{2}})\to \alpha \le \frac{c^{'}\alpha(c^{'}+d^{'}) }{2}\to c(c+d)>2$与已知矛盾，因此原命题得证。
 \end{exercise}
 
+\begin{exercise}{5.12}
+We can prove it inductively. For $k>i$, let $L\in\Sigma_k^p$, there is a polynomial-time Turing machine $M$ and a polynomial $q$ such that
+$$
+x\in L\Leftrightarrow\exists u_1\in\{0,1\}^{q(x)}\forall u_2\in\{0,1\}^{q(x)}\cdots Q_k u_k\in\{0,1\}^{q(x)}M(x,u_1,\dots,u_k)=1,
+$$
+define $L'$ as follows:
+$$
+<x,u_1>\in L'\Leftrightarrow\forall u_2\in\{0,1\}^{q(x)}\cdots Q_k u_k\in\{0,1\}^{q(x)}M(x,u_1,\dots,u_k)=1,
+$$
+clearly, $L'\in\Pi_{k-1}^p$ so $L'$ is in $\Sigma_{k-1}^p$. Inductively, for any $k>i$ $\Sigma_k^p=\Sigma_i^p$, so $\textbf{PH}=\Sigma_i^p$.
+\end{exercise}
+
 \end{document}
