@@ -67,14 +67,30 @@
 \begin{exercise}{6.4}
 Prove a language has logspace-uniform circuits of polynomial size iff it is in P.
 
-The proof is similar to Theorem 6.6 ($P \subseteq P/backslash poly$).
+    The proof is similar to Theorem 6.6 ($P \subseteq P_{/poly}$).
 
 \begin{itemize}
 \item $\Rightarrow$  If $L$ has logspace-uniform circuit of $s$ size, then we can gain $size(n), type(n,i)$ and $edge(n,i,j)$, then we can compute the results of the circuit with poly$(s)$ time, i.e., $L \in P$.
 
 \item $\Leftarrow$ Since $L$ can be simulated by an TM M in time $T(n)$ (in poly($n$)), then M can be simulated by an oblivious TM $M'$, which runs in time $T(n)^{2}$. Since  the snapshot $z_{i}$ is only related to time $T$ and $z_{i-1}$, thus we can compute $z_{i}$ in constant-sized circuit, then we have a $O(T(n))$ size circuit to compute L, and the circuit is logspace-uniform.
 \end{itemize}
+\end{exercise}
 
+\begin{exercise}{6.5}
+    Define $L$ as
+    \begin{align*}
+        L=\Big\{x\Big|
+        &\exists C_1,|C_1|<|x|^{k+2},\\
+        &\forall C_2,|C_2|<|x|^{k+1},\\
+        &\exists u\in\bin^{|x|},C_1(u)\neq C_2(u),\\
+        &\forall C_3,C_3<C_1 (\text{compare as binary string}),\\
+        &\exists C_4,|C_4|<|x|^{k+1},\\
+        &\forall v\in\bin^{|x|},C_3(v)=C_4(v),\\
+        &C_1\text{ accepts }x\Big\}
+    \end{align*}
+    By Nonuniform Hierarchy Theorem, $\text{SIZE}(n^{k+2})\subsetneq\text{SIZE}(n^{k+1})\subsetneq\text{SIZE}(n^k)$.
+    Thus $C_1$ accepts the first language which can not be accepted by circuit of size $|x|^{k+1}$, which means
+    $L\notin\text{SIZE}(n^k)$ and obviously $L\in\textbf{PH}$.
 \end{exercise}
 
 
@@ -86,7 +102,7 @@ The proof is similar to Theorem 6.6 ($P \subseteq P/backslash poly$).
 \begin{exercise}{6.13}
 \begin{itemize}
 \item $\textbf{NC}^1 \subseteq formula$: copy the nodes  whose out-degree larger than $1$ and all its ancient nodes, then connect to its original neighbours. Repeat until the out-degree of each node is not larger than $1$. The depth is $O(\log n)$, so the number of nodes after above operations is $poly(n)$.
-\item $ formula \subseteq\textbf{NC}^1$: the circuit is a tree $T$. choose a sub-tree $T'$ whose nodes is more than $n/3$ and is less than $2/3$, denote the root of $T'$ as $v$.
+\item $ formula \subseteq\textbf{NC}^1$: the circuit is a tree $T$. Choose a sub-tree $T'$ whose nodes is more than $n/3$ and is less than $2/3$, denote the root of $T'$ as $v$.
 We have $T\equiv((T-T'+\{v=true\})\wedge T')\vee((T-T'+\{v=false\})\wedge \neg T')$, so the depth $d(n)\le d(2n/3)+3$, hence $d(n)=O(\log n)$
 \end{itemize}
 \end{exercise}
@@ -96,16 +112,12 @@ We have $T\equiv((T-T'+\{v=true\})\wedge T')\vee((T-T'+\{v=false\})\wedge \neg T
 
 \textbf{Proof:} To prove $NC^1\subset L$, it suffice to show that we can evaluate a $O(\log n)$ depth, $poly(n)$ size circuits $\mathcal{C}_n$ by using $O(\log n)$ space. The circuit is presented by the adjacent table of its nodes. Specifically, the following 3 functions can be calculated by a $\log$-space Turing machine.
 \begin{itemize}
-\item[(1)] Size(n): Size of $\mathcal{C_n}$.
+\item[(1)] Size(n): Size of $\mathcal{C}_n$.
 \item[(2)] Type(n,i): the type of $i-th$ node in $\mathcal{C}_n$.
-\item[(3)] Neighbour(n,i): The left child, right child, father of the $i-th$ node.
+\item[(3)] Neighbour(n,i): The left child, right child, father of the $i$-th node.
 \end{itemize} 
 We give the evaluation algorithm in the following box, which takes the root(the output node) as input and return   
 the evaluation result, using $\log n$ space. 
-
-%\begin{figure}
-%\includegraphics[width=0.5]{NCEvaluation.png}
-%\end{figure}
 
 \begin{algorithm}[h!]
 \caption{Log-Space Algorithm for Evaluating $NC^1$}
@@ -139,7 +151,30 @@ s.push(p.val)\;
 \end{algorithm}
 
 
-The algorithm is a modification of the Non-recursive post-order traversal. In the Non-recursive post-order traversal, the stack is used to record the unvisted nodes, thus takes $O(log n*log n)$ spaces(record one node needs $\log |\mathcal{C}_n|=O(\log n)$ bit). We circumvent this cost by using the information of the father of a node. Instead, we use the stack to store the intermediate value in the computation. In every layer, there are at least one intermidiate value. Thus the maximum usage of the stack is the depth, $O(\log n)$. The total space cost is $p,q,s$, $2*\log n+|s|=O(\log n)$.
-
+    The algorithm is a modification of the Non-recursive post-order traversal. In the Non-recursive post-order traversal, the stack is used to record the unvisited nodes, thus takes $O(\log n\times\log n)$ spaces(record one node needs $\log |\mathcal{C}_n|=O(\log n)$ bit). We circumvent this cost by using the information of the father of a node. Instead, we use the stack to store the intermediate value in the computation. In every layer, there are at least one intermediate value. Thus the maximum usage of the stack is the depth, $O(\log n)$. The total space cost is $p,q,s$, $2\log n+|s|=O(\log n)$.
 \end{exercise}
+
+\begin{exercise}{6.19}
+    Assume \textbf{LP} has fast parallel algorithm, i.e., 
+    $\textbf{LP}\in\textbf{NC}$, to show $\textbf{P}=\textbf{NC}$, it suffices
+    to show \textbf{LP} is $\textbf{P}$-complete. Since $\textbf{LP}\in\textbf{P}$, we prove CIRCUIT-EVAL can be
+    reduced to it in logspace. Also, $a\land b=\neg(\neg a\lor\neg b)$ and this transformation is locally computable,
+    we assume the circuit contains only $\lor,\neg$.
+
+    On the other hand,
+    \begin{align*}
+        x_3&=x_1\lor x_2\iff\begin{cases}
+            x_3\geq x_1\\
+            x_3\geq x_2\\
+            x_3\leq x_1+x_2\\
+            x_3\leq 1
+        \end{cases}\\
+        x_2&=\neg x_1\iff\begin{cases}
+            x_2\geq 1-x_1\\
+            x_2\leq 1-x_1
+        \end{cases},
+    \end{align*}
+    thus the reduction is also locally computable and \textbf{LP} is then \textbf{P}-complete.
+\end{exercise}
+
 \end{document}
