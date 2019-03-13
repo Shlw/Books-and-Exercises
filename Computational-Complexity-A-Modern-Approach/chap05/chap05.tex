@@ -55,6 +55,42 @@
 
 \maketitle
 
+\begin{exercise}{5.1}
+    It is clearly seen that $\Sigma_i SAT$ is in $\Sigma_i P$ from their definition.Therefore, the only thing we need to show is that $\Sigma_i SAT$ is $\Sigma_i P$-hard.We use mathematical induction to prove this result.Suppose the language $\Sigma_i SAT$ is $\Sigma_i P$-hard.
+    \begin{itemize}
+        \item The basic situation is trivial since the language $SAT$ has been proved to be $NP$-hard.
+        \item And the induction follows for $i>1$ if we assume the result holds when $i < n$.
+        \item When $i=n$, we need to prove every language $L \in \Sigma_n P$ is polynomial-time Karp reducible to $\Sigma_n SAT$. According to the definition of $\Sigma_n P$,
+        \begin{equation}
+            x \in L \iff \exists u_1\in\{0,1\}^{q(|x|)} \forall u_2 \in \{0,1\}^{q(|x|)}\cdots Q_iu_i\in\{0,1\}^{q(|x|)} M(x,u_1,\dots,u_i)=1
+        \end{equation}
+        where $M$ is a polynomial-time TM, $q$ is a polynomial, and $Q_i$ denotes $\forall$ or $\exists$ depending on whetehr $i$ is even or odd respectively.
+        
+        We define a new language $L^{\prime}$
+        \begin{equation}
+           x,u_1 \in L^{\prime} \iff \forall u_2 \in \{0,1\}^{q(|x|)}\cdots Q_iu_i\in\{0,1\}^{q(|x|)} M(x,u_1,\dots,u_i)=1
+        \end{equation}
+        
+        Thus, we can rewrite $L$ in another way
+        
+        \begin{equation}
+          x\in L \iff \exists u_1 x,u_1 \in L^{\prime}
+        \end{equation}
+        
+        Note that $L^{\prime}$ is in $\Pi_{n-1} P$ and $\Pi_{n-1} SAT $ is $\Pi_{n-1}$-hard(the proof is analogous to that of TAUTOLOGY).Thus, there is a polynomial time transformation $x \rightarrow \varphi_{x}$ from strings to boolean formulae such that
+        \begin{equation}
+          x,u_1 \in L^{\prime}  \iff \forall u_2 \in \{0,1\}^{q(|x|)}\cdots Q_i u_i\in\{0,1\}^{q(|x|)}\varphi_{x,u_1}(u_2,\dots,u_i)=1. 
+        \end{equation}
+        
+        Let $\phi_{x}(u_1,u_2,\dots,\u_i)=\varphi_{x,u_1}(u_2,\dots,u_i)$, we have the following equivalent definition of $L$
+        \begin{equation}
+        x\ in L^{\prime} \iff  \exists u_1\in\{0,1\}^{q(|x|)} \forall u_2 \in \{0,1\}^{q(|x|)}\cdots Q_iu_i\in\{0,1\}^{q(|x|)} \phi_{x}(u_1,\dots,u_i)=1
+        \end{equation}
+        And obviously, we can transform $x$ to $\phi$ in polynomial time. In a word, we have proved the result in the situation when $i=n$. 
+    \end{itemize} 
+    
+\end{exercise}
+
 \begin{exercise}{5.3}
     Assume $\tt 3SAT$ is polynomial-time reducible to $\overline{\tt 3SAT}$. Denote this reduction as $f$ and the TM checking
     $\tt 3SAT$ as $M$, then

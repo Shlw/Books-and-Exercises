@@ -55,6 +55,12 @@
 
 \maketitle
 
+\begin{exercise}{4.1}   
+    The proof is analogous to that of Theorem 1.9 in section 1.7. We argue that the only difference is 
+    that we just use $\log t$ rather than $\log T$ zones since we have known $M_{\alpha}$ uses at most $t$ cells of its work tape before halting. According to the proof in section 1.7, $SU$ uses at most $1+\sum_{i=0}^{\log t} 2^{i+1}=1+2^{\log t+2 }-2=4t-1$ cells of its work tape to simulate $M_{\alpha}$.
+    
+    The proof of theorem 4.8 is almost the same as the one of theorem 3.1(Time Hierarchy Theorem) except time-bounded universal TM $U$ is replaced by space-bounded universal TM $SU$.And thus the logorithmic slowdown does not appear in the conclusion of theorem 4.8.
+\end{exercise}
 
 \begin{exercise}{4.3}
 Since $L$ is not the empty set or $\{0,1\}^{*}$, there exists $x\in L$ and $y\not\in L$. In the following, we prove that $path(s,t)\leq_{p} L$. We can solve path$(s,t)$ in polynomial-time, and if it the yes case, we corresponding to $x$ in $L$, otherwise corresponding to $y$ in $L$.
