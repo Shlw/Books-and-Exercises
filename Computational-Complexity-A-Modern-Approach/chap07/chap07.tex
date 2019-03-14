@@ -91,4 +91,35 @@
 		
     \end{exercise}
 
+\begin{exercise}{7.8}
+To prove $PH$ collapses to $\Sigma_3^p$, it suffices to show that $\Pi_3 SAT\subset \Sigma_3^p$.
+
+$$
+\Pi_3 SAT=\{\varphi(\cdot,\cdot,\cdot)| \forall x_1, \exists x_2, \forall x_3, \varphi(x_1,x_2,x_3)=0\}.
+$$
+
+$\varphi\in \Pi_3SAT$ iff $\forall x_1, \exists x_2$ such that $\varphi(x_1,x_2,\cdot)\in \overline{3SAT}$.
+
+Since $\overline{3SAT}\leq_r 3SAT$, there exists deterministic polynomial time Turing Machine $M$,  $n=\max(|x_1|,|x_2|,|\varphi|)$, integer $m$, such that $\forall \varphi(x_1,x_2,\cdot)$
+$$
+P_{r\in\{0,1\}^m}(  \varphi(x_1,x_2,\cdot)\in \overline{3SAT} \text{ iff } M(r,\varphi(x_1,x_2,\cdot))\in 3SAT)\geq 1- 2^{-3n-1}.
+$$ 
+Say that a random bit $r$ is bad if the event in the $P(\cdot)$ does not happen. Add over all  $\varphi(x_1,x_2,\cdot)$, the bad random bit is at most $2^{-3n-1}*2^{m}*2^{3n}<2^{m}$. Thus there exists a $r_0$ which is good for all inputs, that is
+
+$$
+ \varphi(x_1,x_2,\cdot)\in \overline{3SAT} \text{ iff } M(r_0,\varphi(x_1,x_2,\cdot))\in 3SAT
+$$
+
+$$
+\Rightarrow 
+\varphi\in \Pi_3SAT \text{ iff } \exists r_0, \forall x_1, \exists x_2, \exists u,   \langle M(r_0,\varphi(x_1,x_2,\cdot)), u\rangle =1
+$$.
+
+%\Leftarrow \varphi\not\in \Pi_3SAT, then \forall r, there exists
+ 
+
+
+Thus we conclude if $\overline{3SAT}\leq_r 3SAT$, then $\Pi_3 SAT\subset \Sigma_3^p$.
+\end{exercise}
+
 \end{document}
