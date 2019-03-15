@@ -1,0 +1,175 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator{\E}{\mathbb E}
+\DeclareMathOperator{\Var}{\mathrm{Var}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\vabs}[1]{\left\| #1 \right\|}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\floorbra}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceilbra}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\ZPP}{\mathtt{ZPP}}
+\newcommand{\RP}{\mathtt{RP}}
+\newcommand{\coRP}{\mathtt{co}\text{-}\mathtt{RP}}
+\newcommand{\per}{\text{per}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Zbb}{\mathbb{Z}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $5$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{3}
+    Without loss of generality, assume $|S(v)|=10d,\forall v\in V$. Uniformly choose color $c_v\in S(v)$ independently
+    for any $v$. For any $u\in V,v\in N(u),c\in S(u)\cap S(v)$, define event $A[\{u,v\},c]$ be $c_u=c_v=c$. Then
+    $$
+    \Pr\sbra{A[\{u,v\},c]}=\frac1{100d^2}.
+    $$
+    Also, $A[\{u,v\},c]$ is mutually independent of all $A[\{u',v'\},c']$ but $\{u,v\}\cap\{u',v'\}\neq\varnothing$. 
+    Therefore in the dependency digraph the maximum degree is at most $2\times10d\times d-1$.
+    By Local Lemma and 
+    $$
+    e\times20d^2\times\frac1{100d^2}\leq1,
+    $$
+    there exists a valid coloring.
+\end{exercise}
+
+\begin{exercise}{4}
+    The result follows directly from the following lemma.
+    \begin{lemma}
+        Assume $G=(V,E)$ can be decomposed into $m$ graphs $G_1,\cdots,G_m$, each of which has maximum degree $1$.
+        Let $V_1,\cdots,V_n$ be $n$ pairwise disjoint subset of $V$, each of which has size at least $2^m$.
+        Then $G$ has an independent set $S$ containing precisely one vertex from each $V_i$.
+    \end{lemma}
+    \begin{proof}
+        Without loss of generality, we may assume $|V_i|=2^m,\forall i$.
+        Now we prove the lemma by induction on $m$.
+        \begin{itemize}
+            \item $m=1$ : $G$ itself is a matching. For any $V_i=\{u_i,v_i\}$, add an edge $\{u_i,v_i\}$ to $G$ if $u_i,v_i$
+                is not previously linked. Then $G$ consists of paths and cycles and the claim holds naturally.
+            \item $m>1$ : Let $V_i=V_i^1\cup V_i^2,|V_i^1|=|V_i^2|=2^{m-1}$ and $G'=G_1\cup\cdots\cup G_{m-1}$.
+                By induction, $G'$ has two independent sets $S_1,S_2$ satisfying $S_1\cap V_i^1=v_i^1,S_2\cap V_i^2=v_i^2$.
+                Since $S_1\cap S_2=\varnothing$, $V_i':=\{v_i^1,v_i^2\},i\in[n]$ are $n$ pairwise disjoint subset of $V$ on
+                graph $G_m$, which falls into the above case.
+        \end{itemize}
+    \end{proof}
+\end{exercise}
+
+\begin{exercise}{6}
+    The following algorithm runs in $O(m+(d+1)\mathrm{TLOG})$.
+
+    \begin{algorithm}[H]
+        \caption{Fix-it Algorithm}
+        \DontPrintSemicolon
+        Initialize $C[v]$\;
+        $\mathrm{Inset}[\beta]\gets1,S\gets\{\beta\}_\beta$\;
+        \While{$S\neq\varnothing$}{
+            Select $\alpha\in S$\;
+            \If{$\mathrm{BAD}[\alpha]$}{
+                Reset $C[v],v\in A[\alpha]$\;
+                \ForEach{$\beta\sim\alpha$}{
+                    \If{$\mathrm{Inset}[\beta]=0$}{
+                        $\mathrm{Inset}[\beta]\gets1$\;
+                        $S\gets S\cup\{\beta\}$\;
+                    }                
+                }
+            }\Else{
+                $S\gets S\backslash\{\alpha\}$\;
+                $\mathrm{Inset}[\alpha]\gets0$\;
+            }
+        }
+    \end{algorithm}
+\end{exercise}
+
+\begin{exercise}{7}
+    Let $A[i],i\in[30m]$ be the event that the $i$-th clause is unsatisfied. Then under a random assignment we have
+    $$
+    \Pr\sbra{A[i]}=2^{-10}.
+    $$
+    Since each variable appears in $30$ clauses, the maximum degree of dependency graph is at most $300-1=299$.
+    By Local Lemma and 
+    $$
+    e\times(299+1)\times2^{-10}<1,
+    $$
+    there exists an assignment that no bad events occur.
+\end{exercise}
+
+\begin{exercise}{8}
+    It is easy to see for any prefix of $D_M$, the number of $+$ in it is strictly larger than the number of $-$ in it.
+    Thus the number of possibilities of $D_M$ is bounded by the Catalan number
+    $$
+    \frac1M\binom{2M-2}{M-1}=\Theta\pbra{\frac{4^M}{M^{1.5}}},
+    $$
+    thus the possibility that the algorithm does not terminate in $M$ iterations is 
+    $$
+    \leq O\pbra{\frac{4^M}{M^{1.5}}\times4^{-M}}=o(1).
+    $$
+\end{exercise}
+\noindent\textbf{\it Remark:} 
+I don't know how to solve the second part of the exercise, and I posted this problem on the website 
+\url{https://math.stackexchange.com/questions/3115038/expected-iterations-of-finding-a-non-repetitive-sequence}.
+
+\end{document}

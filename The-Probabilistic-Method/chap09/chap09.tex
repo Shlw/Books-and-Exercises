@@ -1,0 +1,111 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator{\E}{\mathbb E}
+\DeclareMathOperator{\Var}{\mathrm{Var}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\vabs}[1]{\left\| #1 \right\|}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\floorbra}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceilbra}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\ZPP}{\mathtt{ZPP}}
+\newcommand{\RP}{\mathtt{RP}}
+\newcommand{\coRP}{\mathtt{co}\text{-}\mathtt{RP}}
+\newcommand{\per}{\text{per}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Zbb}{\mathbb{Z}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Gcal}{\mathcal{G}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $9$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{1}
+    Let $\pi_1,\pi_2,\pi_3$ be three independent random permutations in $S_n$.
+    Construct a bipartite graph $G=(V_1,V_2,E)$, where $V_1=V_2=[n]$ and 
+    $$
+    E=\cbra{(i,\pi_1(n)),(i,\pi_2(n)),(i,\pi_3(n))\middle|i\in[n]}.
+    $$
+    Let $S\subseteq V_1,T\subseteq V_2,|S|+|T|\leq n$ and $0<\delta<1/2$ be a constant to be determined later, then 
+    \begin{itemize}
+        \item $\max\cbra{|S|,|T|}\geq(\delta+1/2)n$. Then 
+            $$
+            \frac{|N(S\cup T)|}{|S|+|T|}\geq\frac{N(S)-|T|}{|S|+|T|}\geq\frac{|S|-|T|}{|S|+|T|}\geq2\delta.
+            $$
+        \item $\max\cbra{|S|,|T|}<(\delta+1/2)n$. Let $0<\lambda<1/2$ be a constant to be determined later.
+            \begin{align*}
+                &\Pr\sbra{\exists S,T,\frac{|N(S\cup T)|}{|S|+|T|}<c\middle|\max\cbra{|S|,|T|}<\pbra{\delta+\frac12}n}\\
+                \leq&2\sum_{\substack{S,T\\|T|\leq|S|<(\delta+1/2)n}}\Pr\sbra{\frac{|N(S\cup T)|}{|S|+|T|}<\lambda}\\
+                \leq&2\sum_{\substack{S,T\\|T|\leq|S|<(\delta+1/2)n}}\Pr\sbra{|N(S)|\leq(1+\lambda)|T|+\lambda|S|}\\
+                \leq&2\sum_{S,|S|<(\delta+1/2)n}\Pr\sbra{|N(S)|\leq(1+2\lambda)|S|}\\
+                \leq&2\sum_{i=1}^{(\delta+1/2)n}\binom ni\binom n{(1+2\lambda)i}\pbra{\frac{(1+2\lambda)i}n}^{3i}.
+            \end{align*}
+            It can be shown, with $\delta,\lambda$ carefully chosen, the probability is less than $1$ as $n$ goes to infinity.
+    \end{itemize}
+    Thus the original claim holds for $c=\min\{2\delta,\lambda\}$.
+\end{exercise}
+
+\end{document}

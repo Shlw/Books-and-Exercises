@@ -1,0 +1,243 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator{\E}{\mathbb E}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\ZPP}{\mathtt{ZPP}}
+\newcommand{\RP}{\mathtt{RP}}
+\newcommand{\coRP}{\mathtt{co}\text{-}\mathtt{RP}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Zbb}{\mathbb{Z}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Fcal}{\mathcal{F}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $1$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{1}
+    Color every edge of $K_n$ independently as red with $p$ and blue with $1-p$, then
+    \begin{align*}
+        &\Pr\sbra{\exists\text{red $K_k$}\lor\exists\text{blue $K_t$}}\\
+        \leq&\Pr\sbra{\exists\text{red $K_k$}}+\Pr\sbra{\exists\text{blue $K_t$}}\\
+        \leq&\binom nk p^{\binom k2}+\binom nt (1-p)^{\binom t2}.
+    \end{align*}
+    If 
+    $$
+    \binom nk p^{\binom k2}+\binom nt (1-p)^{\binom t2}<1,
+    $$
+    then $\Pr\sbra{\nexists\text{red $K_k$}\land\nexists\text{blue $K_t$}}>0$, thus $R(k,t)$ must be greater than $n$.
+
+    When $k=4$, we have 
+    $$
+    \binom n4 p^6+\binom nt (1-p)^{\binom t2}\leq n^4p^6+\pbra{\frac{en}{t}}^t\exp\pbra{-\frac{t^2p}{4}}
+    =n^4p^6+\pbra{\frac{en}{te^{tp/4}}}^t.
+    $$
+    Let $p=\frac{4\ln n}{t}$ thus 
+    $$
+    R(4,t)\geq\Omega\pbra{t^{3/2}/\pbra{\ln t}^{3/2}}.
+    $$
+\end{exercise}
+
+\begin{exercise}{2}
+    Let $c$ be an arbitrary coloring, then
+    \begin{align*}
+        \Pr\sbra{\exists\text{edge has $<4$ colors}}\leq\frac{4^{n-1}}{3^n}\times\frac{\binom43 3^n-\binom42 2^n+\binom41}{4^n}<1.
+    \end{align*}
+    Thus there exists a coloring such that in every edge all four colors are represented.
+\end{exercise}
+
+\begin{exercise}{3}
+    Let $\cbra{x_i}_{i\in[n]}$ be iid random variables.
+    Denote 
+    \begin{align*}
+        &S_2=\cbra{(i,j)\middle| i,j\in[n],\abs{x_i-x_j}\leq2}\\
+        &S_1=\cbra{(i,j)\middle| i,j\in[n],\abs{x_i-x_j}\leq1}.
+    \end{align*}
+    Now we prove $|S_2|<3|S_1|$ by induction on $n$:
+    \begin{itemize}
+        \item $n=1$. Trivial.
+        \item $n=k+1,k>0$. Let $T_i=[x_i-1,x_i+1]$ and $s_i=\abs{\cbra{j\middle|x_j\in T_i}}$. Define $i^*$ as the 
+            largest $i$ such that $\forall j<i,s_j\leq s_i$. Denote 
+            \begin{gather*}
+            S_2'=S_2\backslash\cbra{(i^*,\cdot),(\cdot,i^*)},\quad
+            S_1'=S_1\backslash\cbra{(i^*,\cdot),(\cdot,i^*)}, \\
+            u=\abs{\cbra{j\middle|x_j\in[x_{i^*}-2,x_{i^*}-1)}},\quad
+            v=\abs{\cbra{j\middle|x_j\in(x_{i^*}+1,x_{i^*}+2]}}.
+            \end{gather*}
+            Then $u\leq s_{i^*},v\leq s_{i^*}-1$ and 
+            $$
+            |S_2|-3|S_1|=|S_2'|-3|S_1'|+(6s_{i^*}-3)-3\times(2s_{i^*}-1)<0.
+            $$
+    \end{itemize}
+    On the other hand, $\E\sbra{|S_2|}=n+n(n-1)\Pr\sbra{\abs{X-Y}\leq 2}$ and $\E\sbra{|S_1|}=n+n(n-1)\Pr\sbra{\abs{X-Y}\leq 1}$,
+    which means $\Pr[\abs{X-Y}<2]\leq3\Pr[\abs{X-Y}<1]$ when $n$ goes to infinity.
+\end{exercise}
+\noindent\textbf{\it Remark:} This exercise and its extension come from \cite{alon1995123}.
+
+\begin{exercise}{4}
+    Let $p\in(0,1)$ be a constant to be determined later. Pick every vertex with probability $p$ to form $A_1$. 
+    Let $A_2$ be the set of all vertices in $V\backslash A_1$ which have no neighbor in $A_1$; and $A_3$
+    be the set of all vertices in $V\backslash\pbra{A_1\cup A_2}$ which have no neighbor outside $A_1\cup A_2$.
+    Then $A=A_1\cup A_2\cup A_3$ and $B=V\backslash A$ is a desired partition. 
+
+    On the other hand, 
+    $$
+    \E\sbra{|A|}=\E\sbra{|A_1|}+\E\sbra{|A_2|}+\E\sbra{|A_3|}\leq np+n(1-p)^\delta+\sum_v\Pr\sbra{v\in A_3}
+    $$
+    and 
+    \begin{align*}
+        &\Pr\sbra{v\in A_3}=\Pr\sbra{N(v)\subseteq A_1\lor N(v)\subseteq A_2}\\
+        \leq&\Pr\sbra{S\subseteq A_1\lor S\subseteq A_2;|S|=\delta,S\subseteq N(v)}\\
+        \leq&\Pr\sbra{S\subseteq A_1}+\sum_{u\in S}\Pr\sbra{u\in A_2}\leq p^\delta+\delta(1-p)^\delta.
+    \end{align*}
+    Thus 
+    \begin{align*}
+        \E\sbra{|A|}\leq&np+n(1-p)^\delta+np^\delta+n\delta(1-p)^\delta\\
+        \leq&2n\pbra{p+\delta(1-p)^\delta}\\
+        \leq&2n\pbra{p+\delta e^{-p\delta}}.
+    \end{align*}
+    Setting $p=2\ln\delta/\delta$ gives $\E\sbra{|A|}=O(n\ln\delta/\delta)$.
+\end{exercise}
+
+\begin{exercise}{5}
+    Define an $(n-10,2)$-system $\Fcal$ (see in Theorem 1.3.3): for any $e=\{u,v\}\in\overline G$, 
+    $(A_e,B_e)=(V\backslash K_e,\cbra{u,v})$ where $K_e$ is the corresponding $K_{10}$ when $e$ is added in $G$. 
+    By Theorem 1.3.3, 
+    $$
+    \binom n2-|E|=|\Fcal|\leq\binom{n-8}2,
+    $$ 
+    which gives $|E|\geq8n-36$.
+\end{exercise}
+\noindent\textbf{\it Remark:} This bound is tight considering $G=(V,E)$ where $V=\cbra{x_1,\cdots,x_n}$ and
+    $$
+    E=\cbra{\cbra{x_i,x_j}\middle|1\leq i<j\leq 9}\cup\cbra{\cbra{x_i,x_j}\middle|i\in[8],j>9}.
+    $$
+
+\begin{exercise}{6}
+    Since the total in-degree of $T_k$ is $|V|(|V|-1)/2$, there exists a vertex $u_1$ of in-degree $<|V|/2$.
+    Let $U_1=\cbra{u\in V\middle|u_1\to u\in E}$ and $V_1=\cbra{u\in V\middle|u\to u_1\in E}$.
+    Then the induced graph on $V_1$, denoted as $G_1$, has property $P_{k-1}$, 
+    since for any $S\subseteq V_1,|S|=k-1$, $S\cup\{u_1\}$ can not be defeated by any vertex in $U_1$.
+    Now choose $u_2\in V_1$ of in-degree $<|V_1|/2$ and obtain $G_2$; $G_2$ has property $P_{k-2}$.
+    
+    Repeat the process until we get $G_{k-1}$ with property $P_1$. Since each time $|V_i|<|V_{i-1}|/2$, we have
+    $$
+    |V|>2^{k-1}|V_{k-1}|.
+    $$ 
+    Now it suffices to show $|V_{k-1}|\geq k+1$. 
+    \begin{lemma}
+        Assume $S\subseteq V,|S|\leq k-1$, then there are at least $k+1$ vertices defeating all vertices in $S$.
+    \end{lemma}
+    \begin{proof}
+        Let $T$ be the set of vertices defeating all vertices in $S$. If $T\leq k$, there is a vertex $v$ defeating $T$
+        since $G$ has property $P_k$; and there is a vertex $u$ defeating $\cbra{v}\cup S$. Then $u\in T$ which contradicts to
+        the definition of $T$.
+    \end{proof}
+
+    Now with this lemma, assume on the contrary there exists $i\in[k-1]$ such that $|V_i|\leq k$ and $|V_{i-1}|\geq k+1$.
+    Note that $V_i$ contains all the vertices defeating $\cbra{u_1,u_2,\cdots,u_i}$, then $|V_i|\geq k+1$.
+\end{exercise}
+\noindent\textbf{\it Remark:} This argument comes from \cite{szekeres1965problem}.
+
+\begin{exercise}{7}
+    Let $\sigma$ be an arbitrary mapping from $\Nbb$ to $[k+\ell]$, then
+    \begin{align*}
+        1&\geq\Pr\sbra{\exists i,\pbra{\forall x\in A_i,\sigma(x)\leq k}\land\pbra{\forall x\in B_i,\sigma(x)>k}}\\
+        &=\sum_i\Pr\sbra{\pbra{\forall x\in A_i,\sigma(x)\leq k}\land\pbra{\forall x\in B_i,\sigma(x)>k}}\\
+        &=h\times\frac{k^k\ell^\ell}{(k+\ell)^{k+\ell}}.
+    \end{align*}
+    Thus $h\leq(k+\ell)^{k+\ell}/(k^k\ell^\ell)$.
+\end{exercise}
+
+\begin{exercise}{8}
+    Build a prefix tree $T$ of $F$. Since $F$ is prefix-free, each string $s\in F$ corresponds a unique leaf in $T$.
+    Thus 
+    $$
+    \sum_i\frac{N_i}{2^i}=\sum_s 2^{-|s|}=\sum_{\text{leaf }u} 2^{-\text{depth}(u)}\leq1.
+    $$
+\end{exercise}
+
+\begin{exercise}{9}
+    Let $k$ be an arbitrary integer and $m=\max_{s\in F}|s|$. Then
+    \begin{align*}
+        \pbra{\sum_i\frac{N_i}{2^i}}^k=\sum_{\ell=k}^{km} n_\ell2^{-\ell},
+    \end{align*}
+    where $n_\ell$ is the number of ways to decompose a valid codeword of length $\ell$ into $k$ parts.
+    Since $F$ is uniquely decipherable, $n_\ell\leq 2^\ell$, thus
+    \begin{align*}
+        \sum_i\frac{N_i}{2^i}\leq\sqrt[k]{km-k+1}\xlongrightarrow{k\to+\infty} 1.
+    \end{align*}
+\end{exercise}
+
+\begin{exercise}{10}
+    Let $\pi$ be an arbitrary permutation of the rows of $A$, then
+    \begin{align*}
+        &\Pr_\pi\sbra{\exists j,\exists 1\leq i_1<i_2<\cdots<i_k\leq n,\forall t\in[k-1],\pi(A)_{i_t,j}<\pi(A)_{i_{t+1},j}}\\
+        \leq&n\binom nk \Pr_\pi\sbra{\pi(A)_{1,1}<\pi(A)_{2,1}<\cdots<\pi(A)_{k,1}}\\
+        =&n\binom nk \frac1{k!}\leq n\pbra{\frac{en}{k}}^k\frac{e^{k-1}}{k^k}.
+    \end{align*}
+    Set $k=2e\sqrt n$ then the possibility is smaller than $1$.
+\end{exercise}
+
+\bibliography{ref}
+
+\end{document}

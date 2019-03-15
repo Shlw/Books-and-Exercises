@@ -1,0 +1,259 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator{\E}{\mathbb E}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\floorbra}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceilbra}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\ZPP}{\mathtt{ZPP}}
+\newcommand{\RP}{\mathtt{RP}}
+\newcommand{\coRP}{\mathtt{co}\text{-}\mathtt{RP}}
+\newcommand{\per}{\text{per}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Zbb}{\mathbb{Z}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $2$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{1}
+    Considering the number of monochromatic edges under random coloring, we have
+    $$
+    \E\sbra{\#\text{monochromatic edge}}=4^{n-1}\E\sbra{n\text{ vertices have same color}}=4^{n-1}\times4^{-n+1}=1.
+    $$
+    When all vertices have same color, it contributes $4^{n-1}>1$ monochromatic edges to the expectation. 
+    Thus there is a coloring by four colors so that no edge is monochromatic.
+\end{exercise}
+
+\begin{exercise}{2}
+    Assume $x\in[0,T]$ is a uniform random real, 
+    then for any $a\in R\backslash\cbra{0}$ we have $xa$ uniformly distributed in $[0,aT]$ (or $[aT,0]$ if $a<0$).
+    Hence for any fixed $a\in A$, 
+    $$
+    \lim_{T\to+\infty}\Pr\sbra{\cbra{ax}\in\left[\frac3{19},\frac4{19}\right)}=\frac1{19}.
+    $$
+    Since $A$ is a fixed finite set, there exists $T_0>0$ such that for any $a\in A$,
+    $$
+    \Pr\sbra{\cbra{ax}\in\left[\frac3{19},\frac4{19}\right)}\geq\frac1{20}.
+    $$
+    Thus
+    \begin{align*}
+        \E\sbra{\#\cbra{a\in A\middle|\cbra{xa}\in\left[\frac3{19},\frac4{19}\right)}}\geq\frac n{20}
+    \end{align*}
+    and there exists $x\in[0,T_0]$ such that $B=\cbra{a\in A\middle|\cbra{xa}\in\left[\frac3{19},\frac4{19}\right)}$
+    has at least $n/20$ elements.
+
+    On the other hand, for any $b_1,b_2,b_3,b_4\in B$, we have $b_1+2b_2\in\left[\frac9{19},\frac{12}{19}\right)$ and
+    $2b_3+2b_4\in\left[\frac{12}{19},\frac{16}{19}\right)$, which is consistent with the requirement.
+\end{exercise}
+
+\begin{exercise}{3}
+    Assume $x\in[L,R],L>0$ is a uniform random real, 
+    then for any $a\in R\backslash\cbra{0}$ we have $xa$ uniformly distributed in $[aL,aR]$ (or $[aR,aL]$ if $a<0$).
+    \begin{lemma}
+        For any $\varepsilon,L>0$, there exists $R>L$ such that 
+        $\pbra{\cbra{tR}\leq\varepsilon}\lor\pbra{\cbra{tR}\geq1-\varepsilon},\forall t\in T$.
+    \end{lemma}
+    \begin{proof}
+        Let $v=(\cbra{t_1},\cbra{t_2},\cdots,\cbra{t_n})\in[0,1)^n,k=\ceilbra{\frac1\varepsilon}$ and choose $L'>L$.
+        Divide $[0,1)^n$ into $k^n$ subcubes 
+        $$
+        [0,1)^n=\bigcup_{(\ell_1,\cdots,\ell_n)\in[k]^n}\prod_{i=1}^n\left[\frac{\ell_i-1}k,\frac{\ell_i}k\right). 
+        $$
+        Consider $0^n,L'v,2L'v,3L'v,\cdots,k^nL'v$, where $cv$ is defined as $(\cbra{ct_1},\cbra{ct_2},\cdots,\cbra{ct_n})$.
+        By pigeonhole principle, there exists $0\leq x_1<x_2\leq k^n$ such that $x_1L'v,x_2L'v$ are in the same subcube.
+
+        Then let $R=(x_2-x_1)L'\geq L'>L$, we have 
+        $$
+        \cbra{t_iR}\begin{cases}
+            \geq1-\frac1k\geq1-\varepsilon & \cbra{x_2L't_i}<\cbra{x_1L't_i}\\
+            \leq\frac1k\leq\varepsilon & \cbra{x_2L't_i}\geq\cbra{x_1L't_i}.
+        \end{cases}
+        $$
+    \end{proof}
+
+    Let $T$ be the set containing $n$ non-zero reals.
+    Let $L=\pbra{3\max_{t\in T}|t|}^{-1},\varepsilon=L/2$ and $R$ be the corresponding one by the lemma.
+    Then for any $t\in T$, we have
+    \begin{align*}
+        \Pr\sbra{\cbra{xt}\in\left[\frac13,\frac23\right)}
+        =\frac{\floorbra{|t|R}}{3(R-L)}
+        \leq\frac{\floorbra{|t|R}}{3(\floorbra{|t|R}+\varepsilon-L)}
+        =\frac{\floorbra{|t|R}}{3(\floorbra{|t|R}-L/2)}
+        >\frac13.
+    \end{align*}
+    Define $A=\cbra{t\in T\middle|xt\in\left[\frac13,\frac23\right)}$, then
+    $$
+    \E\sbra{|A|}=\sum_t\Pr\sbra{\cbra{xt}\in\left[\frac13,\frac23\right)}>\frac n3.
+    $$
+    Therefore there exists $x\in[L,R]$ such that $|A|>n/3$.
+
+    On the other hand, for any $a_1,a_2,a_3\in A$, $\cbra{a_1+a_2}\in\left[\frac23,1\right)\cup\left[0,\frac13\right)$
+    and $\cbra{a_3}\in\left[\frac13,\frac23\right)$, which meet the requirement.
+\end{exercise}
+
+\begin{exercise}{4}
+    Let $x\in[p-1]$ be a uniform random variable. Then
+    \begin{align*}
+        &\E\sbra{\#\cbra{(i,j)\middle|1\leq i<j\leq m,(xa_i\pmod p)\mod n=(xa_j\pmod p)\mod n}}\\
+        =&\sum_{1\leq i<j\leq m}\Pr\sbra{(x(a_j-a_i)\pmod p)\mod n=0}\\
+        =&\sum_{1\leq i<j\leq m}\Pr\sbra{\exists 1\leq k\leq\floorbra{\frac pn},x(a_j-a_i)\pmod p=kn}\\
+        =&\binom m2\times\frac{\floorbra{\frac pn}}{p-1}=\binom m2\times\frac{\floorbra{\frac{p-1}n}}{p-1}\\
+        <&\frac{m^2}2\times\frac1{10m^2}<1.
+    \end{align*}
+    Thus there exists a desired integer $x$.
+\end{exercise}
+
+\begin{exercise}{5}
+    Let $G$ be the graph on $n$ vertices and $t$ edges containing no copy of $H$.
+    We obtain the coloring of $K_n$ by the following process:
+    \begin{enumerate}
+        \item Initialize the label of every edge of $K_n$ as $0$.
+        \item Generate a random permutation $\pi$ of $n$ vertices.
+        \item For any $e\in E(\pi(G))\cap E(K_n)$, increase its label by $1$.
+        \item If there is no edge of $K_n$ has label $0$, output the labels as a coloring;
+            otherwise go to Step $2$.
+    \end{enumerate}
+    It is easy to see the subgraph of any color in $K_n$ is isomorphic to some subgraph of $G$, thus $K_n$ contains
+    no copy of $H$. Also, the number of colors, i.e., the maximum label, is bounded by the number of random permutations.
+
+    Let $\ell$ be the number of random permutations, then
+    \begin{align*}
+        &\E\sbra{\sum_{e\in K_n}\sbra{e\text{ is not covered by $\pi_1(G),\cdots,\pi_\ell(G)$}}}\\
+        =&\binom n2\Pr\sbra{\pi_1^{-1}(e_0),\pi_2^{-1}(e_0),\cdots,\pi_\ell^{-1}(e_0)\text{ don't hit $G$}}\\
+        =&\binom n2\pbra{1-\frac{t}{\binom n2}}^\ell\\
+        \leq&\binom n2\exp\pbra{-\frac{t\ell}{\binom n2}}.
+    \end{align*}
+    When $t\ell\geq tk>n^2\ln n$, we have 
+    $\E\sbra{\sum_{e\in K_n}\sbra{e\text{ is not covered by $\pi_1(G),\cdots,\pi_\ell(G)$}}}<1$,
+    then there exists $\pi_1,\cdots,\pi_\ell$ outputs a valid coloring.
+\end{exercise}
+
+\begin{exercise}{6}
+    Let $m$ be the number of alternating Hamilton cycles in $K$.
+    Any alternating Hamilton cycle $\Ccal$ in $K$ can be seen as the union of perfect red matchings and perfect blue matchings.
+    Therefore 
+    \begin{align*}
+        m\leq&\sum_{\text{balanced bipartite graph }G<K}
+        \#\cbra{\text{perfect red matchings in $G$}}\times\#\cbra{\text{perfect blue matchings in $G$}}\\
+        \leq&\binom n{n/2}
+        \max_G \#\cbra{\text{perfect red matchings in $G$}}\times\#\cbra{\text{perfect blue matchings in $G$}}\\
+        \leq&\binom n{n/2}\max_{R+B=A}\per(R)\times\per(B),
+    \end{align*}
+    where $A=1^{n/2\times n/2}$  
+    and $R$ ($B$) stands for the biadjacency matrix of the red (blue) graph.
+    Let $r_i=\sum_{1\leq j\leq n/2}R_{ij}$ and by Bregman's Theorem, we have
+    \begin{align*}
+        m\leq&\binom n{n/2}\max_{\bm r}\prod_{i=1}^{n/2}\pbra{r_i!}^{\frac1{r_i}}\prod_{i=1}^{n/2}
+        \pbra{\pbra{n/2-r_i}!}^{\frac1{\pbra{n/2-r_i}}}\\
+        =&\binom n{n/2}\pbra{\max_r\pbra{r!}^{\frac1r}\pbra{\pbra{n/2-r}!}^{\frac1{\pbra{n/2-r}}}}^{n/2}.
+    \end{align*}
+    By the PROBABILISTIC LENS: \textit{Hamiltonian Paths}, the maximum is achieved at $r=n/4$. Thus
+    \begin{align*}
+        m\leq&\binom n{n/2}\pbra{\frac n4!}^4\leq2^n\pbra{\frac e4}^4n^4\pbra{\frac n{4e}}^n
+        \leq n^4\frac{n!}{2^n}.
+    \end{align*}
+\end{exercise}
+
+\begin{exercise}{7}
+    Since there are no $A,B\in\Fcal$ such that $A\subset B$, 
+    $\E\sbra{X}=\frac1{n!}\sum_\sigma X_\sigma\leq\frac1{n!}\sum_\sigma 1=1$.
+    On the other hand, let $\Fcal_i$ be the number of sets of size $i$ in $\Fcal$, then
+    $$
+    \E\sbra{X}=\sum_i\E\sbra{X_i}=\sum_i\frac{\Fcal_i}{\binom ni}.
+    $$
+    By exchange argument, $|\Fcal|=\sum_i\Fcal_i\leq\binom n{\floorbra{n/2}}$.
+\end{exercise}
+\noindent\textbf{\it Remark:} This result is tight considering $\Fcal=\binom{[n]}{\floorbra{n/2}}$.
+
+\begin{exercise}{8}
+    Let $Y$ be a set of pairwise orthogonal unit basis in $R^n$ and $X\subseteq Y$.
+    Basic linear algebra shows $\cbra{[y_{j,i}]_j}_i$ is also a set of pairwise orthogonal unit basis.
+    Then for any $i\in[n]$, we have 
+    $$
+    \sum_{j=1}^{|X|}x_{j,i}^2\leq\sum_{j=1}^ny_{j,i}^2=1.
+    $$
+    Thus
+    $$
+    k\geq\sum_{i=1}^k\sum_{j=1}^{|X|}x_{j,i}^2=\sum_{j=1}^{|X|}\sum_{i=1}^kx_{j,i}^2\geq\varepsilon^2|X|.
+    $$
+
+    This is tight considering the set of normalized row vectors of Hadamard matrix $H_{2^r}$ (padded with $0$'s if $n>2^r$). 
+\end{exercise}
+
+\begin{exercise}{9}
+    Assume $G\in\Bcal_{a,n-a}$. Let $L=R=\varnothing$ and $\ell$ be the list size.
+    For any color $c$, toss a fair coin $X$ independently. If $X=0$, add $c$ to $L$; otherwise add it to $R$.
+    Now for any left vertex $v\in G$, choose any color from $S(v)\cap L$;
+    for any right vertex $u\in G$, choose any color from $S(u)\cap R$.
+    Since no vertices from both sides will share colors, it is a proper coloring.
+
+    To show that $S(v)\cap L\neq\varnothing,S(u)\cap R\neq\varnothing$, it suffices to consider
+    $$
+    \E\sbra{\sum_v\sbra{S(v)\cap L=\varnothing}+\sum_u\sbra{S(u)\cap R=\varnothing}}=n2^{-\ell}<1
+    $$
+    when $\ell>\log n$.
+\end{exercise}
+
+\end{document}

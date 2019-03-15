@@ -1,0 +1,268 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator{\E}{\mathbb E}
+\DeclareMathOperator{\Var}{\mathrm{Var}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\vabs}[1]{\left\| #1 \right\|}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\floorbra}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceilbra}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\ZPP}{\mathtt{ZPP}}
+\newcommand{\RP}{\mathtt{RP}}
+\newcommand{\coRP}{\mathtt{co}\text{-}\mathtt{RP}}
+\newcommand{\per}{\text{per}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Zbb}{\mathbb{Z}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $4$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{1}
+    \begin{align*}
+        &\Var\sbra{X}-\Pr\sbra{X=0}\E\sbra{X^2}\\
+        =&\E\sbra{X^2}-\pbra{\E\sbra{X}}^2-\Pr\sbra{X=0}\E\sbra{X^2}\\
+        =&\pbra{\sum_{i\geq1}p_i}\pbra{\sum_{i\geq0}p_ii^2}-\pbra{\E\sbra{X}}^2\\
+        =&\pbra{\sum_{i\geq1}p_i}\pbra{\sum_{i\geq1}p_ii^2}-\pbra{\E\sbra{X}}^2\\
+        \geq&\pbra{\sum_{i\geq1}p_ii}^2-\pbra{\E\sbra{X}}^2\\
+        =&\pbra{\E\sbra{X}}^2-\pbra{\E\sbra{X}}^2=0.
+    \end{align*}
+\end{exercise}
+
+\begin{exercise}{2}
+    Without loss of generality, assume $a_1\geq a_2\geq\cdots\geq a_n>0$.
+    Let $S,T$ be a partition of $[n],$
+    $$
+    \lambda=\min_{S,T}\abs{\sum_{i\in S}a_i^2-\sum_{i\in T}a_i^2}
+    $$
+    and $S^*,T^*$ be the corresponding partition. Define $s=\sum_{i\in S}a_i^2,t=\sum_{i\in T}a_i^2,X=\sum_{i\in S}\epsilon_ia_i,
+    Y=\sum_{i\in T}\epsilon_ia_i$. Then 
+    \begin{align*}
+        \Pr\sbra{\abs{X+Y}\leq1}\geq\Pr\sbra{\abs{X}\leq1,\abs{Y}\leq1,\sgn(X)\neq\sgn(Y)}\geq\frac12st=\frac{1-\lambda^2}8.
+    \end{align*}
+    
+    On the other hand, assume $s\geq t$. Since for any $i\in S$, if we move $i$ to $T$, the discrepancy shall not increase; thus
+    $\lambda-2a_i\leq-\lambda$, which means $a_1\geq a_i\geq\lambda$. Therefore let $Z=\sum_{i=2}^n\epsilon_ia_i$, we have
+    \begin{align*}
+        \Pr\sbra{\abs{\epsilon_1a_1+Z}\leq1}
+        &\geq\Pr\sbra{\abs{Z}\leq1+a_1,\sgn(Z)\neq\sgn(\epsilon_1)}\\
+        &\geq\frac12\pbra{1-\frac{1-a_1^2}{(1+a_1)^2}}\\
+        &\geq\frac\lambda{1+\lambda}.
+    \end{align*}
+
+    Hence
+    $$
+    \Pr\sbra{\abs{\sum_{i=1}^n\epsilon_ia_i}\leq}\geq\max\cbra{\frac{1-\lambda^2}8,\frac\lambda{1+\lambda}}
+    \geq0.1225.
+    $$
+\end{exercise}
+
+\begin{exercise}{3}
+    Define $f:S\subseteq[n]\to\Rbb$ as $f(U)=\sum_{i\in U}\vabs{a_i}^2$.
+    Let $S=\cbra{i\middle|\vabs{a_i}\geq\frac1{20}}$ and $T=[n]\backslash S$. 
+    Let $T_1,\cdots,T_{300}$ be a partition of $T$,
+    $$
+    \lambda=\min_{f(T_i)\geq f(T_{i+1}),\forall i}f(T_1)-f(T_{200})
+    $$
+    and $T^*_1,\cdots,T^*_{300}$ be the corresponding partition. 
+    Therefore 
+    $$
+    \lambda\leq2\max_{i\in T}\vabs{a_i}^2\leq\frac1{200}
+    $$ 
+    and 
+    $$
+    f(T^*_i)\leq\frac{f(T)}{300}+\lambda=\frac5{600}.
+    $$
+
+    For any $t\in[300]$, let $u_i=\sum_{i\in T^*_t}\epsilon_ia_i$; then 
+    $$
+    \Pr\sbra{\vabs{u_i}\leq\frac1{10}}\geq1-100f(T^*_t)\geq\frac16.
+    $$
+    Now let $\epsilon'_i,i\in[300]$ be uniform value in $\{-1,1\}$, we have
+    \begin{align*}
+        &\Pr\sbra{\vabs{\sum_{i=1}^n\epsilon_ia_i}\leq\frac13}\\
+        \geq&\Pr\sbra{\pbra{\forall t\in[300],\vabs{u_t}\leq\frac1{10}}\land
+        \pbra{\vabs{\sum_{i\in S}\epsilon_ia_i+\sum_{t\in[300]}\epsilon_t'u_t}\leq\frac13}}\\
+        \geq&6^{-300}\Pr\sbra{\vabs{\sum_{i\in S}\epsilon_ia_i+\sum_{t\in[300]}\epsilon_t'u_t}\leq\frac13
+        \middle|\vabs{u_t}\leq\frac1{10}}\\
+        \geq&6^{-300}2^{-700}.
+    \end{align*}
+    The last inequality comes from $|S|\leq400$ and the following lemma. 
+
+    \begin{lemma}
+        For any $n$ vectors $a_1,\cdots,a_n\in\Rbb^2$ satisfying $\|a_i\|\leq\ell$, there exists 
+        $(\epsilon_1,\cdots,\epsilon_n)\in\{-1,1\}$ such that $\vabs{\sum_i\epsilon_ia_i}\leq\sqrt2\ell$, i.e.,
+        $$
+        \Pr\sbra{\vabs{\sum_{i=1}^n\epsilon_ia_i}\leq\sqrt2\ell}\geq2^{-n}.
+        $$
+    \end{lemma}
+    \begin{proof}
+        Prove by induction.
+        \begin{itemize}
+            \item $n=1,2$ : Trivial.
+            \item $n\geq3$ : Let $(r_i,\theta_i),r_i\leq\ell$ be the polar coordinate of $a_i$ and assume without loss of 
+                generality $\theta_i\in[0,\pi)$. Since $n\geq3$, there exists $i\neq j$ such that 
+                $0\leq\theta_i-\theta_j\leq\pi/3$. Then let $a'=a_i-a_j$; it has length
+                $$
+                \vabs{a'}=\sqrt{\vabs{a_i}^2+\vabs{a_j}^2-2\vabs{a_i}\vabs{a_j}\cos(\theta_i-\theta_j)}
+                \leq\sqrt{\vabs{a_i}^2+\vabs{a_j}^2-\vabs{a_i}\vabs{a_j}}\leq\ell.
+                $$
+                Substituting $a_i,a_j$ with $a'$ and by induction, the claim holds.
+        \end{itemize}
+    \end{proof}
+\end{exercise}
+
+\begin{exercise}{4}
+    Let $Y=X-\lambda$, then 
+    \begin{align*}
+        \Pr\sbra{X\geq\lambda}\leq\frac{\sigma^2}{\sigma^2+\lambda^2}
+        &\iff\Pr\sbra{Y\geq0}\leq\frac{\E\sbra{Y^2}-\E^2\sbra{Y}}{\E\sbra{Y^2}}\\
+        &\iff\Pr\sbra{Y<0}\E\sbra{Y^2}\geq\E^2\sbra{Y},
+    \end{align*}
+    which follows directly from the following lemma.
+    \begin{lemma}
+        Let $Y$ be a random variable with $\E\sbra{Y}<0$, then $\Pr\sbra{Y<0}\E\sbra{Y^2}\geq\E^2\sbra{Y}$.
+    \end{lemma}
+    \begin{proof}
+    Since $\E\sbra{Y}<0$, we have
+    $$
+    \Pr\sbra{Y<0}\E\sbra{Y\middle|Y<0}+\Pr\sbra{Y\geq0}\E\sbra{Y\middle|Y\geq0}<0.
+    $$
+    Hence
+    \begin{align*}
+    \E^2\sbra{Y}
+    &=\pbra{\Pr\sbra{Y<0}\E\sbra{Y\middle|Y<0}+\Pr\sbra{Y\geq0}\E\sbra{Y\middle|Y\geq0}}^2\\
+        &\leq\pbra{\Pr\sbra{Y<0}\E\sbra{Y\middle|Y<0}}^2-\pbra{\Pr\sbra{Y\geq0}\E\sbra{Y\middle|Y\geq0}}^2\\
+        &\leq\pbra{\Pr\sbra{Y<0}\E\sbra{Y\middle|Y<0}}^2.
+    \end{align*}
+    On the other hand
+    \begin{align*}
+        \Pr\sbra{Y<0}\E\sbra{Y^2}
+        &=\Pr\sbra{Y<0}\pbra{\Pr\sbra{Y<0}\E\sbra{Y^2\middle|Y<0}+\Pr\sbra{Y\geq0}\E\sbra{Y^2\middle|Y\geq0}}\\
+        &\geq\pbra{\Pr\sbra{Y<0}}^2\E\sbra{Y^2\middle|Y<0}\\
+        &\geq\pbra{\Pr\sbra{Y<0}\E\sbra{Y\middle|Y<0}}^2.
+    \end{align*}
+    \end{proof}
+\end{exercise}
+
+\begin{exercise}{5}
+    Let $r_i,t_i,i\in[n]$ be uniform variables in $\bin$ and $X=\sum_ir_ix_i,Y=\sum_it_iy_i$. Then
+    \begin{gather*}
+        \mu_x=\E\sbra{X}=\frac12\sum_{i=1}^nx_i,\quad \mu_y=\E\sbra{Y}=\frac12\sum_{i=1}^ny_i\\
+        \sigma_x^2=\E\sbra{X^2}-\mu_x^2=\frac14\sum_{i=1}^nx_i^2,\quad \sigma_y^2=\E\sbra{Y^2}-\mu_y^2=\frac14\sum_{i=1}^ny_i^2\\
+    \end{gather*}
+    Therefore let $u_i,i\in[n]$ be uniform variables in $\bin$ and $Z=\sum_iu_iv_i$, we have 
+    \begin{align*}
+        \Pr\sbra{\pbra{\abs{Z_x-\mu_x}\leq3\sigma_x}\land\pbra{\abs{Z_y-\mu_y}\leq3\sigma_y}}
+        \geq1-\Pr\sbra{\abs{X-\mu_x}\geq3\sigma_x}-\Pr\sbra{\abs{Y-\mu_y}\geq3\sigma_y}
+        \geq\frac79.
+    \end{align*}
+    Since $\abs{x_i},\abs{y_i}\leq2^{n/2}/(100\sqrt n)$, $(\sigma_x+1)(\sigma_y+1)\leq n2^n/10000$; then 
+    $$
+    \frac79\times2^n>4\times9\times\frac{2^n}{10000}\geq4\times9\times(\sigma_x+1)(\sigma_y+1).
+    $$
+    There are $\frac79\times2^n$ choices of $u_i$ lies in 
+    $[\mu_x-3\sigma_x,\mu_x+3\sigma_x]\times[\mu_y-3\sigma_y,\mu_y+3\sigma_y]$, by pigeonhole principle,
+    there are $u,u'\in\bin^n$ such that $u\neq u'$ and $\sum_iu_iv_i=\sum_iu_i'v_i$. Let $w=u-u',I=\cbra{i\middle|w_i=1},
+    J=\cbra{i\middle|w_i=-1}$, we have
+    $$
+    \sum_{i\in I}v_i=\sum_{j\in J}v_j.
+    $$
+\end{exercise}
+
+\begin{exercise}{6}
+    Assume $k\geq2$ and $x_1,x_2,\cdots,x_n\in\Zbb_p$ are $n\geq4k^2$ distinct values.
+    Let $X=\{x_1,\cdots,x_n\}$ and $aX+b=\cbra{ax_i+b\mod p\middle|i\in[n]}$.
+
+    Divide $\Zbb_p$ into $m$ intervals $I_i,i\in[m]$ of length $\floorbra{p/m}\leq|I_i|\leq\ceilbra{p/m}$,
+    satisfying any interval of length at least $p/k$ contains some $I_t,t\in[m]$.
+    Since shifting does not change the original claim, it suffices to show
+    \begin{align*}
+        &\Pr\sbra{\forall i\in[m],(aX+b)\cap I_i\neq\varnothing}>0\\
+        \iff&\Pr\sbra{\exists i\in[m],(aX+b)\cap I_i=\varnothing}<1\\
+        \iff&\Pr\sbra{\exists i\in[m],\sum_{x\in X}[ax+b\in I_i]=0}<1.
+    \end{align*}
+
+    On the other hand, for any $u,v,x,y\in\Zbb_p,x\neq y$, 
+    $$
+    \Pr\sbra{ax+b=u,ay+b=v}=\frac1{p^2}.
+    $$
+    Define 
+    $$
+    \mu_i=\E\sbra{\sum_{x\in X}[ax+b\in I_i]}=\frac{n|I_i|}p.
+    $$
+    Hence
+    \begin{align*}
+        &\Pr\sbra{\exists i\in[m],\sum_{x\in X}[ax+b\in I_i]=0}\\
+        \leq&\sum_{i=1}^m\Pr\sbra{\abs{\pbra{\sum_{x\in X}[ax+b\in I_i]}-\mu_i}\geq\mu_i}\\
+        \leq&\sum_{i=1}^m\frac{p^2}{n^2|I_i|^2}\times n\times\pbra{\frac{|I_i|}p-\frac{|I_i|^2}{p^2}}\\
+        =&\sum_{i=1}^m\pbra{\frac p{n|I_i|}-\frac1n}.
+    \end{align*}
+    Setting $m=2k$ and $|I_i|=\frac p{2k}$ will do if we ignore the annoying rounding stuff.
+\end{exercise}
+
+\end{document}

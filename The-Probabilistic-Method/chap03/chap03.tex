@@ -1,0 +1,136 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator{\E}{\mathbb E}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\floorbra}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceilbra}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\ZPP}{\mathtt{ZPP}}
+\newcommand{\RP}{\mathtt{RP}}
+\newcommand{\coRP}{\mathtt{co}\text{-}\mathtt{RP}}
+\newcommand{\per}{\text{per}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Zbb}{\mathbb{Z}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $3$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{1}
+    $$
+    R(k,k)>n-\binom nk2^{1-\binom k2}\geq n-\pbra{\frac{en}k}^k2^{1-\binom k2}.
+    $$
+    Let 
+    $$
+    n=\frac1{\sqrt[k-1]{2e}}\frac ke2^{k/2}
+    $$
+    then
+    $$
+    R(k,k)\geq\pbra{1-\frac1k}\frac1{\sqrt[k-1]{2e}}\frac ke2^{k/2}=(1-o(1))\frac ke2^{k/2}.
+    $$
+\end{exercise}
+
+\begin{exercise}{2}
+    As shown in Section 3.1,
+    $$
+    R(4,k)>n-\binom n4p^6-\binom nk(1-p)^{\binom k2}\geq n-n^4p^6-\frac{n^k}{k!}e^{-p\frac{k^2}4}.
+    $$
+    Let $p=\frac{4\ln n}k\delta$, then 
+    $$
+    R(4,k)>n-n^4\pbra{\frac{4\delta\ln n}k}^6-\frac{n^{k(1-\delta)}}{k!}.
+    $$
+    Let $n=\Theta\pbra{\pbra{\frac k{\ln k}}^2}$ and $\delta=O(1)$, we have $R(4,k)\geq\Omega\pbra{(k/\ln k)^2}$.
+\end{exercise}
+
+\begin{exercise}{3}
+    Independently select every vertex with probability $\sqrt{\frac n{3m}}\leq 1$ to form set $A$. 
+    Let $B$ be the set of edges induced by vertices in
+    $A$. Then 
+    $$
+    \E\sbra{|A|-|B|}=np-mp^3=\frac{2n^{3/2}}{3\sqrt3\sqrt m}.
+    $$
+    By removing at most $1$ vertex in every edge in $B$, there exists an independent set of size at least
+    $\frac{2n^{3/2}}{3\sqrt3\sqrt m}$.
+\end{exercise}
+
+\begin{exercise}{4}
+    Let $G$ be a digraph of order $n$ and each vertex has outdegree at least $\delta=\log n-\frac1{10}\log\log n$.
+    For any $v\in G$, define $N_G(v)=\cbra{u\in G\middle|v\to u\in E(G)}$.
+    Independently for any vertex $v$ choose its color $c_v$ as black or white with equal possibility; thus
+    \begin{align*}
+    \E\sbra{\#\cbra{v\middle|\exists u,\pbra{c_u\neq c_v}\land\pbra{u\in N_G(v)}}}
+        \geq n\pbra{\frac12}^\delta=\pbra{\log n}^{1/10}=o(\log n).
+    \end{align*}
+    Then fix such coloring and remove $o(\log n)$ vertices in 
+    $\cbra{v\middle|\exists u,\pbra{c_u\neq c_v}\land\pbra{u\in N_G(v)}}$. Every vertex $v$ in the remaining graph $G'$ 
+    has outdegree at least $1$ and at least one vertex in $N_{G'}(v)$ has different color.
+    
+    Choose an arbitrary vertex $v_1\in G'$ and go to another one of different color repeatedly, then we have
+    $$
+    v_1\to v_2\to\cdots\to v_k\to v_{k+1}=v_i,i\leq k.
+    $$
+    The simple directed cycle $v_i\to v_{i+1}\to\cdots\to v_k\to v_i$ has even length since $c_{v_i}\neq c_{v_k}$.
+\end{exercise}
+
+\end{document}
