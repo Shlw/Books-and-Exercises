@@ -84,6 +84,8 @@
 \maketitle
 
 \begin{exercise}{1}
+    \textbf{Remark: This is not the complete solution.}
+
     Let $\pi_1,\pi_2,\pi_3$ be three independent random permutations in $S_n$.
     Construct a bipartite graph $G=(V_1,V_2,E)$, where $V_1=V_2=[n]$ and 
     $$
@@ -95,17 +97,17 @@
             $$
             \frac{|N(S\cup T)|}{|S|+|T|}\geq\frac{N(S)-|T|}{|S|+|T|}\geq\frac{|S|-|T|}{|S|+|T|}\geq2\delta.
             $$
-        \item $\max\cbra{|S|,|T|}<(\delta+1/2)n$. Let $0<\lambda<1/2$ be a constant to be determined later.
+        \item $\max\cbra{|S|,|T|}<\kappa n$. Let $0<\lambda<1/2$ be a constant to be determined later.
             \begin{align*}
-                &\Pr\sbra{\exists S,T,\frac{|N(S\cup T)|}{|S|+|T|}<c\middle|\max\cbra{|S|,|T|}<\pbra{\delta+\frac12}n}\\
-                \leq&2\sum_{\substack{S,T\\|T|\leq|S|<(\delta+1/2)n}}\Pr\sbra{\frac{|N(S\cup T)|}{|S|+|T|}<\lambda}\\
-                \leq&2\sum_{\substack{S,T\\|T|\leq|S|<(\delta+1/2)n}}\Pr\sbra{|N(S)|\leq(1+\lambda)|T|+\lambda|S|}\\
-                \leq&2\sum_{S,|S|<(\delta+1/2)n}\Pr\sbra{|N(S)|\leq(1+2\lambda)|S|}\\
-                \leq&2\sum_{i=1}^{(\delta+1/2)n}\binom ni\binom n{(1+2\lambda)i}\pbra{\frac{(1+2\lambda)i}n}^{3i}.
+                &\Pr\sbra{\exists S,T,\frac{|N(S\cup T)|}{|S|+|T|}<\lambda\middle|\max\cbra{|S|,|T|}<\kappa n}\\
+                \leq&2\sum_{|T|\leq|S|<\kappa n}\Pr\sbra{\frac{|N(S\cup T)|}{|S|+|T|}<\lambda}\\
+                \leq&2\sum_{|T|\leq|S|<\kappa n}\Pr\sbra{|N(S)|\leq(1+\lambda)|T|+\lambda|S|}\\
+                \leq&2\sum_{|S|<\kappa n}\Pr\sbra{|N(S)|\leq(1+2\lambda)|S|}\\
+                \leq&2\sum_{i=1}^{\kappa n}\binom ni\binom n{(1+2\lambda)i}\pbra{\frac{(1+2\lambda)i}n}^{3i}.
             \end{align*}
-            It can be shown, with $\delta,\lambda$ carefully chosen, the probability is less than $1$ as $n$ goes to infinity.
+            It can be shown, with $\lambda,\kappa$ sufficiently small, say $\kappa=1/10$, the probability is less than $1$ as $n$ goes to infinity.
+        \item $\kappa n\leq\max\cbra{|S|,|T|}<(\delta+1/2)n$. I don't know.
     \end{itemize}
-    Thus the original claim holds for $c=\min\{2\delta,\lambda\}$.
 \end{exercise}
 
 \end{document}
