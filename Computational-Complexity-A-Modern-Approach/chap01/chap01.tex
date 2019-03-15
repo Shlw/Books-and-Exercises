@@ -85,6 +85,14 @@
 	Therefore, $\widetilde{M}$ perform at most $5kT(n)^2$. 
 \end{exercise}
 
+\begin{exercise}{1.4}
+    We complete the proof sketch of \textbf{claim 1.8}. We take a bidirectional tape and 'fold' the tape at index 0 to produce a unidirectional tape as shown in \textbf{claim 1.5}. The new alphabet is made up of $|\Gamma^2|$ elements, each a two-tuple $(x,y):x,y \in \Gamma$ of every possible combination of the elements of $\Gamma$. We replace every original  rule $(q_i,x)=(q_j,y,z)$ with $(q_i,(x,\bot))=(q_j,(y,\bot),z)$, and $(q^{\prime}_i,(\bot,x))=(q^{\prime}_j,(\bot,y),\lnot z)$, where $z \in {L,R,S}$ and $\lnot L=R,\lnot R=L, \lnot S=S$.
+    
+    The $q$ states preserve the original direction of movement, while the $q^{\prime}$ states reverse the direction. For the case where the head  reaches the start position, we add the rules $(q_i,(\rhd,\rhd))=(q^{\prime}_i,(\rhd,\rhd),R)$ and $(q^{\prime}_i,(\rhd,\rhd))=(q_i,(\rhd,\rhd),R)$- this lets us switch the "mode" of the machine.
+    
+    This machine runs in the same number of steps as the original machine except for the case where we cross the start symbol, which takes 2 steps. Thus, the unidirectional mahcine runs in time at most $2T(n)$.
+\end{exercise}
+
 \begin{exercise}{1.6}
     Define a transducer: read an input and write an output every time step. 
     Firstly, each computation can be simulated by a transducer with same cost by 
@@ -252,6 +260,40 @@
         Choose any vertex and start DFS in the graph, then
         check whether the number of visited vertices is $|V|$ and $|E|=|V|-1$.
 \end{enumerate}
+\end{exercise}
+
+\begin{exercise}{1.15}
+    \begin{enumerate}
+        \item[\textbf{(a)}]
+        We note that converting from any base to binary (or vice versa) can be performed in polynomial time by repeatedly  using the operations of division and modulo.
+        
+        For b>2, a number n represented by $O(\log_b n)$ digits, each digit taking $\log_2 b$ bits. Converting to binary requires $\log_2 n$ modulo and division operations, each of which we assume takes $O(\log_2 n)$ bit-operations. Overall complexity is $0((log_2 n)^2)$.
+        We can reduce from $L_S^2$ to $L_S^b$ or vice versa in polynomial time. Therefore, one of them is in P iff the other language is.
+        \item[\textbf{(b)}]
+        %Show that the language:
+        %\begin{equation*}
+         %\mathrm{UNARYFACTORING}=\left\{\langle \lfloor n\rfloor_{unary},\lfloor l\rfloor_{unary},\lfloor k\rfloor_{unary} \rangle: \text{there is a prime } j \in (l,k)\text{ dividing } n \right\}
+        %\end{equation*}
+        %is in $P$.
+        We have the following algorithm runs in polynomial time over the size of $\langle \lfloor n\rfloor_{unary},\lfloor l\rfloor_{unary},\lfloor k\rfloor_{unary} \rangle$.
+
+            \begin{algorithm}[H]    
+                \KwData{ $ \lfloor n\rfloor_{unary},\lfloor l\rfloor_{unary},\lfloor k\rfloor_{unary} $}
+                \KwResult{$\mathrm{TRUE}$ or $ \mathrm{FALSE}$}
+                \Begin{
+                \ForEach{$j \in (l,k)$}{
+                \If{isPrime($j$)}{
+                   \If{$j$ divides $n$}{
+                      \KwRet $\mathrm{TRUE}$\; 
+                   }
+                }
+            }
+           \KwRet $\mathrm{FALSE}$ \;
+        }
+       \caption{Unaryfactoring}
+       \end{algorithm}
+       The outermost loop runs in time $O(\lfloor k\rfloor_{unary}-\lfloor l\rfloor_{unary})$. Primality test ($\mathrm{isPrime}(j)$) can be performed in polynomial time (either by a simple enumeration of all numbers from 1 to $\sqrt{j}$). Division of unary numbers can be done in linear time.
+    \end{enumerate}
 \end{exercise}
 
 \end{document}

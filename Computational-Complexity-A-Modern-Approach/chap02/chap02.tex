@@ -122,6 +122,10 @@
 		根据 NP 的定义：$x\in L \iff\exists u\in (0,1)^{p|x|},M(u,x)=1$。对于任意一个质数 $n$，我们可以找到一个验证，对于任意的小于 $n$ 的素数 $q$ 都能找到一个 $a$ 满足 $a^{n-1}=1 \pmod n$ 且 $a^{\frac{n-1}{q}}\ne 1 \pmod n$。那么 $u=q_0a_0\dots q_ka_k$ 且 $u=O(\phi (n)\cdot\log n)=poly (n)$，因此所有素数的二进制编码构成的语言属于 NP。
 	\end{exercise}
 
+	\begin{exercise}{2.11}
+		Let $L$ indicate the languange defined in the exercise. $L$ is  clearly in \textbf{NP} since the proof of $\psi$ , of which the length is at most $n$, can serve as the certificate. To reduce $3 SAT$ to $L$, note that 3CNF formulae satisfibility $\cap_{i=1}^m \cup_{j=1}^3 x_{i_j}$ can be regard as a math statement, and has a proof of size at most $3mk$, where $k$ indicates the size of the statement such as '$x_{i_j}=z,z\in{0,1}$'. Obviously, $\psi$ is satisfiable if and only if the corresponding math statement has a proof of size at most $3mk$ in ZF system.
+	\end{exercise}
+
     \begin{exercise}{2.13}
 	\begin{itemize}
 \item [(a)]
@@ -204,6 +208,23 @@ Since the mapping is monomorphism. Thus the number of solutions for $\phi$ and $
 		$$x_i(1-x_i)=0$$.
 	\end{exercise}
         
+	\begin{exercise}{2.22}	
+		Given sets $S_{i_1},\dots,S_{i_l}$ and integers $x_{i_1},\dots,x_{i_l}$ as certificate, we can easily check whether  $S_{i_1},\dots,S_{i_l}$ are disjoint and $\sum_{j=1}^l x_{i_j} \ge k$, thus COMBINATORIAL AUCTION is in NP.
+
+		To show that COMBINATORIAL AUCTION is NP-hard, we show a way to transform a simple undirected graph $G$ to a combinatorail auction case such that $G$ has an independent set of size at least $k$ if and only if the auctioneer can obtain a revenue of at least $k$. 
+
+		Assuming that graph $G=(V,E)$ has $m$ vertices $\{v_1,\dots,v_m \}$ and $n$ edeges $\{ e_1,\dots,e_n \}$, the corresponding auction has $n$ items $\{1,\dots,n \}$ and $m$ item sets $\{S_1,\dots,S_m \}$. For any item set $S_i$, it contains item $j$ if and only if $v_i$ is incident with $e_j$ in the graph $G$. Furthermore, we set every $x_i$ equal to 1.
+
+		Clearly, the process can be done in polynomial time, and all that remains to show is that $G$ has an independent set of size $k$ iff the auctioneer can get a revenue of $k$.
+
+		\begin{itemize}
+			\item Suppose that $G$ has an independent set $T$ of size $k$. We will show that $S_l, v_l \in T$ are disjoint sets. For any such two sets $S_i$,$S_j$, if they had same item $p$, $v_i$ and $v_j$ would be incident with the same edge $e_p$, with contradiction to the assumption that $v_i$ and $v_j$ are independent. Thus, there are at least $k$ disjoint sets and  the auctioneer can get a revenue of at least $k$.
+			
+			\item Supppose the auctioneer can get a revenue of at least $k$. There are $k$ disjoint sets $S_{l_1},\dots,S_{l_k}$ in the auction since the price of each item set is 1. We will show that the vertex subset $V^{prime}=\{v_{l_i}\}_{i=1}^k$ is a $k$-size independent set of $G$. For any two vertices $v_i,v_j \in V^{prime}$, they are not adjacent, otherwise their corresponding item sets $S_i$ and $S_j$ would have some same item. Therefore, $G$ has an independent set of size at least $k$.
+
+		\end{itemize}
+	\end{exercise}
+
 	\begin{exercise}{2.24}
 	Since $\bar{L} \in NP$, then by the definition of NP, exists $p: \mathbb{N}\rightarrow \mathbb{N}$ and a polynomial TM $M$ s.t. for every $x \in \{0,1\}^{*}$,
 $$x \in \bar{L} \Leftrightarrow \exists u \in \{0,1\}^{p(|x|)} \text{ s.t. } M(x,u) = 1$$
@@ -246,4 +267,25 @@ $$
 T(s,i+1)=max(T(s-n_i,i), T(s,i))
 $$
 \end{exercise}
+
+\begin{exercise}{2.33}	
+	We now need to show that if $P=NP$, then $\Sigma_2 SAT$ is in $P$. Note that $\Sigma_2 SAT$ is defined as follows:
+	\begin{equation*}
+	 \psi=\left\langle \varphi,1^{n},1^{m} \right\rangle \in  \Sigma_2 SAT  \text{   if and only if   } \exists_{x\in \{0,1\}^n} \forall_{y \in \{0,1 \}^m} \text{s.t.} \varphi(x,y)=1,\text{  where }\varphi \text{ is a CNF formula.} 
+	\end{equation*}
+	Define a new language $L^{\prime}$:
+	\begin{equation*}
+	     	L^{\prime}=\{(\psi,x): \forall_{y \in \{0,1\}^m} \varphi(x,y)=1\}
+	\end{equation*}
+	which can be written in a slightly different way:
+	\begin{equation*}
+		\psi \in L \text{  if and only if  } \exists_{x \in {0,1}^m} (\phi,x) \in L^{prime}
+	\end{equation*}
+	Observe, that $L^{prime}$ is in co-$NP$. Thus there exists apolynomial time algorithm deciding the language $L^{prime}$ since $P=NP$ and therefore $P=$co-$NP$. Hence it's equivalent to 
+	\begin{equation*}
+	       \psi \in L \text{  if and only if  } \exists x \text{s.t.} B(\psi,x). 
+	\end{equation*}
+	But this is an $NP$-statement, thus the problem can be solved in polynomial time.
+\end{exercise}
+
 \end{document}
