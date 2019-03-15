@@ -110,4 +110,51 @@
     \end{itemize}
 \end{exercise}
 
+\begin{exercise}{2}
+    Since $G$ is an $(n,d,\lambda)$-graph, for any $B\subseteq V$ of size $bn$, we have
+    $$
+    \sum_{v\in V}\abs{|N_B(v)|-bd}^2\leq\lambda^2b(1-b)n.
+    $$
+    Let $B_c$ be the set of vertices with color $c$,
+    then
+    \begin{align*}
+        \#\cbra{v\middle|N(v)\text{ has $<k$ colors}}
+        \leq\sum_{c=1}^k\#\cbra{v\middle|N_{B_c}(v)=\emptyset}
+        \leq\sum_{c=1}^k\frac{\lambda^2\frac1k\pbra{1-\frac1k}n}{\frac{d^2}{k^2}}<n.
+    \end{align*}
+\end{exercise}
+
+\begin{exercise}{3}
+    For any fixed $Y,|Y|=5a$.
+    Let $X\subseteq V,|X|\leq a$ be any largest subset such that $|N_Y(X)|<2|X|$.
+    Then consider any $Z\subset V,Z\cap\pbra{X\cup Y}=\emptyset,|Z|\leq a$.
+    \begin{itemize}
+        \item $|Z|>|X|$. By the choice of $X$, we have $|N_Y(Z)|\geq2|Z|$.
+        \item $|Z|\leq|X|$. Then $X\neq\emptyset$ and $|Z\cup X|>|X|$. 
+            \begin{itemize}
+                \item $|Z\cup X|\leq a$.
+                    Thus by the choice of $X$,
+                    $$
+                    |N_Y(Z\cup X)|\geq2|Z\cup X|=2|Z|+2|X|.
+                    $$
+                    Since 
+                    $$
+                    |N_Y(Z\cup X)|\leq|N_Y(Z)|+|N_Y(X)|<|N_Y(Z)|+2|X|,
+                    $$
+                    the claim holds as well.
+                \item $|Z\cup X|>a$.
+                    By assumption, $N_Y(Z\cup X)\neq\emptyset$ and we can repeatedly remove $N_Y(Z\cup X)$ from $Y$
+                    until $|Y|\leq a$. Thus
+                    $$
+                    |N_Y(Z\cup X)|\geq4a.
+                    $$
+                    On the other hand, $|Z\cup X|\leq 2a$, thus
+                    $$
+                    |N_Y(Z\cup X)|\leq|N_Y(Z)|+|N_Y(X)|<|N_Y(Z)|+2x\leq|N_Y(Z)|+2(2a-|Z|)
+                    $$
+                    and then the claim holds as well.
+            \end{itemize}
+    \end{itemize}
+\end{exercise}
+
 \end{document}
