@@ -157,4 +157,24 @@
     \end{itemize}
 \end{exercise}
 
+\begin{exercise}{4}
+    Observe that
+    $$
+    M=\frac13\sum_{u\in G}|e(N(u))|.
+    $$
+    Since $G$ is an $(n,n/2,2\sqrt n)$-graph, we have $|N(u)|=n/2$ and
+    $$
+    \abs{|e(N(u))|-\frac12\times\frac n2\times\pbra{\frac12}^2\times n}\leq\frac12\times2\sqrt n\times\frac n2.
+    $$
+    Thus 
+    $$
+    |e(N(u))-\frac{n^2}{16}|=o(n^2)
+    $$
+    and then
+    $$
+    \abs{M-\frac{n^3}{48}}=o(n^3),
+    $$
+    which is equivalent to the original claim.
+\end{exercise}
+
 \end{document}
