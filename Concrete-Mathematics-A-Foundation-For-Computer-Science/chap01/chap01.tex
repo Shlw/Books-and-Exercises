@@ -55,8 +55,20 @@
 
 \maketitle
 
-\begin{exercise}{1}
-    hhh
+\begin{exercise}{2}
+    Let $f(n)$ be the answer to $n$ disks, then $f(1)=2$. For $n>1$, consider the largest disk.
+    \begin{enumerate}
+        \item Before $n$ can be moved, $1\sim (n-1)$ must be piled on B.
+        \item Move $n$ to the middle.
+        \item Before $n$ can be moved to B, $1\sim (n-1)$ must be moved to A.
+        \item Move $n$ to B.
+        \item Move $1\sim (n-1)$ to B.
+    \end{enumerate}
+    Thus $f(n)=f(n-1)+1+f(n-1)+1+f(n-1)=3^n-1$.
+\end{exercise}
+
+\begin{exercise}{7}
+    $H(1)=J(2)-J(1)=0\neq 2$. The induction fails at the beginning.
 \end{exercise}
 
 \end{document}
