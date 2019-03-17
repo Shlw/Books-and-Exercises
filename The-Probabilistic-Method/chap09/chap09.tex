@@ -51,6 +51,7 @@
 \DeclareMathOperator*{\argmin}{\arg\,\min}
 \DeclareMathOperator{\E}{\mathbb E}
 \DeclareMathOperator{\Var}{\mathrm{Var}}
+\DeclareMathOperator{\tr}{\mathrm{tr}}
 \newcommand{\abs}[1]{\left| #1 \right|}
 \newcommand{\vabs}[1]{\left\| #1 \right\|}
 \newcommand{\pbra}[1]{\left( #1 \right)}
@@ -175,6 +176,47 @@
     \abs{M-\frac{n^3}{48}}=o(n^3),
     $$
     which is equivalent to the original claim.
+\end{exercise}
+
+\begin{exercise}{8}
+    Here we restate the theorem for convenience.
+    \begin{theorem}
+        Assume $0<p<1$. Let $G=G_n$ be a sequence of graphs on $n$ vertices with $p\binom n2(1+o(1))$ edges. 
+        Assume further that all but $o(n)$ vertices have degree $pn(1+o(1))$. Then the following $6$ properties are 
+        equivalent.
+        \begin{itemize}
+            \item \textbf{Property} $P^p_1$: For every graph $H(s,e)$ on $s$ vertices with $e$ edges
+                $$
+                N_G^*(H(s,e))=(1+o(1))n^sp^e(1-p)^{\binom s2-e}.
+                $$
+            \item \textbf{Property} $P^p_2$: For the cycle $C(4)$ with $4$ vertices, $N_G(C(4))\leq(1+o(1))p^4n^4$. 
+            \item \textbf{Property} $P^p_3$: $\abs{\lambda_2}=o(n)$.
+            \item \textbf{Property} $P^p_4$: For every set $S$ of vertices of $G$, $e(S)=\frac p2|S|^2+o(n^2)$.
+            \item \textbf{Property} $P^p_5$: For every two sets of vertices $B,C$, $e(B,C)=p|B||C|+o(n^2)$.
+            \item \textbf{Property} $P^p_6$: $\sum_{u,v\in V}\abs{|N(u)\cap N(v)|-p^2n}=o(n^3)$.
+        \end{itemize}
+    \end{theorem}
+    \begin{proof}[$P_1^p\implies P^p_2$]
+        Since $N_G(H)=\sum_{H\subseteq L}N_G^*(L)$, where $L$ is a graph on $|V(H)|$ vertices,
+        we have
+        \begin{align*}
+            N_G(C(4))&=N_G^*(H(4,4))+2N_G^*(H(4,5))+N_G^*(H(4,6))\\
+            &=(1+o(1))p^4n^4\sbra{(1-p)^2+2p(1-p)+p^2}\\
+            &=(1+o(1))p^4n^4.
+        \end{align*}
+    \end{proof}
+    \begin{proof}[$P_2^p\implies P^p_3$]
+        Let $A$ be the adjacency matrix of $G$.
+        By Perron-Frobenius Theorem, $\lambda_1>0$; thus
+        $$
+        \lambda_1=\sup_{x\in\Rbb^n}\frac{x^TAx}{x^Tx}\geq\frac{\bm 1^TA\bm 1}{\bm 1^T\bm 1}=pn(1+o(1)).
+        $$
+        On the other hand,
+        $$
+        (1+o(1))p^4n^4\geq N_G(C(4))=\tr\pbra{A^4}-o(n^4)=\sum_{i=1}^n\lambda_i^4-o(n^4)\geq p^4n^4(1+o(1))+\lambda_2^4-o(n^4),
+        $$
+        thus $|\lambda_2|=o(n)$.
+    \end{proof}
 \end{exercise}
 
 \end{document}
