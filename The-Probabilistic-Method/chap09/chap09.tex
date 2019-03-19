@@ -179,6 +179,30 @@
     which is equivalent to the original claim.
 \end{exercise}
 
+\begin{exercise}{5}
+    By Theorem 9.3.2, it suffices to show that with limiting probability $1$, $N_{G_n}(C(4))=(1+o(1))p^4n^4$,
+    since it implies $e(A_n,B_n)=p|A_n||B_n|+o(n^2)$ and thus $\abs{d(A_n,B_n)-p}=o(1)$.
+
+    Let $X_{w_1,w_2,w_3,w_4}$ be the indicator variable of ordered cycle $w_1\to w_2\to w_3\to w_4\to w_1$, where
+    $w_i$'s are distinct. Then $N_{G_n}(C(4))=\sum_wX_w$.
+    On the other hand,
+    $$
+    \E_w\sbra{N_{G_n}(C(4))}=\sum_w\E\sbra{X_w}=n_{(4)}p^4=n^4p^4+O(n^3)
+    $$
+    and 
+    \begin{align*}
+        &\Var_w\sbra{N_{G_n}(C(4))}\\
+        =&\E_w\sbra{\pbra{\sum_wX_w}^2}-n^8p^8+O(n^7)\\
+        =&n_{(4)}\pbra{(n-4)_{(4)}p^8+4(n-4)_{(3)}p^8+8(n-4)_{(2)}p^7+8(n-4)_{(1)}p^6+8(n-4)_{(0)}p^4}-n^8p^8+O(n^7)\\
+        =&O(n^7).
+    \end{align*}
+    Thus
+    $$
+    \Pr\sbra{\abs{N_{G_n}(C(4))-\E_w\sbra{N_{G_n}(C(4))}}\geq n^{3.9}}\leq\frac{\Var_w\sbra{N_{G_n}(C(4))}}{n^{7.8}}=o(1),
+    $$
+    which means $N_{G_n}(C(4))=(1+o(1))p^4n^4$ has limiting probability $1$.
+\end{exercise}
+
 \begin{exercise}{8}
     Here we restate the theorem for convenience.
     \begin{theorem}
