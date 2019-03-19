@@ -54,6 +54,7 @@
 \DeclareMathOperator{\tr}{\mathrm{tr}}
 \newcommand{\abs}[1]{\left| #1 \right|}
 \newcommand{\vabs}[1]{\left\| #1 \right\|}
+\newcommand{\abra}[1]{\left\langle #1 \right\rangle}
 \newcommand{\pbra}[1]{\left( #1 \right)}
 \newcommand{\cbra}[1]{\left\{ #1 \right\}}
 \newcommand{\sbra}[1]{\left[ #1 \right]}
@@ -216,6 +217,152 @@
         (1+o(1))p^4n^4\geq N_G(C(4))=\tr\pbra{A^4}-o(n^4)=\sum_{i=1}^n\lambda_i^4-o(n^4)\geq p^4n^4(1+o(1))+\lambda_2^4-o(n^4),
         $$
         thus $|\lambda_2|=o(n)$.
+    \end{proof}
+    \begin{proof}[$P_3^p\implies P_4^p$]
+        Let $A$ be the adjacency matrix of $G$.
+        Let $\lambda_1,\cdots,\lambda_n$ be the eigenvalues of $G$ and $u_1,\cdots,u_n$ be the corresponding 
+        orthonormal eigenvectors.
+        \begin{lemma}
+            $\vabs{u_1-\frac1{\sqrt n}\vec1}_2=o(1)$.
+        \end{lemma}
+        \begin{proof}
+            Let $v_1=\frac1{\sqrt n}\vec1$ and $v_1=\sum_ia_iu_i$, then $pnv_1+e=Av_1=\sum_ia_i\lambda_iu_i$,
+            where $\vabs{e}_2=o(n)$.
+            Since by adding dummy edges we can get a $(pn(1+o(1)))$-regular graph, $\lambda_1=\vabs{A}_2\leq pn(1+o(1))$.
+            Also, from the proof of $P_2^p\implies P_3^p$, we have $\lambda_1\geq pn(1+o(1))$; thus $\lambda_1=pn(1+o(1))$.
+            Thus
+            \begin{align*}
+                &\sum_ia_i\lambda_iu_i=e+pnv_1=e+pn\pbra{\sum_ia_iu_i}\\
+                \implies&\sum_{i>1}a_i\pbra{\lambda_i-pn}u_i=e+pn(pn-\lambda_1)u_1=e+o(n)u_1\\
+                \implies&\vabs{\sum_{i>1}a_i\pbra{\lambda_i-pn}u_i}_2=\sqrt{\sum_{i>1}a_i^2(o(n)-pn)^2}=o(n)\\
+                \implies&\sum_{i>1}a_i^2=o(1)\implies a_1=1-o(1)\\
+                \implies&\vabs{u_1-\frac1{\sqrt n}\vec1}_2=\vabs{u_1-v_1}_2=(a_1-1)^2+\sum_{i>1}a_i^2=o(1).
+            \end{align*}
+        \end{proof}
+        Without loss of generality, assume $|S|=\Theta(n)$, since otherwise $e(S)\leq|S|^2=o(n^2)$.
+        Let $\vec1_S$ be the indicator vector of set $S$ and $\vec1_S=\sum_ib_iu_i$.
+        Then
+        $$
+        b_1=\abra{\vec1_S,u_1}=\abra{\vec1_S,\frac1{\sqrt n}\vec1}+\abra{\vec1_S,u_1-\frac1{\sqrt n}\vec1}
+        =\frac{|S|}{\sqrt n}+o(\sqrt{|S|})=\frac{|S|}{\sqrt n}+o(\sqrt{n}).
+        $$
+        Thus 
+        $$
+        2e(S)=\vec1_S^TA\vec1_S=\sum_i\lambda_ib_i^2=\pbra{\frac{|S|^2}{n}+o(n)}pn(1+o(1))+o(n)\pbra{\sum_{i>1}b_i^2}
+        =p|S|^2+o(n^2).
+        $$
+    \end{proof}
+    \begin{proof}[$P_4^p\implies P_5^p$]
+        Let $D=B\cap C,B_1=B\backslash D,C_1=C\backslash D$. Then
+        \begin{align*}
+            e(B,C)&=e(B_1,D)+e(B_1,C_1)+e(D,C_1)+e(D)\\
+            &=e(D)+\pbra{e(B_1\cup D)-e(B_1)-e(D)}
+            +\pbra{e(B_1\cup C_1)-e(B_1)-e(C_1)}
+            +\pbra{e(D\cup C_1)-e(D)-e(C_1)}\\
+            &=\frac p2\pbra{\pbra{|B_1|+|D|}^2+\pbra{|B_1|+|C_1|}^2+\pbra{|D|+|C_1|}^2-2|B_1|^2-2|C_1|^2-|D|^2}+o(n^2)\\
+            &=p\pbra{|B_1|+|D|}\pbra{|D|+|C_1|}+o(n^2)\\
+            &=p|B||C|+o(n^2).
+        \end{align*}
+    \end{proof}
+    \begin{proof}[$P_5^p\implies P_6^p$]
+        Define $S=\cbra{u\in V\middle||N(u)|=pn(1+o(1))}$, then $|S|=n-o(n)$ and
+        $$
+        \sum_{u,v}\abs{|N(u)\cap N(v)|-p^2n}=
+        \pbra{\sum_{u\in S}+\sum_{u\notin S}}\sum_v\abs{|N(u)\cap N(v)|-p^2n}
+        =\sum_{u\in S}\sum_v\abs{|N(u)\cap N(v)|-p^2n}+o(n^3).
+        $$
+        Thus it suffices to show for any fixed $u\in S$
+        $$
+        \sum_v\abs{|N(u)\cap N(v)|-p^2n}=o(n^2).
+        $$
+        Let $T=\cbra{v\in V\middle||N(u)\cap N(v)|\geq p^2n}$, then
+        \begin{align*}
+            \sum_v\abs{|N(u)\cap N(v)|-p^2n}
+            &=\pbra{\sum_{v\in T}N(u)\cap N(v)}-p^2n|T|
+            -\pbra{\sum_{v\notin T}N(u)\cap N(v)}+p^2n(n-|T|)\\
+            &=e(N(u),T)-e(N(u),T^c)+p^2n(n-2|T|)\\
+            &=p|N(u)|(|T|-n+|T|)+o(n^2)+p^2n(n-2|T|)\\
+            &=p^2n(1+o(1))(2|T|-n)+o(n^2)+p^2n(n-2|T|)\\
+            &=o(n^2).
+        \end{align*}
+    \end{proof}
+    \begin{proof}[$P_6^p\implies P_1^p$]
+        Prove by induction on $s$. 
+        
+        If $s=1$, then $e=0$ and $N_G^*(H(s,e))=n$. 
+
+        Now we assume $s=k+1,k\geq1$.
+        Let $V(H(k+1,e))=v_1,\cdots,v_{k+1}$ and $H'$ be the graph induced by $v_1,\cdots,v_k$.
+        Denote $A$ as the adjacency matrix of G and
+        $$
+        s_b(u,v)=\#\cbra{w\in G\backslash\cbra{u,v}\middle|A_{u,w}=A_{v,w}=b}
+        $$
+        for $b\in\bin$.
+        Let $I_i=1$ if $v_{k+1}$ is linked with $v_i$ and $I_i=0$ otherwise.
+        Denote $\Delta=|I|=\sum_iI_i$ and 
+        $f$ as 
+        $$
+        f(w_1,\cdots,w_k)=\#\cbra{x\in G\backslash\cbra{w_1,\cdots,w_k}\middle|A_{x,w_i}=I_i}.
+        $$
+        Then $N_G^*(H(k+1,e))$ is the summation of $f(w)$ if $G\restriction_w=H'$
+
+        Consider the uniform distribution over $w\in G_{(k)}$. Then
+        \begin{align*}
+            \mu
+            &=\E_w\sbra{f(w)}=\frac1{n_{(k)}}\sum_{w_1,\cdots,w_k}f(w_1,\cdots,w_k)\\
+            &=\frac1{n_{(k)}}\sum_{x\in V}\sum_{w_1,\cdots,w_k}[w_1,\cdots,w_k,x\text{ is valid}]\\
+            &=\frac1{n_{(k)}}\sum_{x\in V}d(x)_{(\Delta)}\pbra{n-1-d(x)}_{(k-\Delta)}\\
+            &=\frac1{n_{(k)}}\pbra{n(pn)_{(\Delta)}(n-1-pn)_{(k-\Delta)}+o(n)n_{(k)}}\\
+            &=p^\Delta(1-p)^{k-\Delta}n+o(n)
+        \end{align*}
+        and 
+        \begin{align*}
+            \E_w\sbra{f^2(w)}
+            &=\frac1{n_{(k)}}\sum_wf^2(w)\\
+            &=\frac1{n_{(k)}}\sum_{x,y\in V}\sum_{w_1,\cdots,w_k}[w_1,\cdots,w_k,x\text{ and }w_1,\cdots,w_k,y\text{ are valid}]\\
+            &=\frac1{n_{(k)}}\sum_{x,y\in V}s_1(x,y)_{(\Delta)}s_0(x,y)_{(k-\Delta)}\\
+            &=\frac1{n_{(k)}}\sum_{x,y\in V}|N(x)\cap N(y)|_{(\Delta)}\pbra{n-2-|N(x)|-|N(y)|+|N(x)\cap N(y)|}_{(k-\Delta)}\\
+            &=o(n^2)+\frac1{n_{(k)}}\sum_{x,y\in V}|N(x)\cap N(y)|_{(\Delta)}\pbra{(1-2p)n+|N(x)\cap N(y)|}_{(k-\Delta)}.
+        \end{align*}
+
+        Let $\epsilon_{x,y}=|N(x)\cap N(y)|-p^2n$, then $\abs{\epsilon_{x,y}}\leq n$ and by 
+        \textbf{Property $P_6^p$}, we have $\sum_{x,y\in V}\abs{\epsilon_{x,y}}=o(n^3)$.
+        Thus
+        \begin{align*}
+            \E_w\sbra{f^2(w)}
+            &=o(n^2)+\frac1{n_{(k)}}\sum_{x,y\in V}\pbra{p^2n+\epsilon_{x,y}}_{(\Delta)}
+            \pbra{(1-p)^2n+\epsilon_{x,y}}_{(k-\Delta)}\\
+            &=o(n^2)+\frac1{n_{(k)}}\sum_{x,y\in V}\sum_{d=0}^k\epsilon_{x,y}^d
+            \sum_{i=0}^dc_{x,y,d,i}\pbra{p^2n}^{\Delta-i}\pbra{(1-p)^2n}^{k-\Delta-d+i}\\
+            &=o(n^2)+\frac1{n_{(k)}}\sum_{x,y\in V}\pbra{
+                \pbra{p^\Delta(1-p)^{k-\Delta}}^2n^k+
+                \sum_{d=1}^k\epsilon_{x,y}^d
+            \sum_{i=0}^dc_{x,y,d,i}\pbra{p^2n}^{\Delta-i}\pbra{(1-p)^2n}^{k-\Delta-d+i}}\\
+            &=o(n^2)+\frac1{n_{(k)}}\pbra{p^\Delta(1-p)^{k-\Delta}}^2n^{k+2}
+                +\sum_{d=1}^kO(n^{k-d})\sum_{x,y\in V}\epsilon_{x,y}^d\\
+            &\leq o(n^2)+\frac1{n_{(k)}}\pbra{p^\Delta(1-p)^{k-\Delta}}^2n^{k+2}
+                +\sum_{d=1}^kO(n^{k-d})O(n^{d-1})\pbra{\sum_{x,y\in V}\abs{\epsilon_{x,y}}}\\
+            &\leq o(n^2)+\frac1{n_{(k)}}\pbra{p^\Delta(1-p)^{k-\Delta}}^2n^{k+2}
+                +\frac1{n_{(k)}}\sum_{d=1}^kO(n^{k-d})O(n^{d-1})o(n^3)\\
+            &=\pbra{p^\Delta(1-p)^{k-\Delta}}^2n^2+o(n^2).
+        \end{align*}
+        Therefore
+        \begin{align*}
+            \abs{N_G^*(H(k+1,e))-N_G^*(H')\mu}
+            &=\abs{\sum_{w,G\restriction_w=H'}f(w)-\mu}\\
+            &\leq\sqrt{N_G^*(H')\sum_{w,G\restriction_w=H'}(f(w)-\mu)^2}\\
+            &\leq\sqrt{N_G^*(H')\sum_w(f(w)-\mu)^2}\\
+            &\leq\sqrt{N_G^*(H')n_{(k)}\pbra{\E\sbra{f^2(w)}-\mu^2}}\\
+            &\leq\sqrt{(1+o(1))n^kp^{e(H')}(1-p)^{\binom k2-e(H')}n_{(k)}o(n^2)}\\
+            &=o(n^{k+1}),
+        \end{align*}
+        which gives
+        \begin{align*}
+        N_G^*(H(k+1,e))
+            &=N_G^*(H')\mu+o(n^{k+1})=n^kp^{e(H')}(1-p)^{\binom k2-e(H')}p^\Delta(1-p)^{k-\Delta}n+o(n^{k+1})\\
+            &=(1+o(1))n^{k+1}p^e(1-p)^{\binom{k+1}2-e}
+        \end{align*}
+        as desired.
     \end{proof}
 \end{exercise}
 
