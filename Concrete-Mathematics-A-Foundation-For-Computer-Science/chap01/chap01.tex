@@ -8,6 +8,7 @@
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{mathrsfs}
 \usepackage{bm}
+\usepackage{extarrows}
 \usepackage{geometry}
 \usepackage{ntheorem}
 \usepackage{hyperref}
@@ -69,6 +70,42 @@
 
 \begin{exercise}{7}
     $H(1)=J(2)-J(1)=0\neq 2$. The induction fails at the beginning.
+\end{exercise}
+
+\begin{exercise}{12}
+    Consider the largest disks, we have
+    $$
+    A(m_1,\cdots,m_n)=2A(m_1,\cdots,m_{n-1})+m_n=\sum_{i=1}^nm_i2^{n-i}.
+    $$
+\end{exercise}
+
+\begin{exercise}{17}
+    Assume now we have $n(n+1)/2$ disks, and we use the following strategy:
+    \begin{enumerate}
+        \item Move the top $n(n-1)/2$ disks to second peg. (with cost $W_{n(n-1)/2}$)
+        \item Move the bottom $n$ disks to third peg without using second one. (with cost $T_n$)
+        \item Move the top $n(n-1)/2$ disks to third peg. (with cost $W_{n(n-1)/2}$)
+    \end{enumerate}
+    Thus the inequality holds.
+\end{exercise}
+
+\begin{exercise}{22}
+    Let $G$ be a regular polygon with $2^n$ sides and label the sides with a de Bruijin cycle of length $2^n$.
+    Now construct a base set $S$ by attaching a tiny margin to the sides labeled $1$ on $G$.
+    Then rotate $S$ about the center for angle $2\pi\frac kn,k=0,1,\cdots,n-1$ and we get all $2^n$ possible subsets
+    along the $2^n$ sides of $G$.
+
+    A de Bruijin cycle of length $2^n$ is $s_0s_1\cdots s_{2^n-1}\in\bin^{2^n}$ such that for any $k=0,1,\cdots,2^n-1$,
+    $s_ks_{k+1}\cdots s_{k+n}$ are distinct (here $+$ is computed modulo $2^n$).
+    It can be constructed as follows (here we assume $n>1$):
+    \begin{itemize}
+        \item Define digraph $H=(V,E)$, where $V=\bin^{2^{n-1}}$ and
+            $$
+            E=\cbra{s_1\cdots s_{n-1}\xlongrightarrow{b} s_2\cdots s_{n-1}b\middle|b\in\bin}.
+            $$
+        \item Since any vertex in $H$ has in-degree $2$ and out-degree $2$, it has a Euler cycle $\mathcal C$.
+        \item The label sequence of $\mathcal C$ is a desired de Bruijin cycle.
+    \end{itemize}
 \end{exercise}
 
 \end{document}
