@@ -55,6 +55,8 @@
 
 \maketitle
 
+
+
 \begin{exercise}{6.1}
     \begin{itemize}
     \item Logspace-uniform circuits $\subseteq$ $\mathbf{P}$-uniform circuits $=$ $\mathbf{P}$.
@@ -62,6 +64,28 @@
         on $n$-length input in the $i$-th tape after $j$ steps, can be computed in logarithmic space.
             Thus the construction in Theorem 6.6 can be logspace, and $\mathbf{P}$ $\subseteq$ Logspace-uniform circuits.
     \end{itemize}
+\end{exercise}
+
+\begin{exercise}{6.1} \hspace{-1em}(Solution version 2 by Liu)
+
+    (a) From the recursion relation:
+        \begin{equation}
+            f(x_1,x_2,...,x_n)=
+            \begin{cases}
+            f(x_1,x_2,...,x_{n-1},1) & \text{$x_n=1$}\\
+            f(x_1,x_2,...,x_{n-1},0) & \text{$x_n=0$}\\
+            \end{cases}
+        \end{equation}
+        so $f(x_1,x_2,...,x_n)=[f(x_1,x_2,...,x_{n-1},1)\wedge x_n]\vee [f(x_1,x_2,...,x_{n-1},0)\wedge \bar{x_n}]$,
+        
+        then we can get the relation about circle size:
+         $C(n)= 2C(n-1)+5$ and $C(0)=1$.
+         the solution is $C(n)=6\cdot2^{n}-5 < 10\cdot 2^{n}$.
+         
+    (b) There only $2^{2^{k}}$functions on k bits,so we can use $2^{2^{k}}\cdot (k 2^{k})$ gates to compute every possible  such function on $x_1,...,x_k$.Then for getting the $x_1,...x_n$,we do $n-k$ times recurion which is in (a).
+    
+        Then $C(n)=2^{2^{k}}\cdot (k2^{k}) + 5\cdot 2^{n-k}$.
+        Make $k=log^n-2$ then $C(n)\leq 1000\cdot 2^n /n$.       
 \end{exercise}
 
 \begin{exercise}{6.4}
@@ -152,6 +176,13 @@ s.push(p.val)\;
 
 
     The algorithm is a modification of the Non-recursive post-order traversal. In the Non-recursive post-order traversal, the stack is used to record the unvisited nodes, thus takes $O(\log n\times\log n)$ spaces(record one node needs $\log |\mathcal{C}_n|=O(\log n)$ bit). We circumvent this cost by using the information of the father of a node. Instead, we use the stack to store the intermediate value in the computation. In every layer, there are at least one intermediate value. Thus the maximum usage of the stack is the depth, $O(\log n)$. The total space cost is $p,q,s$, $2\log n+|s|=O(\log n)$.
+\end{exercise}
+
+\begin{exercise}{6.15}
+    (1) If $P=NC$ ,then $L\in P$ $\rightarrow$ $L \in NC$.
+    
+    (2) If $L$ is $P$-complete and $L \in NC$ , then $P\subseteq NC$.
+        And beacuse $NC\subseteq P$,then $P=NC$.
 \end{exercise}
 
 \begin{exercise}{6.19}
