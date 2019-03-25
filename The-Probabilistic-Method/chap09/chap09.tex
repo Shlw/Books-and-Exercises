@@ -273,9 +273,46 @@
             $$
             choices of $v_k^i$. Then in Step $4$, $|V_j|=\abs{N_{V_j}(v_k^i)}>(d-\delta)^{k+(i-1)t}m$ holds for any $j>i$.
     \end{itemize}
+
+    Now we optimize the undetermined constants $\ell,d,\delta$ to satisfy the following conditions
+    $$
+    \begin{cases}
+        \epsilon'=\epsilon-4\delta-\frac1\ell-d>0\\
+        (d-\delta)^{rt}\geq r\delta\\
+        \delta m\geq t
+    \end{cases}
+    \Leftarrow
+    \begin{cases}
+        d=\epsilon/2\\
+        \ell=4/\epsilon\\
+        \delta\text{ sufficiently small}\\
+        m \text{, i.e., $n$, sufficiently large}.
+    \end{cases}
+    $$
 \end{exercise}
 \noindent\textbf{Remark:} This result is essentially tight considering $H=K_r$ and 
 $G$ being a complete $(r-1)$-partite graph $T(\underbrace{n/\pbra{r-1},\cdots,n/\pbra{r-1}}_{r-1})$.
+
+\begin{exercise}{7}
+    By the definition of limit sequence, we have
+    $$
+    \lim_{n\to\infty}t(H,G_n)
+    $$
+    exists for any finite $H$. Thus
+    $$
+    \lim_{n\to\infty}t'(H,G_n)
+    =\lim_{n\to\infty}\sum_{\substack{H'\subseteq H\\|V(H)|=|V(H')|}}(-1)^{|E(H)|-|E(H')|}t(H',G)
+    =\sum_{\substack{H'\subseteq H\\|V(H)|=|V(H')|}}(-1)^{|E(H)|-|E(H')|}\lim_{n\to\infty}t(H',G)
+    $$
+    exists for any finite $H$.
+    On the other hand,
+    $$
+    \lim_{n\to\infty}t(H,G)
+    =\lim_{n\to\infty}\sum_{\substack{H\subseteq H'\\|V(H)|=|V(H')|}}t'(H',G)
+    =\sum_{\substack{H\subseteq H'\\|V(H)|=|V(H')|}}\lim_{n\to\infty}t'(H',G),
+    $$
+    which means they are equivalent.
+\end{exercise}
 
 \begin{exercise}{8}
     Here we restate the theorem for convenience.
