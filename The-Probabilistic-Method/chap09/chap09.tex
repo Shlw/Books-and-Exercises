@@ -203,6 +203,80 @@
     which means $N_{G_n}(C(4))=(1+o(1))p^4n^4$ has limiting probability $1$.
 \end{exercise}
 
+\begin{exercise}{6}
+    Let $\ell,d,\delta$ be constants to be determined later. 
+    By Regularity Lemma, there exists $L=L(\ell,\delta)$ such that for any graph $G=(V,E)$ on $n\geq L$ vertices, $V$ can be 
+    partitioned into $V_0,V_1,\cdots,V_k,\ell\leq k\leq L$, where $|V_0|\leq\delta|V|,|V_1|=|V_2|=\cdots=|V_k|$ and 
+    all $V_i,V_j,1\leq i<j\leq k$ but at most $\delta k^2$ of them are $\delta$-regular.
+
+    Now we remove the following redundant edges:
+    \begin{itemize}
+        \item all edges among $V_0,V_i,0\leq i\leq k$, which is at most $\delta n^2$;
+        \item all edges among non-$\delta$-regular pairs, which is at most $\delta k^2\times\pbra{\frac nk}^2=\delta n^2$;
+        \item all edges in $V_i,i\in[k]$, which is at most $k\times\frac{n^2}{2k^2}=\frac{n^2}{2k}\leq\frac{n^2}{2\ell}$;
+        \item all edges among $V_i,V_j,1\leq i<j\leq k$ that $d(V_i,V_j)<d$, which is at most 
+            $\binom k2\pbra{\frac nk}^2d\leq\frac{dn^2}2$.
+    \end{itemize}
+    By assumption, $|E|\geq\pbra{\frac{r-2}{r-1}+\epsilon}\binom n2$, thus there are
+    $$
+    \pbra{\frac{r-2}{r-1}+\epsilon-4\delta-\frac1\ell-d-o(1)}\binom n2
+    :=\pbra{\frac{r-2}{r-1}+\epsilon'-o(1)}\binom n2
+    $$
+    edges left.
+
+    As long as $\epsilon'>0$, we have a $K_r$ clique in the modified $G$, which means $k\geq r$ and, without loss of generality,
+    $d(V_i,V_j)\geq d,1\leq i<j\leq r$ and they are also $\delta$-regular.
+
+    Assume $H$ has $t$ vertices and chromatic number $r$. Then $H$ can be partitioned into $r$ parts by the coloring, which means
+    $H$ is contained in a complete $r$-partite graph $T(\underbrace{t,\cdots,t}_r)$. Therefore, we may safely assume $H$ is 
+    $T(\underbrace{t,\cdots,t}_r)$; and it suffices to show $V_1,\cdots,V_r$ contains a copy of $H$.
+
+    Let $|V_1|=\cdots=|V_r|=m\geq\frac{(1-\delta)n}\ell$. Now we drop redundant vertices according to the following steps.
+    \begin{enumerate}
+        \item Initialize $i=1$.
+        \item Initialize $k=1$.
+        \item Choose $v^i_k\in V_i\backslash\cbra{v_{k'}^i\middle|k'<k}$ 
+            satisfying $\abs{N_{V_j}(v^i_k)}>(d-\delta)|V_j|$ for all $j>i$.
+        \item Let $V_j\gets N_{V_j}(v^i_k)$ for all $j>i$.
+        \item If $k<t$, then let $k\gets k+1$ and go to Step $3$.
+        \item If $i<r$, then let $i\gets i+1$ and go to Step $2$.
+    \end{enumerate}
+    It is easy to see, if Step $3$ above always succeeds, then the graph induced by $v_k^i,i\in[r],k\in[t]$ is isomorphic to $H$.
+    Now we prove by induction under the condition $(d-\delta)^{rt}\geq r\delta,\delta m\geq t$, that Step $3$ always succeeds and 
+    $|V_j|>(d-\delta)^{k+(i-1)t}m,j>i$ every time after Step $4$ in loop $i$.
+    \begin{itemize}
+        \item $i=1,k=1.$ (base case) 
+            
+            Let $S=\cbra{v\in V_1\middle|\abs{N_{V_j}(v)}\leq(d-\delta)|V_j|}$.
+            By the $\delta$-regularity of $V_1,V_j,j\geq1$, if $|S|>\delta m$, then 
+            $$
+            d-\delta<d(S,V_j)\leq\frac{(d-\delta)|V_j|\times|S|}{|V_j|\times|S|}=d-\delta.
+            $$
+            Thus by union bound, there exists at least 
+            $$
+            |V_1|-(r-1)\delta m=(1-(r-1)\delta)m>\pbra{(d-\delta)^{rt}-(r-1)\delta}m\geq\delta m\geq t
+            $$
+            choices of $v_1^1$. Then in Step $4$, $|V_j|=|N_{V_j}(v_1^1)|>(d-\delta)m$ holds for any $j>i$.
+        \item $i\geq1,k>1$ or $i>1,k=1.$ (induction on $k$ or $i$) 
+            
+            Let $S=\cbra{v\in V_i\middle|\abs{N_{V_j}(v)}\leq(d-\delta)|V_j|}$. Since 
+            $$
+            |V_j|>(d-\delta)^{k-1+(i-1)t}m\geq(d-\delta)^{rt}m\geq r\delta m\geq\delta m,
+            $$
+            then by the $\delta$-regularity of original $V_i,V_j$, if $|S|>\delta m$, then
+            $$
+            d-\delta<d(S,V_j)\leq\frac{(d-\delta)|V_j|\times|S|}{|V_j|\times|S|}=d-\delta.
+            $$
+            Thus by union bound, there exists at least 
+            $$
+            |V_1|-(r-1)\delta m-(k-1)>\pbra{(d-\delta)^{(i-1)t}-(r-1)\delta}m-t+1\geq\delta m-t+1\geq 1
+            $$
+            choices of $v_k^i$. Then in Step $4$, $|V_j|=\abs{N_{V_j}(v_k^i)}>(d-\delta)^{k+(i-1)t}m$ holds for any $j>i$.
+    \end{itemize}
+\end{exercise}
+\noindent\textbf{Remark:} This result is essentially tight considering $H=K_r$ and 
+$G$ being a complete $(r-1)$-partite graph $T(\underbrace{n/\pbra{r-1},\cdots,n/\pbra{r-1}}_{r-1})$.
+
 \begin{exercise}{8}
     Here we restate the theorem for convenience.
     \begin{theorem}
