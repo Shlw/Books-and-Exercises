@@ -501,4 +501,43 @@ $G$ being a complete $(r-1)$-partite graph $T(\underbrace{n/\pbra{r-1},\cdots,n/
     \end{proof}
 \end{exercise}
 
+\begin{exercise}{9}
+    Let 
+    $$
+    S=\cbra{k\middle|\exists G_n,\pbra{|E(G_n)|=0.7\binom n2+o(n^2)}\land\pbra{N_{G_n}(C(3))=k\binom n3+o(n^3)}}
+    $$
+    and
+    \begin{align*}
+        S'=&\bigg\{k'=\int W(x,y)W(x,z)W(y,z)\bigg|W:[0,1]^2\to[0,1],\\
+        &\pbra{W\text{ is Lebesgue measurable}}
+        \land\pbra{W(x,y)\equiv W(y,x)}\land\pbra{\int W(x,y)=0.7}\bigg\}.
+    \end{align*}
+    Let $b=\inf S,b'=\inf S'$ and we need to show $b,b'$ are attained.
+
+    Since $G_n=K_{\sqrt{0.7}n}$ with $k=0.7^{3/2}$ and $W(x,y)\equiv0.7$ with $k'=0.7^3$ are valid candidates, 
+    $S,S'$ are not empty.
+    On the other hand, $k,k'$ are non-negative, thus $0\leq b\leq0.7^{3/2},0\leq b'\leq0.7^3$.
+
+    \begin{itemize}
+        \item $b$ is attained. Let $G_m^k,k\in\Nbb^+$ be a sequence of graph sequence such that for any $k$
+            $$
+            b\leq\lim_{m\to\infty}\frac{N_{G_m^k}(C(3))}{\binom m3}\leq b+\frac1k.
+            $$
+            Now construct a new graph sequence $G_n=G_n^n$, then we have
+            $$
+            b\leq\lim_{n\to\infty}\frac{N_{G_n}(C(3))}{\binom n3}=
+            \lim_{n\to\infty}\frac{N_{G_n^n}(C(3))}{\binom n3}\leq b,
+            $$
+            which means $b$ is attained.
+        \item $b'$ is attained. (I'm not sure since I'm not familiar with real analysis.) 
+            I think the valid $W$'s consist of a compact, thus closed, space.
+            Then for any sequence $W_k,k\in\Nbb^+$ where 
+            $$
+            b'\leq\int W_k(x,y)W_k(x,z)W_k(y,z)\leq b'+\frac1k,
+            $$
+            there exists a convergence sequence $\cbra{W_{k_i}}\subseteq\cbra{W_k}$ and the limit function
+            $W$ is also valid and the corresponding integral achieves $b'$.
+    \end{itemize}
+\end{exercise}
+
 \end{document}
