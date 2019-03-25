@@ -288,4 +288,14 @@ $$
 	But this is an $NP$-statement, thus the problem can be solved in polynomial time.
 \end{exercise}
 
+	\begin{exercise}{2.34}
+		仿照NP的2.1定义形式给NEXP定义，并证明两个定义等价
+		\begin{itemize}
+			\item [1.] NEXP定义$x\in L \iff\exists u\in (0,1)^{\exp|x|},M(u,x)=1$其中M是一台指数时间的确定性图灵机。
+			\item [2.] 两个定义等价，NDTIME定义$\to$本题定义，$L\in $NEXP$\iff L$可以由非确定性图灵机在指数时间内求解，那么NTM每一步选择的$\delta$函数序列为$u$,则存在确定性图灵机可以利用这个序列$u$和原输入$x$在指数时间内可以验证，且$u$是指数范围内的。
+
+				本题定义$\to$NDTIME定义,非确定性产生验证$u$，新的非确定性图灵机停机当且仅当有一个验证$u$，验证$x$。又$\exp(n) =O(2^{n^c})\to L\in NTIME(2^{n^c})$。综上，两个定义等价。
+		\end{itemize}
+	\end{exercise}
+
 \end{document}
