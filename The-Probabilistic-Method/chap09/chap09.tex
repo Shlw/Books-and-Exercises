@@ -52,6 +52,7 @@
 \DeclareMathOperator{\E}{\mathbb E}
 \DeclareMathOperator{\Var}{\mathrm{Var}}
 \DeclareMathOperator{\tr}{\mathrm{tr}}
+\DeclareMathOperator{\poly}{\mathrm{poly}}
 \newcommand{\abs}[1]{\left| #1 \right|}
 \newcommand{\vabs}[1]{\left\| #1 \right\|}
 \newcommand{\abra}[1]{\left\langle #1 \right\rangle}
@@ -539,5 +540,222 @@ $G$ being a complete $(r-1)$-partite graph $T(\underbrace{n/\pbra{r-1},\cdots,n/
             $W$ is also valid and the corresponding integral achieves $b'$.
     \end{itemize}
 \end{exercise}
+
+\begin{exercise}{10}
+    Let $G=G_n=(T_n,B_n,E_n),|T_n|=|B_n|=n$ be a sequence of bipartite graphs. Assume $\lim_{n\to\infty}d(T_n,B_n)=p\in(0,1)$.
+    We call such a sequence bipartite quasirandom with parameter $p$ is any one of the following equivalent definitions holds.
+    \begin{itemize}
+        \item \textbf{Original}: For any $\epsilon>0$, $(T_n,B_n)$ is $\epsilon$-regular for $n$ sufficiently large.
+        \item \textbf{Property $B_1^p$}: For every bipartite graph $H(s,t,e)$ on $s\times t$ vertices with $e$ edges
+            $$
+            N_G^*(H(s,t,e))=(1+o(1))n^{s+t}p^e(1-p)^{st-e},
+            $$
+            where 
+            $$
+            N_G^*(H(s,t,e)):=\sum_{\vec u\in\pbra{T_n}_{(s)},\vec v\in\pbra{B_n}_{(t)}}[G\restriction_{\vec u,\vec v}
+            \text{ is isomorphic to }H].
+            $$
+        \item \textbf{Property $B_2^p$}: For the cycle $C(4)$ with $4$ vertices, $N_G(C(4))\leq(1+o(1))p^4n^4$,
+            where
+            $$
+            N_G(H(s,t,e))=\sum_{H\subseteq H'(s,t,e')}N_G(H'(s,t,e')).
+            $$
+        \item \textbf{Property $B_3^p$}: $\sigma_1=(p+o(1))n,\sigma_2=o(n)$, where $\sigma_i$ is the $i$-th largest singular
+            value of the adjacency matrix of $G$.
+        \item \textbf{Property $B_4^p$}: For every set $S_1\subseteq T_n,S_2\subseteq B_n$, $e(S_1,S_2)=p|S_1||S_2|+o(n^2)$.
+        \item \textbf{Property $B_5^p$}: $\sum_{u,v\in T_n}\abs{\abs{N(u)\cap N(v)}-p^2n}
+            +\sum_{u,v\in B_n}\abs{\abs{N(u)\cap N(v)}-p^2n}=o(n^3)$.
+    \end{itemize}
+    \begin{proof}[Original $\implies$ $B_1^p$]
+        For any fixed $H(s,t,e)$, assume $d(T_n,B_n)\in p\pm\frac\epsilon2$.
+        Let $A_{T_n\times B_n},A'_{[s]\times[t]}$ be the adjacency matrix of $G$ and $H$ respectively.
+        For any pairwise distinct $w_1,\cdots,w_s\in T_n$ and $\alpha\in\bin^s$, denote 
+        $$
+        f(w_1,\cdots,w_s,\alpha)=\#\cbra{v\in B_n\middle|A_{w_i,v}=\alpha_i,\forall i\in[s]}.
+        $$
+        Let $\beta_i=(A'_{1,i},A'_{2,i},\cdots,A'_{s,i})$ for all $i\in[t]$ and $c_\beta=\#\cbra{i\in[t]\middle|\beta_i=\beta}$,
+        then
+        $$
+        N_G^*(H(s,t,e))=\sum_{\vec w}\prod_\beta f(\vec w,\beta)_{(c_\beta)}=(1+o(1))\sum_{\vec w}\prod_{i=1}^tf(\vec w,\beta_i).
+        $$
+
+        Let 
+        $$
+        S=\cbra{\vec w\in (T_n)_{(s)}\middle|\exists\alpha\in\bin^s,
+        f(\vec w,\alpha)\notin(p\pm2\epsilon)^{|\alpha|}(1-p\pm2\epsilon)^{s-|\alpha|}n}.
+        $$
+        Then
+        \begin{align*}
+            N_G^*(H(s,t,e))
+            &=(1+o(1))\pbra{\sum_{\vec w\in S}+\sum_{\vec w\notin S}}\prod_{i=1}^tf(\vec w,\beta_i)\\
+            &\begin{cases}
+                \leq(1+o(1))\pbra{|S|n^t+(n_{(s)}-|S|)(p+2\epsilon)^e(1-p+2\epsilon)^{st-e}n^t}\\
+                \geq(1+o(1))\pbra{n_{(s)}-|S|}(p-2\epsilon)^e(1-p-2\epsilon)^{st-e}n^t.
+            \end{cases}
+        \end{align*}
+        Since $\epsilon$ can be arbitrarily small, it suffices to show $|S|=O(\poly(\epsilon)n^s)$.
+
+        Define an indicator function $P:\pbra{T_n}_{(s)}\to[s]\cup\cbra{\bot}$ as follows
+        \begin{align*}
+        P(\vec w)=i\in[s]\iff
+            &\pbra{\abs{\bigcap_{j\leq i}N(w_j)}\notin(p\pm2\epsilon)\abs{T_n\cap\bigcap_{j<i}N(w_j)}}\\
+        &\land
+            \pbra{\forall k<i,\abs{\bigcap_{j\leq k}N(w_j)}\in(p\pm2\epsilon)\abs{T_n\cap\bigcap_{j<k}N(w_j)}}\\
+        \end{align*}
+        and $P(\vec w)=\bot$ if no $i\in[s]$ satisfies the condition above.
+        Then if $P(\vec w)=\bot$, it is easy to see 
+        $f(\vec w,\alpha)\in(p\pm2\epsilon)^{|\alpha|}(1-p\pm2\epsilon)^{s-|\alpha|}n$ holds for any $\alpha\in\bin^s$,
+        hence 
+        $$
+        |S|\leq\#\cbra{\vec w\middle|P(\vec w)\neq\bot}=\sum_{i=1}^s\#\cbra{\vec w\middle|P(\vec w)=i}.
+        $$
+
+        Let $\epsilon$ be sufficiently small such that $(p-2\epsilon)^s>\epsilon$.
+        For any fixed $i$, assume $P(\vec w)=i$, then let
+        $$
+        V_{\vec w,i}=T_n\cap\bigcap_{j<i-1}N(w_j),\quad 
+        U_{\vec w,i}=\cbra{u\in T_n\middle|\abs{N(u)\cap V_{\vec w,i}}<(p-2\epsilon)|V_{\vec w,i}|},
+        $$
+        and we have $(p\pm2\epsilon)^{i-1}n\ni|V_{\vec w,i}|>\epsilon n$.
+        Assume $|U_{\vec w,i}|\geq\epsilon n$, by the $\epsilon$-regularity of $T_n,B_n$, we have
+        $$
+        p-\frac\epsilon2-\epsilon\leq d(U_{\vec w,i},V_{\vec w,i})<\frac{(p-2\epsilon)|V_{\vec w,i}||U_{\vec w,i}|}
+        {|U_{\vec w,i}||V_{\vec w,i}|}=p-2\epsilon.
+        $$
+        Similarily, 
+        $$
+        U_{\vec w,i}':=\cbra{u\in T_n\middle|\abs{N(u)\cap V_{\vec w,i}}>(p+2\epsilon)|V_{\vec w,i}|}
+        $$
+        has size at most $\epsilon n$.
+        Therefore
+        $$
+        |S|\leq\sum_{i=1}^s\sum_{\text{valid }w_1,\cdots,w_{i-1}}\pbra{\#U_{\vec w,i}+\#V_{\vec w,i}}\leq\epsilon sn^s
+        $$
+        as desired.
+    \end{proof}
+    \begin{proof}[$B_1^p\implies B_2^p$]
+        Since $N_G(C(4))=N_G^*(C(4))$, the claim holds immediately.
+    \end{proof}
+    \begin{proof}[$B_2^p\implies B_3^p$]
+        Let $A$ be the adjacency matrix of $G$. Then
+        $$
+        \sigma_1=\sup_{x,y\in\Rbb^n}\frac{x^TAy}{x^Ty}\geq\frac{\bm 1^TA\bm 1}{\bm 1^T\bm 1}=(p+o(1))n.
+        $$
+        On the other hand,
+        \begin{align*}
+            (1+o(1))p^4n^4
+            &\geq N_G(C(4))\\
+            &=\pbra{\sum_{i=1}^ne_i^TA^TAA^TAe_i}-o(n^4)\\
+            &=\tr\pbra{A^TAA^TA}-o(n^4)\\
+            &\geq\sigma_1^4+\sigma_2^4-o(n^4)\\
+            &\geq(p+o(1))^4n^4+\sigma_2^4-o(n^4).
+        \end{align*}
+        Thus $\sigma_1=(p+o(1))n,\sigma_2=o(n)$.
+    \end{proof}
+    \begin{proof}[$B_3^p\implies B_4^p$]
+        Denote $A$ as the adjacency matrix of $G$.
+        Let the SVD of $A$ be $U\Sigma V^T$, where $U=(u_1,\cdots,u_n),V=(v_1,\cdots,v_n)$;
+        and $\bm 1_{S_1}=\sum_ia_iu_i,\bm 1_{S_2}=\sum_ib_iv_i$.
+        Then
+        $$
+        e(S_1,S_2)=\bm 1_{S_1}^TA\bm 1_{S_2}=\pbra{\sum_ia_iu_i}A\pbra{\sum_jb_jv_j}=\sum_ia_ib_i\sigma_i.
+        $$
+
+        Assume $\frac1{\sqrt n}\bm 1=\sum_ic_iu_i=\sum_id_iv_i,\sum_ic_i^2=\sum_id_i^2=1$, then
+        $$
+        (p+o(1))n=\frac1n\bm 1^TA\bm 1=\sum_ic_id_i\sigma_i\leq c_1d_1(p+o(1))n+o(n)\sum_{i>1}c_id_i=c_1d_1pn+o(n).
+        $$
+        Thus $c_1d_1=1-o(1)$. 
+        Since $u_1$ is the leading eigenvector of $AA^T\geq\bm0$, by Perron-Frobenius Theorem we have $u_1\geq\bm0$
+        and $0\leq\frac1{\sqrt n}\bm1^Tu_1=c_1\leq1$, which means $c_1=1-o(1),d_1=1-o(1)$.
+        Therefore
+        $$
+        a_1=\bm 1_{S_1}^Tu_1=\frac1{\sqrt n}\bm 1_{S_1}^T\bm 1+\bm 1_{S_1}^T\pbra{u_1-\frac1{\sqrt n}\bm 1}
+        =\frac{|S_1|}{\sqrt n}+\bm 1_{S_1}^T\pbra{o(1)u_1-\sum_{i>1}c_iu_i}
+        =\frac{|S_1|}{\sqrt n}+o(\sqrt n).
+        $$
+        Similarily, $b_1=\frac{|S_2|}{\sqrt{2n}}+o(\sqrt{|S_2|})$.
+        Hence 
+        $$
+        e(S_1,S_2)=a_1b_1\lambda_1+o(n)\sum_{i>1}a_ib_i=p|S_1||S_2|+o(n^2).
+        $$
+    \end{proof}
+    \begin{proof}[$B_4^p\implies B_5^p$]
+        By symmetry, it suffices to show $\sum_{u,v\in T_n}\abs{\abs{N(u)\cap N(v)}-p^2n}=o(n^3)$.
+        For any fixed $u$, define $S_u=\cbra{v\in T_n\middle|\abs{N(u)\cap N(v)}\geq p^2n}$. Then
+        \begin{align*}
+            \sum_{u,v\in T_n}\abs{\abs{N(u)\cap N(v)}-p^2n}
+            &=\sum_u\pbra{\sum_{v\in S_u}\pbra{\abs{N(u)\cap N(v)}-p^2n}+\sum_{v\notin S_u}\pbra{p^2n-\abs{N(u)\cap N(v)}}}\\
+            &=\sum_u\pbra{e(N(u),S_u)-e(N(u),S_u^c)+p^2n(n-2|S_u|)}\\
+            &=\sum_u\pbra{p(pn-|N(u)|)(n-2|S_u|)+o(n^2)}\\
+            &=o(n^3)+p\times O(n)\times\sum_u(pn-|N(u)|)\\
+            &=o(n^3)+p\times O(n)\times\pbra{pn^2-(p+o(1))n^2}\\
+            &=o(n^3).
+        \end{align*}
+    \end{proof}
+    \begin{proof}[$B_4^p\implies$ Original]
+        Let 
+        $$
+        f(n)=\max_{S_1\subseteq T_n,S_2\subseteq B_n}\frac{\abs{e(S_1,S_2)-p|S_1||S_2|}}{n^2},
+        $$
+        then $f(n)=o(1)$.
+        Now for any fixed $\epsilon$, choose $n$ sufficiently large such that $f(n)<\epsilon^3/2$ and 
+        $\abs{d(T_n,B_n)-p}<\epsilon/2$.
+        Thus for any $S_1\subseteq T_n,S_2\subseteq B_n,|S_1|,|S_2|\geq\epsilon n$, we have
+        $$
+        d(S_1,S_2)-p=\frac{e(S_1,S_2)}{|S_1||S_2|}-p\in\frac{p|S_1||S_2|\pm f(n)n^2}{|S_1||S_2|}-p\in\pm\frac{f(n)}{\epsilon^2}
+        \in\pm\frac\epsilon2
+        $$
+        and
+        $$
+        \abs{d(S_1,S_2)-d(T_n,B_n)}\leq\abs{d(S_1,S_2)-p}+\abs{d(T_n,B_n)-p}\leq\epsilon
+        $$
+        as desired.
+    \end{proof}
+    \begin{proof}[$B_5^p\implies B_2^p$]
+        Let 
+        $$
+        f(n)=\frac{\sum_{u,v\in T_n}\abs{|N(u)\cap N(v)|-p^2n}}{n^3},
+        $$
+        then $f(n)=o(1)$.
+        For any fixed $\epsilon$, choose $n$ sufficiently large such that $f(n)<\epsilon^2$.
+
+        Observe that
+        $$
+        N_G(C(4))=\sum_{\substack{u,v\in T_n\\u\neq v}}\abs{N(u)\cap N(v)}_{(2)}=(1+o(1))\sum_{u,v\in T_n}\abs{N(u)\cap N(v)}^2.
+        $$
+        Let $S=\cbra{(u,v)\in T_n^2\middle|\abs{N(u)\cap N(v)}\in (p^2+\epsilon)n}$, then
+        $$
+        \epsilon^2n^3>f(n)n^3=\sum_{u,v\in T_n}\abs{|N(u)\cap N(v)|-p^2n}\geq(n^2-|S|)\epsilon n,
+        $$
+        which means $|S|\geq(1-\epsilon)n^2$.
+
+        Therefore, 
+        $$
+        N_G(C(4))
+            \geq(1+o(1))(1-\epsilon)n^2\times\pbra{(p^2-\epsilon)n}^2
+            =(1+o(1))p^4n^4\sbra{(1-\epsilon)\pbra{1-\frac\epsilon{p^2}}^2}
+        $$
+        and
+        $$
+        N_G(C(4))
+            \leq(1+o(1))\pbra{(1-\epsilon)n^2\times\pbra{(p^2+\epsilon)n}^2+\epsilon n^2\times n^2}
+            =(1+o(1))p^4n^4\sbra{(1-\epsilon)\pbra{1+\frac\epsilon{p^2}}^2+\frac\epsilon{p^4}}.
+        $$
+        Since $\epsilon$ can be arbitrarily small, we have
+        $$
+        N_G(C(4))=(1+o(1))p^4n^4
+        $$
+        as desired.
+    \end{proof}
+\end{exercise}
+\noindent\textbf{Remark:} 
+\begin{itemize}
+    \item $\sigma_1=(p+o(1))n$ is indispensable in \textbf{Property $B_3^p$} considering the case 
+    where $T_n,B_n$ is a quasirandom $2pn$-regular bipartite graph over $\frac n2\times\frac n2$ vertices.
+    \item I didn't show {\bf$B_5^p\implies$ Original}
+        because I don't know how to prove $d(u)\approx pn$ for almost any $u\in T_n\cup B_n$ from $B_5^p$.
+        But it seems it's feasible since this can be easily derived from $B_4^p$.
+\end{itemize}
 
 \end{document}
