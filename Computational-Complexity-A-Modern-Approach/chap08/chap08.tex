@@ -55,7 +55,48 @@
 \maketitle
 
 \begin{exercise}{8.1}
-(a) It is obvious that $IP\subseteq IP'$.
+(a) It is obvious that $IP\subseteq IP'$. To prove the other hand. We first observe that if $L \in IP'[2]$, then we have iteration process:
+
+Give $x$ and $r,r'$, if $\exists a_{1}, a_{2}$ subject to
+\begin{itemize}
+\item $f(x, r) = a_{1}$
+\item $g(x, r') = a_{2}$
+\item $a_{2} = 1\Rightarrow $ ACC.
+\item $a_{2} = 0 \Rightarrow $ REJ.
+\end{itemize}
+
+Firstly, when prover knows the answer, then $r, r'$ can be omitted. In the other hand, when prover don't know answer, it has a strategy $r'$ or without strategy would have the same result since verifier can check whether the prover is honest. That is, there exists $u(r, r')$ such that
+
+$\exists a_{1}, a_{2}$ subject to
+\begin{itemize}
+\item $f(x, u(r,r')) = a_{1}$
+\item $g(x) = a_{2}$
+\item $a_{2} = 1\Rightarrow $ ACC.
+\item $a_{2} = 0 \Rightarrow $ REJ.
+\end{itemize}
+  Thus $IP'\subseteq IP$.
+%In other hand,$\exists  f$ can be computed polynomially, for any $g$ and $x$,
+%\begin{itemize}
+%\item $x \in L \Rightarrow $ $\Pr(ACC)\geq 1 - \frac{1}{2^{n}}$. 
+%\item $x \not\in L \Rightarrow $ for any $r'$, $\Pr(REJ)\geq 1 - \frac{1}{2^{n}}$.  
+%\end{itemize}
+
+(2) Prove $IP\subseteq PSPACE$.
+
+Review the definition of PSPACE, if $L\in PSPACE$, we need to find the prover in $poly(|x|)$ space. $L\in IP$, given any verifier, we can compute the optimal prover in $poly(|x|)$ space, i.e., $L\in PSPACE$.
+
+(3) IP' : changing $2/3$ in $(8.2)$ to 1.
+
+Review the proof of Theorem 8.19: $IP = PSPACE$. We prove that there is a protocol for TQBF that uses public coins, if $x\in TQBF$, then there is a prover that makes the verifier accept with probability 1. Thus we can change the successful probability to $1$ in IP.
+
+(4) Changing $1/3$ in $(8.3)$ to 1.
+
+That is, $\exists V (f), r$, for any $P (g)$
+\begin{itemize}
+\item $x \in L \Rightarrow \exists P\Pr[\text{out}_{V}\ket{V,P}(x) = 1] = 1$. 
+\item $x \not\in L \Rightarrow \forall P \Pr[\text{out}_{V}\ket{V,P}(x) = 1]  =0$.  
+\end{itemize}
+$\Rightarrow IP = IP[1] = NP$.
 \end{exercise}
 
 \begin{exercise}{8.2}
