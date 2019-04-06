@@ -1,0 +1,80 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage[UTF8]{ctex}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{refute}{Refute}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\bin}{\{0,1\}}
+
+\title{Exercise Set --- Chapter $2$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{2}
+    It's easy to see $x([x>0]-[x<0])=|x|$.
+\end{exercise}
+
+\begin{exercise}{7}
+    $$
+    \nabla\pbra{x^{\overline m}}=x^{\overline m}-(x-1)^{\overline m}
+    =x(x+1)\cdots(x+m-1)-(x-1)x\cdots(x+m-2)=mx^{\overline{m-1}}.
+    $$
+\end{exercise}
+
+\begin{exercise}{12}
+    Assume $p(k)=p(\ell)$, we have $k-\ell=c\pbra{(-1)^\ell-(-1)^k}$.
+    \begin{itemize}
+        \item $k=2u,\ell=2v$: $2(u-v)=0\implies u=v\implies k=\ell$.
+        \item $k=2u+1,\ell=2v$: $2(u-v)+1=-2c$, impossible.
+        \item $k=2u,\ell=2v+1$: $2(u-v)-1=2c$, impossible.
+        \item $k=2u+1,\ell=2v+1$: $2(u-v)=0\implies u=v\implies k=\ell$.
+    \end{itemize}
+\end{exercise}
+
+\end{document}
