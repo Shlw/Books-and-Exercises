@@ -163,6 +163,33 @@
     \end{proof}
 \end{exercise}
 
+\begin{exercise}{5}
+    We first show $c<4$, i.e., if $k$ is sufficiently large, then for any $|S_k|\geq4k\ln k$ there exists a coloring
+    $r$ such that $x+S,\forall x$ intersects all $k$ colors.
+
+    Assume towards contradiction such $S_k$ does exist. Then without loss of generality we may assume $|S_k|=4k\ln k$ by dropping
+    several terms in $S_k$; and assume $\min_{x\in S_k}x=0$ by shifting it to the origin. Let $M=1+\max_{x\in S_k}x$.
+
+    Now we choose a random local coloring $s_1:[0,2M-1]\to[k]$ by picking $s_1(i)\in[k]$ independently and uniformly.
+    Let $s:\Zbb\to[k]$ be repeated $s_1$, i.e., $s(i)=s_1(i\mod 2M)$.
+    Then, to verify if $S_k$ fails on $s$, it suffices to verify for all $x\in[0,2M-1]$.
+
+    Denote $A_x,x\in[0,2M-1]$ as the event $x+S_k$ intersects $<k$ colors in $s$, then
+    $$
+    \Pr\sbra{A_x}\leq\frac{k\times(k-1)^{4k\ln k}}{k^{4k\ln k}}=k\pbra{1-\frac1k}^{4k\ln k}\leq\frac1{k^3},
+    $$
+    since $x+S_k$ is contained in $[x,x+M-1]$.
+    Note that $A_x$ is correlated with less than $|S_k|^2=16k^2\ln^2k$ kinds of events $A_y$, as $(x+S_k)\cap(y+S_k)$ 
+    (after modulo $2M$) must be non-empty. 
+    Thus by Local Lemma, 
+    $$
+    e\times16k^2\ln^2k\times\frac1{k^3}<1
+    $$
+    with sufficiently large $k$, we show there exists coloring $s$ where $S_k$ fails.
+
+    % upper bound
+\end{exercise}
+
 \begin{exercise}{6}
     The following algorithm runs in $O(m+(d+1)\mathrm{TLOG})$.
 
