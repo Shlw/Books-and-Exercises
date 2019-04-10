@@ -1,0 +1,155 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsthm,amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{geometry}
+% \usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+% \newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{refute}{Refute}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\bin}{\{0,1\}}
+
+\title{Exercise Set --- Chapter 8}
+\date{}
+
+\begin{document}
+
+    \maketitle
+
+  %   \begin{exercise}{8.3}
+		% For any language $L \in \mathbf{BP\cdot NP}$, there exist poly-time DTMs $M, N$ such that 
+		% \begin{align*}
+		% 	\forall x\in L \Pr_r(\exists c N(M(x,r), c)=1)&\geq 2/3\\
+		% 	\forall x\not\in L \Pr_r(\forall c N(M(x,r), c)=1)&\leq 1/3.
+		% \end{align*}
+		% Design an AM protocol as:
+		% \begin{itemize}
+		% 	\item V: send random bits $r$ to P;
+		% 	\item P: return $c$ to $V$;
+		% 	\item V: accept if $N(M(x, r), c) = 1$.
+		% \end{itemize}
+
+		% Given an AM protocol for a language $L$:
+		% \begin{itemize}
+		% 	\item V: send random bits $r$ and $M_1(x, r)$ to P;
+		% 	\item P: return $c$ to $V$;
+		% 	\item V: accept if $M_2(x, r, c) = 1$.
+		% \end{itemize}
+		% Thus,
+		% \begin{align*}
+		% 	\forall x\in L\exists P \Pr_r(M_2(x, r, P(r, x, M_1(x, r))) = 1) &\geq 2/3\\
+		% 	\forall x\not\in L\forall P \Pr_r(M_2(x, r, P(r, x, M_1(x, r))) = 1) &\leq 1/3
+		% \end{align*}
+		% \begin{align*}
+		% 	\forall x\in L\exists P \Pr_r(M_2(x, r, P(r, x)) = 1) &\geq 2/3\\
+		% 	\forall x\not\in L\forall P \Pr_r(M_2(x, r, P(r, x)) = 1) &\leq 1/3
+		% \end{align*}
+		% \begin{align*}
+		% 	\forall x\in L\Pr_r(\exists c M_2(x, r, c) = 1) &\geq 2/3\\
+		% 	\forall x\not\in L \Pr_r(\forall c M_2(x, r, c) = 1) &\leq 1/3
+		% \end{align*}
+		% \begin{align*}
+		% 	\forall x\in L\Pr_r(\exists c M_2(x, r, c) = 1) &\geq 2/3\\
+		% 	\forall x\not\in L \Pr_r(\forall c M_2(x, r, c) = 1) &\leq 1/3
+		% \end{align*}
+		% \begin{align*}
+		% 	\forall x\in L\Pr_r(N(M(x, r)) = 1) &\geq 2/3\\
+		% 	\forall x\not\in L \Pr_r(N(M(x, r)) = 1) &\leq 1/3
+		% \end{align*}
+
+		% Equivalently, there exist a poly-time DTM $M, N'$ such that 
+		% \begin{align*}
+		% 	\forall x\in L \Pr_r(\exists c N'(M(x,r),c)=1)\geq 2/3\\
+		% 	\forall x\in L \exists c \Pr_r(N'(M(x,r),c(r))=1)\geq 2/3\\
+		% \end{align*}
+  %   \end{exercise}
+
+    \begin{exercise}{8.11}
+		Give the definition of $MIP$ and probabilistic oracle machine:\\
+		
+		$P_1,...,P_k$ and $V$ form a multi-prover interactive protocol for a language $L$ if :
+
+		\begin{enumerate}
+			\item[(1)] If $x\in L$, $\exists P_1,\ldots,P_k$, have $Pr[\text{$P_1,\ldots,P_k$ and $V$ on $x$ accecpt}]>1-2^{-n}$;
+			\item[(2)] If $x\notin L$, $\forall P_1,\ldots,P_k$, have $Pr[\text{$P_1,\ldots,P_k$ and $V$ on $x$ accecpt}]<2^{-n}$
+		\end{enumerate}
+		
+		$MIP$ is the class of all languages which have multi-prover interactive protocols.\\
+		
+		Let $M$ be a probabilistic ploy-time Turing machine with access to an oracle $O$,a language L is accepted by M iff 
+
+		\begin{enumerate}
+			\item[(1)] For all $x\in L$, $\exists O$,have $Pr[M^O(x)=1]>1-2^{-n}$;
+			\item[(2)] For all $x\notin L$, $\forall O$,have $Pr[M^O(x)=1]]<2^{-n}$
+		\end{enumerate}
+
+		By Lemma 1 and Lemma 2, we can proof $MIP \subseteq NEXP $.\\
+
+		\begin{lemma}
+			If a language $L$ is accepted by a  a multi-prover interactive protocol , then $L$ can be accepted by a probabilistic oracle machine.
+		\end{lemma}
+
+		\begin{proof}
+			Suppose now that $L$ is accepted by a multi-prover interactive protocol. Then define $M$ as follows: Have $M$ simulate $V$ with $M$ remembering all messages. When $V$ sends the $j$th message to the $i$th prover, $M$ asks the oracle the question$(i,j,l,\beta_i1,...,\beta_ij)$ properly encoded and uses the response as the $l$th bit of the $j$th response from prover $i$ where $\beta_i1,...,\beta_ij$ is everything prover $i$ can see in the point.
+
+			\begin{itemize}
+				\item[(a)] If $x\in L$, then the oracle $O$ could convince $M$ to accept by just encoding each prover's answer to each question.
+				\item[(b)] If an oracle $O$ could convince $M$ to accept a string x then the provers could convince the verifier to accept by just using that $O$ to create their responses.
+			\end{itemize}
+		\end{proof}
+
+		\begin{lemma}
+			If a language $L$ is accepted by  a probabilistic oracle machine, then $L$ can be computed in nondeterministic exponential time.
+		\end{lemma}
+
+		\begin{proof}
+			By lemma 1,$M$ accept $L$ with $M$ using time $n^k$ on inputs length $n$ for some $k>0$.We create a nondeterministic exponential time machine to accept $L$ as follow:
+		
+			On input $x$($|x|=n$),guess the value of the oracle $O$ on all questions of length at most $n^k$.Note $M(k)$ can only ask oracle questions of lendth no longer than $n^k$,there are $2^{n^k +1} -1)$ such questions.For $r$ is a string of length $n^k$, let $f(x,O,r)=1$ if $M$ on input $x$ accepts using random coin tosses $r$ and getting the oracle answers from $O$ and $f(x,O,r)=0$ otherwise. Compute
+			
+					$S= \sum_{r \in \{0,1\}^{n^k}}f(x,O,r)$
+
+			Accept if $S>2^{n^k}/2$.
+			
+			By the definition of probabilistic oracle machine,for $x\in L$ there exist a setting of the oracle such that $S\ge(1-2^{-n})2^{n^k}$. If $x \notin L$ then for any setting of the oracle ,$S\leq 2^{-n}2^{n^k}$.
+		\end{proof}
+	\end{exercise}
+\end{document}
