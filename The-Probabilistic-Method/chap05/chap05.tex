@@ -82,6 +82,51 @@
 
 \maketitle
 
+\begin{exercise}{2}
+    Fix an arbitrary $n>2\ell_0$, we show there exists a binary sequence $a\in\bin^n$ satisfying the requirement.
+    Construct $a$ by independently pick $a_i\in\bin$ uniformly.
+    Let $A_{i,k},k>\ell_0,i+2k-1\leq n$ be the event $u=(a_i,\cdots,a_{i+k-1})$ and $v=(a_{i+k},\cdots,a_{i+2k-1})$
+    differ in less than $(1/2-\epsilon)k$ coordinates.
+    Then
+    $$
+    \Pr\sbra{A_{i,k}}=\Pr\sbra{\frac1k\sum_{j=i}^{i+k-1}[a_j\neq a_{j+k}]-\frac12<-\epsilon}
+    \leq e^{-2\epsilon^2k}.
+    $$
+    On the other hand, $A_{i,k}$ is (at most) correlated with $A_{i',t},i+k\in[i',i'+2t-1]$.
+    By Local Lemma, it suffices to show there exists $x_{\ell_0+1},\cdots,x_{n/2}\in[0,1]$ such that
+    $$
+    \Pr\sbra{A_{i,k}}\leq C^k\leq x_k\prod_{\substack{i',t\\i+k\in[i',i'+2t-1]}}(1-x_t)
+    $$
+    holds for any $i,k$, where $C=e^{-2\epsilon^2}$ is a constant smaller than $1$.
+
+    Let $x_t=C^{\delta_t},\delta_t\geq0$ for all $t=\ell_0+1,\cdots,n/2$.
+    Then
+    \begin{align*}
+        &x_k\prod_{\substack{i',t\\i+k\in[i',i'+2t-1]}}(1-x_t)\\
+        \geq&C^{\delta_k}\prod_{t=\ell_0+1}^{n/2}\pbra{1-C^{\delta_t}}^{2t}\\
+        \geq&C^{\delta_k}\prod_{t=\ell_0+1}^{n/2}\exp\cbra{-4tC^{\delta_t}},\quad 1-x\geq e^{-2x}
+        \text{ for $x\geq0$ sufficiently small.}
+    \end{align*}
+    Thus it suffices to show there is an assignment satisfying
+    $$
+        k\ln C\leq\delta_k\ln C-4\sum_{t=\ell_0+1}^{n/2}tC^{\delta_t}.
+    $$
+    Let $\delta_t=t/2$, then
+    $$
+    \text{RHS}=\frac k2\ln C-O(\ell_0C^{\ell_0/2}).
+    $$
+    Therefore, when $\epsilon$ (thus $C$) is fixed, choose $\ell_0$ sufficiently large such that
+    $$
+    \begin{cases}
+        1-C^{\ell_0/2}\geq\exp\cbra{-2C^{\ell_0/2}}\\
+        O(\ell_0C^{\ell_0/2})<-\frac k2\ln C,
+    \end{cases}
+    $$
+    we are guaranteed a desired binary string of length $n$.
+
+    This should be generalized to the infinite case by some ``compactness argument'', but I'm not familiar with that.
+\end{exercise}
+
 \begin{exercise}{3}
     Without loss of generality, assume $|S(v)|=10d,\forall v\in V$. Uniformly choose color $c_v\in S(v)$ independently
     for any $v$. For any $u\in V,v\in N(u),c\in S(u)\cap S(v)$, define event $A[\{u,v\},c]$ be $c_u=c_v=c$. Then
@@ -116,6 +161,33 @@
                 graph $G_m$, which falls into the above case.
         \end{itemize}
     \end{proof}
+\end{exercise}
+
+\begin{exercise}{5}
+    We first show $c<4$, i.e., if $k$ is sufficiently large, then for any $|S_k|\geq4k\ln k$ there exists a coloring
+    $r$ such that $x+S,\forall x$ intersects all $k$ colors.
+
+    Assume towards contradiction such $S_k$ does exist. Then without loss of generality we may assume $|S_k|=4k\ln k$ by dropping
+    several terms in $S_k$; and assume $\min_{x\in S_k}x=0$ by shifting it to the origin. Let $M=1+\max_{x\in S_k}x$.
+
+    Now we choose a random local coloring $s_1:[0,2M-1]\to[k]$ by picking $s_1(i)\in[k]$ independently and uniformly.
+    Let $s:\Zbb\to[k]$ be repeated $s_1$, i.e., $s(i)=s_1(i\mod 2M)$.
+    Then, to verify if $S_k$ fails on $s$, it suffices to verify for all $x\in[0,2M-1]$.
+
+    Denote $A_x,x\in[0,2M-1]$ as the event $x+S_k$ intersects $<k$ colors in $s$, then
+    $$
+    \Pr\sbra{A_x}\leq\frac{k\times(k-1)^{4k\ln k}}{k^{4k\ln k}}=k\pbra{1-\frac1k}^{4k\ln k}\leq\frac1{k^3},
+    $$
+    since $x+S_k$ is contained in $[x,x+M-1]$.
+    Note that $A_x$ is correlated with less than $|S_k|^2=16k^2\ln^2k$ kinds of events $A_y$, as $(x+S_k)\cap(y+S_k)$ 
+    (after modulo $2M$) must be non-empty. 
+    Thus by Local Lemma, 
+    $$
+    e\times16k^2\ln^2k\times\frac1{k^3}<1
+    $$
+    with sufficiently large $k$, we show there exists coloring $s$ where $S_k$ fails.
+
+    % upper bound
 \end{exercise}
 
 \begin{exercise}{6}
