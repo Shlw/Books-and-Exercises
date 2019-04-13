@@ -530,14 +530,26 @@ $G$ being a complete $(r-1)$-partite graph $T(\underbrace{n/\pbra{r-1},\cdots,n/
             \lim_{n\to\infty}\frac{N_{G_n^n}(C(3))}{\binom n3}\leq b,
             $$
             which means $b$ is attained.
-        \item $b'$ is attained. (I'm not sure since I'm not familiar with real analysis.) 
-            I think the valid $W$'s consist of a compact, thus closed, space.
-            Then for any sequence $W_k,k\in\Nbb^+$ where 
+        \item $b'$ is attained. Let 
             $$
-            b'\leq\int W_k(x,y)W_k(x,z)W_k(y,z)\leq b'+\frac1k,
+            \Ccal=\cbra{W:[0,1]^2\to[0,1]\middle|
+            \pbra{W\text{ is Lebesgue measurable}}
+            \land\pbra{W(x,y)\equiv W(y,x)}\land\pbra{\int W(x,y)=0.7}}.
             $$
-            there exists a convergence sequence $\cbra{W_{k_i}}\subseteq\cbra{W_k}$ and the limit function
-            $W$ is also valid and the corresponding integral achieves $b'$.
+            Define $d(W_1,W_2)=\sup_{x,y\in[0,1]^2}\abs{W_1(x,y)-W_2(x,y)}$, then it suffices to show $\Ccal$ is a complete
+            space with metric $d(\cdot,\cdot)$.
+
+            Let $\cbra{W_i}\subseteq\Ccal$ be any Cauchy sequence and $\epsilon_i=d(W_i,W_{i-1})$, 
+            then $\lim_{i\to+\infty}\epsilon_i=0$. Define $W^*$ be the limit, i.e.,
+            $$
+            W^*(x,y)=\lim_{i\to+\infty}W_i(x,y).
+            $$
+            It is easy to see $W*(x,y)\in[0,1]$ and $W^*(x,y)=W^*(y,x)$. By dominated convergence theorem, $W^*$ is Lebesgue
+            measurable and 
+            $$
+            \int W^*(x,y)=\int\lim_{i\to+\infty}W_i(x,y)=\lim_{i\to+\infty}\int W_i(x,y)=0.7.
+            $$
+            Thus $W^*\in\Ccal$ and $\Ccal$ is a complete space.
     \end{itemize}
 \end{exercise}
 
@@ -757,5 +769,20 @@ $G$ being a complete $(r-1)$-partite graph $T(\underbrace{n/\pbra{r-1},\cdots,n/
         because I don't know how to prove $d(u)\approx pn$ for almost any $u\in T_n\cup B_n$ from $B_5^p$.
         But it seems it's feasible since this can be easily derived from $B_4^p$.
 \end{itemize}
+
+%\begin{problem}{11}
+%    Assume $H$ is a graph on $s$ vertices with $e$ edges and $G=G(n,W)=(V,E)$.
+%    Let $X_w,w\in V_{(s)}$ be the indicator variable about $H\subseteq G\restriction_w$.
+%    Then
+%    $$
+%    t(H,G(n,W))=n^{-s}\sum_{w\in V_{(s)}}X_w=(1-o(1))\frac1{n_{(s)}}\sum_{w\in V_{(s)}}X_w
+%    =\frac1{n_{(s)}}\sum_{w\in V_{(s)}}X_w-o(1)
+%    $$
+%    and
+%    $$
+%    \Pr\sbra{\abs{t(H,G(n,W))-c(H,W)}>\epsilon}\leq
+%    \Pr\sbra{\abs{\frac1{n_{(s)}}\sum_{w\in V_{(s)}}X_w-c(H,W)}>\epsilon-o(1)}.
+%    $$
+%\end{problem}
 
 \end{document}
