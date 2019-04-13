@@ -115,7 +115,7 @@
     $$
     \text{RHS}=\frac k2\ln C-O(\ell_0C^{\ell_0/2}).
     $$
-    Therefore, when $\epsilon$ (thus $C$) is fixed, choose $\ell_0$ sufficiently large such that
+    Therefore, when $\epsilon$ (thus $C$) is fixed, choose $\ell_0$ (independent of $n$) sufficiently large such that
     $$
     \begin{cases}
         1-C^{\ell_0/2}\geq\exp\cbra{-2C^{\ell_0/2}}\\
@@ -124,7 +124,22 @@
     $$
     we are guaranteed a desired binary string of length $n$.
 
-    This should be generalized to the infinite case by some ``compactness argument'', but I'm not familiar with that.
+    Let $\Ccal=\bin^{\Nbb}$ be the space (with the usual product topology) of all possible colorings, 
+    then by Tikhonov's Theorem it's compact.
+    Let $\Ccal_n$ be the set of coloring valid for $[n]$, then $\Ccal_n$ is closed and non-empty since 
+    $$
+    \Ccal_n=\cbra{\text{valid coloring for the first $n$ entries}}\times\bin^{\Nbb},
+    $$
+    where the first part is of discrete topology (thus closed) and the second part is trivially closed.
+
+    Now it suffices to show $\bigcap_{n\in\Nbb}\Ccal_n\neq\emptyset$.
+    Note that $\Ccal_n^c$ is open and $\Ccal_{n+1}\subseteq\Ccal_n$. Assume $\bigcap_{n\in\Nbb}\Ccal_n=\emptyset$, then 
+    $\bigcup_{n\in\Nbb}\Ccal_n^c=\Ccal$. By the compactness, there exists a finite set $S\subset\Nbb$ such that
+    $\bigcup_{n\in S}\Ccal_n^c=\Ccal$. Then 
+    $$
+    \Ccal_{t+1}\subseteq\bigcap_{n\in\Nbb}\Ccal_n,\quad t=\max_{x\in S}x,
+    $$
+    which means $\bigcap_{n\in\Nbb}\Ccal_n\neq\emptyset$.
 \end{exercise}
 
 \begin{exercise}{3}
