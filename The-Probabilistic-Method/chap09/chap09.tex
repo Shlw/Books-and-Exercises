@@ -770,19 +770,109 @@ $G$ being a complete $(r-1)$-partite graph $T(\underbrace{n/\pbra{r-1},\cdots,n/
         But it seems it's feasible since this can be easily derived from $B_4^p$.
 \end{itemize}
 
-%\begin{problem}{11}
-%    Assume $H$ is a graph on $s$ vertices with $e$ edges and $G=G(n,W)=(V,E)$.
-%    Let $X_w,w\in V_{(s)}$ be the indicator variable about $H\subseteq G\restriction_w$.
-%    Then
-%    $$
-%    t(H,G(n,W))=n^{-s}\sum_{w\in V_{(s)}}X_w=(1-o(1))\frac1{n_{(s)}}\sum_{w\in V_{(s)}}X_w
-%    =\frac1{n_{(s)}}\sum_{w\in V_{(s)}}X_w-o(1)
-%    $$
-%    and
-%    $$
-%    \Pr\sbra{\abs{t(H,G(n,W))-c(H,W)}>\epsilon}\leq
-%    \Pr\sbra{\abs{\frac1{n_{(s)}}\sum_{w\in V_{(s)}}X_w-c(H,W)}>\epsilon-o(1)}.
-%    $$
-%\end{problem}
+\begin{problem}{11}
+    Assume $H=(V_H,E_H)$ is a graph on $\tilde s$ vertices with $\tilde e$ edges and $G=G(n,W)=(V_G,E_G)$.
+    Let $L_i\in[0,1],i\in[n]$ be the label of vertex $v_i\in V_G$ and
+    $\hat e_{j,i}$ be the indicator whether $e_{j,i}$ exists. Define
+    random variable $X_i=(L_i,\cbra{\hat e_{j,i}\middle|j<i})$,
+    then $X_i$ can be interpreted as first choose $L_i$ uniformly
+    then decide whether $e_{j,i}$ exists by probability $W(L_i,L_j)$. 
+
+    Define $f(X_1,\cdots,X_n)=t(H,G')$, where $G'$ is exactly the graph described by $X_1,\cdots,X_n$.
+    Let 
+    $$
+    Y_i=\E_{X_{i+1},\cdots,X_n}\sbra{f(X_1,\cdots,X_n)\middle|X_1,\cdots,X_i},\quad i=0,1,\cdots,n,
+    $$
+    then $Y_i$ is a (vertex exposure) martingale.
+    Since $Y_0=\E\sbra{f(X_1,\cdots,X_n)}$, then 
+    $$
+    Y_0=\frac1{n^{\tilde s}}\sum_{w\in{V_G}_{(\tilde s)}}\Pr\sbra{G'\restriction_w\cong H}
+    =\frac{n_{(\tilde s)}}{n^{\tilde s}}c(H,W)=(1-o(1))c(H,W)=c(H,W)-o(1).
+    $$
+
+    Note that 
+    \begin{align*}
+        &\abs{Y_i-Y_{i-1}}\\
+        =&\abs{\E_{X_i,\cdots,X_n}\sbra{f(\hat X_1,\cdots,\hat X_i,X_{i+1},\cdots,X_n)-
+        f(\hat X_1,\cdots,\hat X_{i-1},X_i,\cdots,X_n)}}\\
+        \leq&\E_{X_i,\cdots,X_n}\sbra{\abs{f(\hat X_1,\cdots,\hat X_i,X_{i+1},\cdots,X_n)-
+        f(\hat X_1,\cdots,\hat X_{i-1},X_i,\cdots,X_n)}}\\
+        \leq&\max_{X_i,\cdots,X_n}\abs{f(\hat X_1,\cdots,\hat X_i,X_{i+1},\cdots,X_n)-
+        f(\hat X_1,\cdots,\hat X_{i-1},X_i,\cdots,X_n)}\\
+        \leq&\frac1{n^{\tilde s}}\sum_{\pi:[\tilde s]\to{V_G}_{(\tilde s)}}\sbra{\pi(E_H)\cap\cbra{e_{j,i}}\neq\emptyset}\\
+        \leq&\frac1{n^{\tilde s}}\sum_{j<i}\sum_{\pi:[\tilde s]\to{V_G}_{(\tilde s)}}\sbra{e_{j,i}\in\pi(E_H)}\\
+        =&\frac1{n^{\tilde s}}\times\pbra{i-1}\times\frac{\tilde e}{\binom n2}\times n^{(\tilde s)}\\
+        \leq&\frac{2\tilde e(1-o(1))}n.
+    \end{align*}
+
+    Then we have
+    \begin{align*}
+        &\Pr\sbra{\abs{t(H,G(n,W))-c(H,W)}>\epsilon}\\
+        =&\Pr\sbra{\abs{Y_n-Y_0-o(1)}>\epsilon}\\
+        \leq&\Pr\sbra{\abs{Y_n-Y_0}>\epsilon-o(1)}\\
+        =&\Pr\sbra{\abs{\frac n{2\tilde e(1-o(1))}Y_n-\frac n{2\tilde e(1-o(1))}Y_0}
+        >\frac{(\epsilon-o(1))\sqrt n}{2\tilde e(1-o(1))}\sqrt n}\\
+        <&2\exp\cbra{-\pbra{\frac{\epsilon-o(1)}{2\tilde e(1-o(1))}}^2n}
+    \end{align*}
+    as desired, where the second inequality is Azuma's inequality.
+
+    Then 
+    \begin{align*}
+        &\Pr\sbra{\lim_{n\to+\infty}t(H,G(n,W))=c(H,W)}=1\\
+        \iff&\Pr\sbra{\forall\epsilon>0,\exists N,\forall n>N,\abs{t(H,G(n,W))-c(H,W)}\leq\epsilon}=1\\
+        \iff&\Pr\sbra{\exists\epsilon>0,\exists\text{ infinite many }n,\abs{t(H,G(n,W))-c(H,W)}>\epsilon}=0.
+    \end{align*}
+    Let $\Omega$ be the sample space, where any sample point $\omega\in\Omega$ is a possible sequence of graph, 
+    then 
+    \begin{align*}
+        \iff&\Pr\cbra{\omega\in\Omega:
+        \exists\epsilon>0,\exists\text{ infinite many }n,\abs{t(H,G(n,W))-c(H,W)}>\epsilon}=0\\
+        \iff&\Pr\cbra{\bigcup_{\epsilon>0}\cbra{\omega\in\Omega:
+        \exists\text{ infinite many }n,\abs{t(H,G(n,W))-c(H,W)}>\epsilon}}=0\\
+        \iff&\Pr\cbra{\bigcup_{k=0}^{+\infty}\cbra{\omega\in\Omega:
+        \exists\text{ infinite many }n,\abs{t(H,G(n,W))-c(H,W)}>2^{-k}}}=0.
+    \end{align*}
+    For any $k\in\Nbb$, define 
+    $$
+    S_k=\cbra{\omega\in\Omega:\exists\text{ infinite many }n,\abs{t(H,G(n,W))-c(H,W)}>2^{-k}}.
+    $$
+    Then $S_k\subseteq S_{k+1}$ and the claim is 
+    \begin{align*}
+        \iff&\Pr\cbra{\bigcup_{k=0}^{+\infty}S_k}=0\\
+        \iff&\Pr\cbra{S_0\cup\bigcup_{k=1}^{+\infty}\pbra{S_k\backslash S_{k-1}}}=0\\
+        \iff&\Pr\cbra{S_0}+\sum_{k=1}^{+\infty}\Pr\cbra{S_k\backslash S_{k-1}}=0\\
+        \Longleftarrow\ &\sum_{k=0}^{+\infty}\Pr\cbra{S_k}=0\\
+        \iff&\Pr\cbra{S_k}=0,\quad\forall k\geq0.
+    \end{align*}
+    For any fixed $k$, let $\alpha$ be the constant when $\epsilon=2^{-k}$ in the first part of the question.
+    Define $A^k_n$ as the event that $\abs{t(H,G(n,W))-c(H,W)}>2^{-k}$ and $I(\cdot)$ as the indicator function, then
+    $$
+    \Pr\cbra{S_k}=0\iff\Pr\sbra{\sum_{n=1}^{+\infty}I\pbra{A_n^k}=+\infty}=0.
+    $$
+    This is guaranteed by Borel-Cantelli lemma together with 
+    $$
+    \sum_{n=1}^{+\infty}\Pr\sbra{A_n^k}=\sum_{n=1}^{+\infty}\Pr\sbra{\abs{t(H,G(n,W))-c(H,W)}>2^{-k}}
+    \leq\sum_{n=1}^{+\infty}2e^{-\alpha n}<+\infty.
+    $$
+
+\end{problem}
 
 \end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
