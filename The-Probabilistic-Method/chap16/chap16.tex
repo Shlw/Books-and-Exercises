@@ -118,6 +118,21 @@
     \end{enumerate}
 \end{exercise}
 
+%\begin{exercise}{2}
+%    Let every $F\in\Fcal$ independently consist of $10\log n$ elements drawn with replacement from $N$.
+%    Then
+%    \begin{align*}
+%        \Pr\sbra{\Fcal\text{ is valid}}
+%        =&\Pr\sbra{\forall\Gcal,\exists F\in\Fcal,\forall i\in[n],F\cap G_i\neq\emptyset}\\
+%        =&1-\Pr\sbra{\exists\Gcal,\forall F\in\Fcal,\exists i\in[n],F\cap G_i=\emptyset}\\
+%        \geq&1-\sum_\Gcal\Pr\sbra{\forall F\in\Fcal,\exists i\in[n],F\cap G_i=\emptyset}\\
+%        =&1-\sum_\Gcal\pbra{\Pr\sbra{\exists i\in[n],F\cap G_i=\emptyset}}^{|\Fcal|}\\
+%        \geq&1-\sum_\Gcal\pbra{\sum_{i=1}^n\Pr\sbra{F\cap G_i=\emptyset}}^{|\Fcal|}\\
+%        =&1-\sum_\Gcal\pbra{\sum_{i=1}^n2^{-10\log n}}^{|\Fcal|}\\
+%        \geq&1-\binom{n}{\frac n2}^nn^{-9n^{10}}\geq1-(2e)^{\frac{n^2}2}n^{-9n^{10}}=1-o(1).
+%    \end{align*}
+%\end{exercise}
+
 \end{document}
 
 
