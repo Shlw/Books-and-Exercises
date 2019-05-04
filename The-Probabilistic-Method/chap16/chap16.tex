@@ -1,0 +1,139 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator{\E}{\mathbb E}
+\DeclareMathOperator{\Var}{\mathrm{Var}}
+\DeclareMathOperator{\tr}{\mathrm{tr}}
+\DeclareMathOperator{\poly}{\mathrm{poly}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\vabs}[1]{\left\| #1 \right\|}
+\newcommand{\abra}[1]{\left\langle #1 \right\rangle}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\floorbra}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceilbra}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\ZPP}{\mathtt{ZPP}}
+\newcommand{\RP}{\mathtt{RP}}
+\newcommand{\coRP}{\mathtt{co}\text{-}\mathtt{RP}}
+\newcommand{\per}{\text{per}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Zbb}{\mathbb{Z}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Gcal}{\mathcal{G}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $16$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{1}
+    Pick $\chi(i)\in\bin$ uniformly and independently. Then
+    \begin{align*}
+        \Pr\sbra{\chi\text{ is valid}}
+        =&\Pr\sbra{\forall i\in[n],\chi(A_i)=\bin}\\
+        =&1-\Pr\sbra{\exists i\in[n],\chi(A_i)=\cbra{0}\text{ or }\cbra{1}}\\
+        \geq&1-\sum_{i=1}^n\Pr\sbra{\chi(A_i)=\cbra{0}\text{ or }\cbra{1}}\\
+        =&1-\sum_{i=1}^n2^{1-|A_i|}\\
+        >&0.
+    \end{align*}
+    Thus there exists a valid $\chi$.
+
+    When $m=n$, we find such a $\chi$ by the following algorithm.
+    \begin{enumerate}
+        \item Initialize $i\gets1$ and $\chi(t)\gets*$ for all $t\in[n]$.
+        \item Let $\chi(i)=b,b\in\bin$ and compute 
+            $$
+            x_b=\sum_{i=1}^n\Pr\sbra{\chi(A_i)=\cbra{0}\text{ or }\cbra{1}}
+            =\sum_{i=1}^n\begin{cases}
+                0 & c_0(A_i),c_1(A_i)>0\\
+                2^{1-|A_i|} & c_0(A_i)=c_1(A_i)=0\\
+                2^{c_0(A_i)-|A_i|} & c_0(A_i)>0,c_1(A_i)=0\\
+                2^{c_1(A_i)-|A_i|} & c_1(A_i)>0,c_0(A_i)=0,
+            \end{cases}
+            $$
+            where $c_b(A_i)=\#\cbra{t\in A_i\middle|\chi(t)=b}$.
+        \item $b^*\gets\argmin_bx_b$.
+        \item $\chi(i)\gets b^*$.
+        \item $i\gets i+1$. If $i>m$, return $\chi$; otherwise go to Step 2.
+    \end{enumerate}
+\end{exercise}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
