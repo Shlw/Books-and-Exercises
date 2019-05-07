@@ -53,6 +53,10 @@
 
     \maketitle
 
+\begin{exercise}{9.2}
+If for any two messages $x,x'$ such that $E_{U_{n}}(x)$ has the same distributions to $E_{U_{n}}(x')$. Then there exists $r$, s.t. $x$ and $x'$ are encrypted by the same key $k$. i.e., $\Pr[E_{k}(x) = y] = \Pr[E_{k'}(x)] = y$. In the other hand, if $E_{k}(x) = E_{k}(x') = y$, then we can not obtain the correct plaintext with $y$. Thus there exists $x,x'$, $E_{U_{n}}(x)$ is not the same distributions as $E_{U_{n}}(x')$. 
+\end{exercise}
+
 	\begin{exercise}{9.3}
         Since $\mathrm E_k(\cdot)$ is one-time pad encryption, the distribution of $\mathrm E_k(\cdot)$ is uniform.
         Then the desired inequality follows immediately.
