@@ -46,6 +46,11 @@
 \newcommand{\sbra}[1]{\left[ #1 \right]}
 \newcommand{\bin}{\{0,1\}}
 
+
+\def\sD{\textsf{D}}
+\def\sE{\textsf{E}}
+\def\cD{\mathcal{D}}
+
 \title{Exercise Set --- Chapter 9}
 \date{}
 
@@ -53,28 +58,55 @@
 
     \maketitle
 
-\begin{exercise}{9.2}
-If for any two messages $x,x'$ such that $E_{U_{n}}(x)$ has the same distributions to $E_{U_{n}}(x')$. Then there exists $r$, s.t. $x$ and $x'$ are encrypted by the same key $k$. i.e., $\Pr[E_{k}(x) = y] = \Pr[E_{k'}(x)] = y$. In the other hand, if $E_{k}(x) = E_{k}(x') = y$, then we can not obtain the correct plaintext with $y$. Thus there exists $x,x'$, $E_{U_{n}}(x)$ is not the same distributions as $E_{U_{n}}(x')$. 
-\end{exercise}
+	\begin{exercise}{9.2}
+		If for any two messages $x,x'$ such that $E_{U_{n}}(x)$ has the same distributions to $E_{U_{n}}(x')$. Then there exists $r$, s.t. $x$ and $x'$ are encrypted by the same key $k$. i.e., $\Pr[E_{k}(x) = y] = \Pr[E_{k'}(x)] = y$. In the other hand, if $E_{k}(x) = E_{k}(x') = y$, then we can not obtain the correct plaintext with $y$. Thus there exists $x,x'$, $E_{U_{n}}(x)$ is not the same distributions as $E_{U_{n}}(x')$. 
+	\end{exercise}
 
 	\begin{exercise}{9.3}
         Since $\mathrm E_k(\cdot)$ is one-time pad encryption, the distribution of $\mathrm E_k(\cdot)$ is uniform.
         Then the desired inequality follows immediately.
 	\end{exercise}
 
-\begin{exercise}{9.15}
-\begin{itemize}
-\item [a.] There exists indistinguishable function $f^{-1}$, and polynomial $A$ s.t.,
-\begin{align*}
-|\Pr[A(f^{-1}(f(X_{n})))] - A(f^{-1}(f(Y_{n})))]|<\epsilon(n)
-\end{align*}
-i.e., $f(X_{n})$ and $f(Y_{n})$ are indistinguishable.
-\item[b.] $\Leftarrow$ By definition 9.8.
+	\begin{exercise}{9.4}
+		Define a distinguisher $A$ for each $x$ as 
+		\[
+			A_x(y): = \left\{\begin{array}{cl}
+				x & \Pr[\sD_{U_n}(y) = x] \geq 2^{-n},\\
+				0 & \text{otherwise.}
+			\end{array}\right.
+		\]
+		Define $\text{error}(x)$ as the failure probability to distinguish $0$ and $x$. Thus,
+		\begin{align*}
+			\text{error}(x) 
+				= &\frac12 \Pr_{k_1,r} [A_x(\sE_{k_1,r}(0))=x] + \frac12 \Pr_{k_1,r} [A_x(\sE_{k_1,r}(x))=0]\\
+				= &\frac12 \Pr_{k_1,r} \left[\Pr_{k_2}[\sD_{k_2}(\sE_{k_1,r}(0))=x] \geq 2^{-n}\right] + \frac12 \Pr_{k_1,r} \left[\Pr_{k_2}[\sD_{k_2}(\sE_{k_1,r}(x))=x] < 2^{-n}\right]\\
+				\leq &\frac12 \Pr_{k_1,k_2,r} \left[\sD_{k_2}(\sE_{k_1,r}(0))=x\right]\cdot 2^n
+		\end{align*}
+		Furthermore, we have
+		\[
+			\sum_x \text{error}(x) \leq \sum_x \Pr_{k_1,k_2,r} \left[\sD_{k_2}(\sE_{k_1,r}(0))=x\right]\cdot 2^{n - 1} \leq 2^{n - 1},
+		\]
+		which implies there exists $x$ such that $\text{error}(x) \leq 2^{n - m - 1}$ as required.
+	\end{exercise}
 
-$\Rightarrow$ Obvious?
-\item[c.] 
-\end{itemize}
-\end{exercise}
+	\begin{exercise}{9.15}
+		\begin{itemize}
+			\item [a.] 
+				There exists indistinguishable function $f^{-1}$, and polynomial $A$ s.t.,
+				\begin{align*}
+					|\Pr[A(f^{-1}(f(X_{n})))] - A(f^{-1}(f(Y_{n})))]|<\epsilon(n)
+				\end{align*}
+				i.e., $f(X_{n})$ and $f(Y_{n})$ are indistinguishable.
+
+			\item[b.] 
+				$\Leftarrow$ By definition 9.8.
+
+				$\Rightarrow$ Obvious?
+
+			\item[c.] 
+
+		\end{itemize}
+	\end{exercise}
 
 %   \begin{exercise}{9.16}
 %       Let 
