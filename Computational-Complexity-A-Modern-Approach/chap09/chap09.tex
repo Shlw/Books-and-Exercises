@@ -89,6 +89,56 @@
 		which implies there exists $x$ such that $\text{error}(x) \leq 2^{n - m - 1}$ as required.
 	\end{exercise}
 
+	\begin{exercise}{9.12}
+		Suppose $g(n)$ is a one-way permutation,then construct the function $f(n)$:
+		\begin{equation}
+			f(z,x)=0^ng(x);	
+			f(0^n,x)=0^{2n}.
+		\end{equation}
+
+		the function $f(x)$ is a one-way function, but for every $c>0$,$f(x)^{n^c}$ is not a one-way function.Next we give the proof.  
+		
+		(1)$f(n)$ is a one-way function.
+		
+			Assume $f(n)$ is not a one-way function ,then there is a ploy-time algorithm $A$ and 
+			\begin{equation}
+				Pr_{s\in\{0,1\}^{2n};u=f(s)}(A(u)=s' \ s.t.\  f(s')=u)\geq\epsilon_1(2n)
+			\end{equation}
+			
+			then we can construct a ploy-time algorithm $B$ by $A$ :
+			
+			\begin{center}
+				\fbox{\shortstack[l]{$A$:\\input $u(|u|=2n)$;\\output $s(|s|=2n)$}}
+				\qquad\qquad\qquad
+				\fbox{\shortstack[l]{$B$:\\input $y(|y|=n)$;\\$A(0^ny)=S^1S^2\dots S^{2n}$;\\output $x=S^{n+1}\dots S^{2n}$}};
+				
+			\end{center}
+		We name $P_1=Pr_{s\in\{0,1\}^{2n};u=f(s)}(A(u)=s' \ s.t.\  f(s')=u\ |\ u=0^{2n});P_2=Pr_{s\in\{0,1\}^{2n};u=f(s)}(A(u)=s' \ s.t.\  f(s')=u\ |\ u\ne0^{2n});P_3=Pr_{x\in\{0,1\}^{n};y=g(x)}(B(y)=x'\ s.t.\ g(x')=y\ |\ y=0^n)$
+		
+		\begin{equation}
+		Pr_{s\in\{0,1\}^{2n};u=f(s)}(A(u)=s' \ s.t.\  f(s')=u)=\frac{1}{2^n}P_1+\frac{2^n-1}{2^n}P_2
+		\end{equation}
+		
+		\begin{equation}
+		Pr_{x\in\{0,1\}^{n};y=g(x)}(B(y)=x'\ s.t.\ g(x')=y)=\frac{1}{2^n}P_3+\frac{2^n-1}{2^n}P_2\geq\epsilon_1(2n)-\frac{1}{2^n}
+		\end{equation}
+		
+		For every fixed negligible function$\epsilon_2(n)$,that $\forall c_2,\exists N_2,\forall n>N_2$,there is $\epsilon_2<\frac{1}{n^c_2}$.we can construct another negligible function$\epsilon_1(2n)$,that $\exists N_1,\forall 2n>N_1$,there is $\epsilon_1(2n)=\epsilon_1(n)-\frac{1}{2^n}<\frac{1}{n^{C_2}}+\frac{1}{2^n}<\frac{1}{(2n)^{\frac{C_2}{2}}}$  .
+		
+		so,
+		\begin{equation}
+		Pr_{x\in\{0,1\}^{n};y=g(x)}(B(y)=x'\ s.t.\ g(x')=y)\geq \epsilon_2(n)
+		\end{equation}
+		
+		It's cotrast to that $g(x)$ is a one-way function,so f(x) is also a one-way function.
+		
+		(2)$\forall c>0$($n^c$ is still ploynomial);$f^{n^c}(s)$ is not one-way function.Because
+		\begin{equation}
+		Pr_{s\in\{0,1\}^{2n};u=f^{n^c}(s)}(A(u)=s' \ s.t.\  f^{n^c}(s')=u)=1
+		\end{equation}
+			
+	\end{exercise}
+
 	\begin{exercise}{9.15}
 		\begin{itemize}
 			\item [a.] 
