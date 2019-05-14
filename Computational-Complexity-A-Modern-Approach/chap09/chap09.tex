@@ -123,16 +123,16 @@
 		Pr_{x\in\{0,1\}^{n};y=g(x)}(B(y)=x'\ s.t.\ g(x')=y)=\frac{1}{2^n}P_3+\frac{2^n-1}{2^n}P_2\geq\epsilon_1(2n)-\frac{1}{2^n}
 		\end{equation}
 		
-		For every fixed negligible function$\epsilon_2(n)$,that $\forall c_2,\exists N_2,\forall n>N_2$,there is $\epsilon_2<\frac{1}{n^c_2}$.we can construct another negligible function$\epsilon_1(2n)$,that $\exists N_1,\forall 2n>N_1$,there is $\epsilon_1(2n)=\epsilon_1(n)-\frac{1}{2^n}<\frac{1}{n^{C_2}}+\frac{1}{2^n}<\frac{1}{(2n)^{\frac{C_2}{2}}}$  .
+		For every fixed negligible function$\epsilon_2(n)$,that $\forall c_2,\exists N_2,\forall n>N_2$,there is $\epsilon_2<\frac{1}{n^c_2}$.we can construct another negligible function$\epsilon_1(2n)$,that $\exists N_1,\forall 2n>N_1$,there is $\epsilon_1(2n)=\epsilon_1(n)-\frac{1}{2^n}<\frac{1}{n^{C_2}}+\frac{1}{2^n}<\frac{1}{(2n)^{\frac{C_2}{2}}}$.
 		
 		so,
 		\begin{equation}
 		Pr_{x\in\{0,1\}^{n};y=g(x)}(B(y)=x'\ s.t.\ g(x')=y)\geq \epsilon_2(n)
 		\end{equation}
 		
-		It's cotrast to that $g(x)$ is a one-way function,so f(x) is also a one-way function.
+		It's contrast to that $g(x)$ is a one-way function, so f(x) is also a one-way function.
 		
-		(2)$\forall c>0$($n^c$ is still ploynomial);$f^{n^c}(s)$ is not one-way function.Because
+		(2)$\forall c>0$($n^c$ is still polynomial);$f^{n^c}(s)$ is not one-way function.Because
 		\begin{equation}
 		Pr_{s\in\{0,1\}^{2n};u=f^{n^c}(s)}(A(u)=s' \ s.t.\  f^{n^c}(s')=u)=1
 		\end{equation}
@@ -158,19 +158,29 @@
 		\end{itemize}
 	\end{exercise}
 
-%   \begin{exercise}{9.16}
-%       Let 
-%       $$
-%       L=\cbra{(y,r,b)\in\bin^n\times\bin^n\times\bin\middle|b=r\odot f^{-1}(y)},
-%       $$
-%       then
-%       $$
-%       \overline L=\cbra{(y,r,b)\in\bin^n\times\bin^n\times\bin\middle|b\neq r\odot f^{-1}(y)}.
-%       $$
-%       Since $f$ is a permutation, $L$ is polynomially sampleable, 
-%       as we first randomly select $r,x$ then let $b=x\odot t,y=f(x)$.
-%        Similar argument works for $\overline L$ as well.
-%
-%    \end{exercise}
+   \begin{exercise}{9.16}
+       Assume $f$ is a one-way permutation.
+       Let 
+       $$
+       L=\cbra{(y,r,b)\in\bin^n\times\bin^n\times\bin\middle|b=r\odot f^{-1}(y)},
+       $$
+       then
+       $$
+       \overline L=\cbra{(y,r,b)\in\bin^n\times\bin^n\times\bin\middle|b\neq r\odot f^{-1}(y)}.
+       $$
+       Since $f$ is a permutation, $L$ is polynomially sampleable, 
+       as we first randomly select $r,x$ then let $b=r\odot x,y=f(x)$.
+       Similar argument works for $\overline L$ as well.
+       Then by Goldreich-Levin Theorem, uniform distribution over $L$ is computationally indistinguishable from 
+       uniform distribution over $\overline L$.
+
+       Now we move to \textsc{3-Coloring}. Since $L\in\textbf{NP}$, there is a polynomial-time algorithm $\mathcal A$
+       such that $s\in L$ iff $\mathcal A(s)\in\textsc{3-Coloring}$.
+       Thus, the uniform distribution over $L$ induces a polynomially sampleable distribution over \textsc{3-Coloring}
+       and ditto for $\overline L$ and $\overline{\textsc{3-Coloring}}$.
+       Meanwhile, these two distributions are polynomial-time indistinguishable, following from the hardness of 
+       distinguishing $L$ and $\overline L$.
+
+    \end{exercise}
 
 \end{document}
