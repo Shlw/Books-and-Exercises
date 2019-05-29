@@ -63,4 +63,24 @@
         Thus $uBN+vAB=B$. Now observe that $N$ divides $uBN+vAB$ as claimed, then $N$ must divide $B$.
 	\end{exercise}
 
+	\begin{exercise}{10.13}
+		\begin{itemize}
+			\item [\textbf{(a)}] Consider the following partition of $\mathbb Z_p^*$:
+			\[
+				\{\{1, p - 1\}, \{2, p - 2\}, \ldots, \{(p - 1)/2, (p + 1)/2\}\}.
+			\]
+			Since that $x_1^2 - x_2^2 \equiv (x_1 - x_2)(x_1 + x_2) \equiv 0 \pmod p$, it maps $x_1, x_2$ to the same element if and only if they are in the same pair.
+
+			\item [\textbf{(b)}] Actually, if $2 \mid \ord(x)$, $\ord(x^2) = \ord(x)/2$.
+
+			\item [\textbf{(c)}] Let $N = n_1\cdot n_2 \cdot \ldots \cdot n_k$ where $n_i$ is power of a prime and $n_i \perp n_j$ for all distinct $i, j \in [k]$. Assume $n_1 < \ldots < n_k$. If $n_1 \neq 2$ or $k > 2$, $r / 2$ can be divided by $\text{lcm}(\varphi(n_1), \ldots, \varphi(n_k))$, which means $x^{r/2} = 1$ for all $x \in \mathbb Z_{N}^*$. Thus, it suffices to proof $\Pr[x_2^{\varphi(n_2)/2} = 1] \geq 1/4$ due to Chinese Remainder Theorem, where $x_2$ is uniformly sampled from $\mathbb Z_{n_2}^*$. Let $x = a\cdot p + b$. We have:
+			\[
+				(a\cdot p + b)^{p^{k - 1}(p - 1)/2} \equiv (b^{(p - 1)/2})^{p^{k - 1}} \pmod {p^k}.
+			\]
+			Note that $(b^{(p - 1)/2})^{p^{k - 1}} \bmod {p^k} = b^{(p - 1)/2} \bmod p$. If $b$ is a quadratic residue modulo $p$, $b^{(p - 1)/2} \equiv 1 \pmod p$ holds, since there exists $b'$ s.t. $b'^2 = b$ and $b'^{(p - 1)} = 1$. According to \textbf{(a)}, there are $(p - 1)/2$ quadratic residues, which finishes the proof.
+
+			% Note that $x^{r/2} \neq -1$ means $\ord(x) = r / c$ where $c$ is an odd. Let $N = n_1\cdot n_2 \cdot \ldots \cdot n_k$ where $n_i \perp n_j$ for all distinct $i, j \in [k]$. Due to Chinese Remainder Theorem, there exist $x_1 \in \mathbb Z_{n_1}^*, \ldots, x_k \in \mathbb Z_{n_k}^*$ such that $x \equiv x_i \pmod {n_i}$ for all $i \in [k]$. Whereas, $x^{r/2} \neq -1$ holds if and only if there exists $i \in [k]$, such that $\ord(x_i) \mid \varphi(n_i)/2$ holds. Since $k \geq 2$ and $x_i$ is uniformly sampled from $\mathbb Z_{n_i}^*$ for all $i \in [k]$, it suffices to proof $\Pr[x_1^{\varphi(n_1)/2} = 1] \geq 1/2$.
+		\end{itemize}
+	\end{exercise}
+
 \end{document}
