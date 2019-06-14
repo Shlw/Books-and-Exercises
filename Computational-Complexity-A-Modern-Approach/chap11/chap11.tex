@@ -1,5 +1,4 @@
 % !TeX encoding = UTF-8
-% !TeX program = XeLaTeX
 % !TeX spellcheck = LaTeX
 
 \documentclass[a4paper]{article}
@@ -10,7 +9,6 @@
 \usepackage{geometry}
 % \usepackage{ntheorem}
 \usepackage{hyperref}
-\usepackage[ruled]{algorithm2e}
 \usepackage{caption,subcaption}
 
 \geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
@@ -50,6 +48,10 @@
 \def\sD{\textsf{D}}
 \def\sE{\textsf{E}}
 \def\cD{\mathcal{D}}
+
+\usepackage{algorithm,xspace}
+\usepackage{algorithmicx}
+\usepackage[noend]{algpseudocode}
 
 \title{Exercise Set --- Chapter 11}
 \date{}
@@ -116,6 +118,43 @@
                         as $c,d$ sufficiently large.
                 \end{itemize}
         \end{itemize}
+    \end{exercise}
+
+
+    \begin{exercise}{11.10}
+    	Given input $x$ and random bits $s$, $V_{x, s}(\pi)$ is a function which outputs $1$ if and only the prover accepts $x$ under $\pi, s$. Denote $R_{x, s}$ as the range of bits read by $V_{x, s}$ on $\pi$. Note that $V_{x, r}(\pi)$ and $R_{x, r}$ can be computed by a log-space Turing machine. Thus, $x \in L$ if there exists $\pi$ s.t. $V_{x, s}(\pi) = 1$ for all $s$, and $x \not\in L$ if for all $\pi$, $|\{s \mid V_{x, s}(\pi) = 1\}| \leq 2^{r(n)}/2$. These 2 cases can be distinguished by the following algorithm.
+
+    	\begin{algorithm}[H]
+        \caption{A log-space membership checking algorithm}\label{alg:soc}
+        \begin{algorithmic}
+            \Function{Check}{$x, \ell, r$} \Comment{\textsc{Check} can be computed in log-space when $r - \ell = O(\log n)$.}
+            	\State Output $|\{s \in \{0,1\}^{r(n)} \mid R_{x, s} \subseteq [\ell, r]\}|$
+            	\State Output $\max_\pi|\{s \in \{0,1\}^{r(n)} \mid R_{x, s} \subseteq [\ell, r], V_{x,s}(\pi) = 1\}|$
+            \EndFunction
+            \\
+            \State $tot \gets 0, val \gets 0$
+            \State $\ell \gets 1, r \gets 2a\log n$
+            \While{$\ell \leq |\pi|$}
+            	\State $(t, v) \gets $ \Call{Check}{$x, \ell, r$}
+            	\State $tot \gets tot + t, val \gets val + v$
+            	\State $\ell \gets r + 1, r \gets \ell + 2a\log n - 1$
+            \EndWhile
+            \\
+            \State $tot' \gets 0, val' \gets 0$
+            \State $\ell \gets a\log n + 1, r \gets 3a\log n$
+            \While{$\ell \leq |\pi|$}
+            	\State $(t, v) \gets $ \Call{Check}{$x, \ell, r$}
+            	\State $tot' \gets tot' + t, val' \gets val' + v$
+            	\State $\ell \gets r + 1, r \gets \ell + 2a\log n - 1$
+            \EndWhile
+            \\
+            \If{$tot > tot'$}
+      			\State \Return $\mathbf 1_{tot = val}$
+            \Else
+            	\State \Return $\mathbf 1_{tot' = val'}$
+            \EndIf
+        \end{algorithmic}
+    \end{algorithm}
     \end{exercise}
 
 \end{document}
