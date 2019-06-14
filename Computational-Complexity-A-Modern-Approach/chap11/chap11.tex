@@ -64,4 +64,58 @@
 		We add something in the construction:make the $7$ vertices which are show the same clause are connected to each other. Make $f$ is it, so $f(\varphi)$ is an $n$-vertex graph, and the largest independent set has size $var(\varphi)n/7$.
     \end{exercise}
 
+    \begin{exercise}{11.9} $ $
+        \begin{itemize}
+            \item $\text{L-PCP}(\log n)\subseteq\text{NP}$:
+                Assume $\mathcal A\in\text{L-PCP}(\log n)$ and $V_{\mathcal A}$ be the corresponding checker.
+                For any input $x$, we can guess the certificate $y$, 
+                which is of polynomial length since $V_{\mathcal A}$ is logspace.
+                Then simulate $V_{\mathcal A}$ on all $2^{r(n)}=\text{poly}(n)$ possible randomness and count the number of accepted
+                ones.
+                If $x\in\mathcal A$, there exists $y$ such that all $2^{r(n)}$ cases accept.
+                Otherwise, no $y$ would achieve success rate better than $\frac12$ as assumption.
+            \item $\text{NP}\subseteq\text{L-PCP}(\log n)$:
+                Since all languages in $\text{NP}$ can be reduced to \textsc{3-SAT} in logspace, it suffices to prove 
+                $\textsc{3-SAT}\in\text{L-PCP}(\log n)$.
+
+                Assume there are $n$ variables and $m$ clauses. The certificate $y$ consists of $nm$ bits and partitioned into
+                $a_1a_2\cdots a_m$, where $a_1=\cdots=a_m$ is a satisfiable assignment.
+                Then we describe $V_\textsc{3-SAT}$ in two parts.
+                \begin{itemize}
+                    \item \textbf{Satisfiability Checker:}
+                        $V_\textsc{3-SAT}$ simply checks the satisfiability of the $i$-th clause in $a_i$, which can be done
+                        as in one pass.
+                    \item \textbf{Validity Checker:}
+                        To make sure the certificate is consistent, i.e., $a_1=\cdots=a_m$, $V_\textsc{3-SAT}$ checks the validity
+                        along the one pass.
+
+                        With $O(\log n)$ random bits, 
+                        it selects a random prime $1\leq p\leq n^c$ and a random integer $x\in[n^d]$, 
+                        where $c,d$ are constants sufficiently large.
+                        For $i\in[m]$, it computes 
+                        $$
+                        f_i=\sum_{j=1}^na_i[j]x^j\pmod{p}
+                        $$
+                        and checks if $f_i=f_{i+1}$, which can be done in logspace.
+                        Assume $a_i\neq a_{i+1}$, 
+                        \begin{align*}
+                            &\Pr\sbra{f_i=f_j}\\
+                            \leq&\Pr\sbra{f_i=f_j\middle|\sum_{j=1}^n(a_i[j]-a_{i+1}[j])x^j\neq0}
+                            +\Pr\sbra{\sum_{j=1}^n(a_i[j]-a_{i+1}[j])x^j=0}\\
+                            \leq&
+                            \frac{\displaystyle\max_{t\in\sbra{n^{dn+1}}}\#\cbra{\text{prime }p\middle|p\text{ divides }t}}
+                            {\pi(n^c)}
+                            +\frac{n+1}{n^d}\\
+                            \leq&
+                            \frac{(dn+1)\log n}{\frac{n^c}{c\log n}}+\frac{n+1}{n^d}.
+                        \end{align*}
+                        Thus by union bound, the probability that fake $y$ fools $V_\textsc{3-SAT}$ is upper bounded by
+                        $$
+                            m\times\pbra{\frac{(dn+1)\log^2 n}{cn^c}+\frac{n+1}{n^d}}=o(1)
+                        $$
+                        as $c,d$ sufficiently large.
+                \end{itemize}
+        \end{itemize}
+    \end{exercise}
+
 \end{document}
