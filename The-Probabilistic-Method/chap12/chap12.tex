@@ -1,0 +1,186 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator{\E}{\mathbb E}
+\DeclareMathOperator{\Var}{\mathrm{Var}}
+\DeclareMathOperator{\tr}{\mathrm{tr}}
+\DeclareMathOperator{\poly}{\mathrm{poly}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\vabs}[1]{\left\| #1 \right\|}
+\newcommand{\abra}[1]{\left\langle #1 \right\rangle}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\floorbra}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceilbra}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\ZPP}{\mathtt{ZPP}}
+\newcommand{\RP}{\mathtt{RP}}
+\newcommand{\coRP}{\mathtt{co}\text{-}\mathtt{RP}}
+\newcommand{\per}{\text{per}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Zbb}{\mathbb{Z}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Gcal}{\mathcal{G}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $12$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{1}
+    Each gate is one of the following possibilities: \emph{And gate, Or gate, Negation gate}. Each gate has at most two input wires. Thus the number of binary Boolean circuits of size $s$ on $n$ variables is at most
+    $$
+    \prod_{i=1}^s\underbrace{3}_{\text{gate kinds}}\times\underbrace{(s+n)^2}_{\text{input wire}}
+    =\pbra{\sqrt3(s+n)}^{2s}.
+    $$
+
+\end{exercise}
+\noindent\textbf{\it Remark:} The bound in the exercise is not true. It can be easily refuted by $s=1$.
+
+\begin{exercise}{2}
+    Directly applying Local Lemma, we have
+    $$
+    e\times 2^{-10}\times 100<1.
+    $$
+    Thus there exists a satisfying assignment.
+\end{exercise}
+
+\begin{exercise}{3}
+    We describe layers of And gates and Or gates, and use And-Or iterations to amplify the threshold gap.
+    Assume input as $pn$ ones.
+    \begin{itemize}
+        \item The first (bottom) layer consists of $\bigwedge_{\log n}$ gates and each has uniformly random input.
+            Then the probability of being one shifts
+            $$
+            \begin{cases}
+                p\geq\frac12+\frac1{\log n}\\
+                p\leq\frac12-\frac1{\log n}
+            \end{cases}
+            \Rightarrow
+            \begin{cases}
+                p'\geq\pbra{\frac12+\frac1{\log n}}^{\log n}\approx\frac{e^2}n\\
+                p'\leq\pbra{\frac12-\frac1{\log n}}^{\log n}\approx\frac1{e^2n}.
+            \end{cases}
+            $$
+        \item The second layer consists of $\bigvee_{n}$ gates and each has disjoint input from first layer.
+            Then the probability of being one shifts
+            $$
+            \begin{cases}
+                p\geq\frac{e^2}{n}\\
+                p\leq\frac1{e^2n}
+            \end{cases}
+            \Rightarrow
+            \begin{cases}
+                p'\geq1-\pbra{1-\frac{e^2}{n}}^{n}\approx1-e^{-e^2}>\frac78\\
+                p'\leq1-\pbra{1-\frac1{e^2n}}^{n}\approx1-e^{-\frac1{e^2}}<\frac17.
+            \end{cases}
+            $$
+        \item The third layer consists of $\bigwedge_{\log n}$ gates and each has disjoint input from second layer.
+            Then the probability of being one shifts
+            $$
+            \begin{cases}
+                p\geq\frac78\\
+                p\leq\frac17
+            \end{cases}
+            \Rightarrow
+            \begin{cases}
+                p'\geq\pbra{\frac78}^{\log n}=n^{-3+\log7}\geq n^{-0.2}\\
+                p'\leq\pbra{\frac17}^{\log n}=n^{-\log 7}\leq n^{-2.8}.
+            \end{cases}
+            $$
+        \item The fourth layer consists of $\bigvee_{n^{1.5}}$ gates and each has disjoint input from third layer.
+            Then the probability of being one shifts
+            $$
+            \begin{cases}
+                p\geq n^{-0.2}\\
+                p\leq n^{-2.8}
+            \end{cases}
+            \Rightarrow
+            \begin{cases}
+                p'\geq1-\pbra{1-n^{-0.2}}^{n^{1.5}}\approx 1-e^{-n^{1.3}}\\
+                p'\leq1-\pbra{1-n^{-2.8}}^{n^{1.5}}\leq n^{-1.3}.
+            \end{cases}
+            $$
+        \item The fifth layer consists of $\bigwedge_{n}$ gates and each has disjoint input from fourth layer.
+            Then the probability of being one shifts
+            $$
+            \begin{cases}
+                p\geq 1-e^{-n^{1.3}}\\
+                p\leq n^{-1.3}
+            \end{cases}
+            \Rightarrow
+            \begin{cases}
+                p'\geq\pbra{1-e^{-n^{1.3}}}^n\geq1-ne^{-n^{1.3}}>1-2^{-n}\\
+                p'\leq n^{-1.3n}< 2^{-n}.
+            \end{cases}
+            $$
+    \end{itemize}
+    Thus, for any given input, the bounded-depth, polynomial-size, monotone circuit above satisfies the condition
+    with probability at least $1-2^{-n}$. 
+    By union bound, there exists a desired circuit coincides with all $f(\bm x)$ for 
+    $$
+    \pbra{\sum_{i=1}^nx_i\geq\frac n2+\frac n{\log n}}\lor
+    \pbra{\sum_{i=1}^nx_i\leq\frac n2-\frac n{\log n}}.
+    $$
+\end{exercise}
+
+\end{document}
