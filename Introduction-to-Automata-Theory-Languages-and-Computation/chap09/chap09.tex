@@ -1,0 +1,302 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+\usepackage{tikz}
+
+\usetikzlibrary{automata}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator{\E}{\mathbb E}
+\DeclareMathOperator{\Var}{\mathrm{Var}}
+\DeclareMathOperator{\tr}{\mathrm{tr}}
+\DeclareMathOperator{\poly}{\mathrm{poly}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\vabs}[1]{\left\| #1 \right\|}
+\newcommand{\abra}[1]{\left\langle #1 \right\rangle}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\floorbra}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceilbra}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\ZPP}{\mathtt{ZPP}}
+\newcommand{\RP}{\mathtt{RP}}
+\newcommand{\coRP}{\mathtt{co}\text{-}\mathtt{RP}}
+\newcommand{\per}{\text{per}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Zbb}{\mathbb{Z}}
+\newcommand{\Sset}{\mathbb{S}}
+\newcommand{\Fset}{\mathbb{F}}
+\newcommand{\Nset}{\mathbb{N}}
+\newcommand{\Zset}{\mathbb{Z}}
+\newcommand{\Uset}{\mathbb{U}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\qd}[2]{{\left(\frac{#1}{#2}\right)}}
+\newcommand{\dv}{\ |\ }
+\newcommand{\mylm}{\xLongrightarrow[lm]{}}
+\newcommand{\myrm}{\xLongrightarrow[rm]{}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $9$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{9.2.4} 
+        Since $L_i$ is RE, let $M_i$ be the TM accepting $L_i$.
+        Design $k$-tape TM $\overline{M}_s$ for $L_s$:
+        \begin{enumerate}
+            \item Copy the input string $w$ to every tape
+            \item Simulate $M_i$ on the $i$-th tape simultaneously
+            \item Accept if $M_s$ on the $s$-th tape accepts;
+                reject if $M_i,i\neq s$ on the $i$-th tape accepts
+        \end{enumerate}
+        Since $L_1\cup L_2\cup\cdots\cup L_k=\Sigma^*$, $w$ must be in $L_t$, therefore
+        $M_t$ will terminate, thus $\overline{M}_s$ always halts, indicating $L_s$ is recursive.
+\end{exercise}
+
+\begin{exercise}{9.2.5} 
+    Both $L'$ and $\overline{L}'$ are non-RE.
+    \begin{proof}\hspace{0pt}\\
+        \noindent \textbf{$L'$ is non-RE.}\par
+        Assume $L'$ is RE and TM $M$ accepts it. Construct $\overline{M}$ for $\overline{L}$:
+        \begin{enumerate}
+            \item Modify the input string $w$ into $1w$
+            \item Simulate $M$ on the new input
+            \item Accept if $M$ accepts; reject otherwise
+        \end{enumerate}
+        Therefore $\overline{L}$ will be RE, a contradiction.\\
+        \noindent \textbf{$\overline{L}'$ is non-RE.}\par
+        Assume $\overline{L}'=\{0w|w\notin L\}\cup\{1w|w\in L\}$ is RE and TM $M$ accepts it.
+        Construct $\overline{M}$ for $\overline{L}$:
+        \begin{enumerate}
+            \item Modify the input string $w$ into $0w$
+            \item Simulate $M$ on the new input
+            \item Accept if $M$ accepts; reject otherwise
+        \end{enumerate}
+        Therefore $\overline{L}$ will be RE, a contradiction.
+    \end{proof}
+\end{exercise}
+
+\begin{exercise}{9.2.6} \hspace{0pt}\\
+\textbf{d)} Both recursive languages and RE are closed under Kleene closure.
+    \begin{proof}\hspace{0pt}\\
+        \textbf{Recursive Language:}\par
+        Assume $L$ is recursive and TM $M$ accepts it. Construct $3$-tape TM $N$ for $L^*$:
+        \begin{enumerate}
+            \item Enumerate all possible dividing ways for input string $w$ on second tape
+            \item For $i$-th way, start from round $1$
+            \item In $j$-th round of $i$-th way, copy the $j$-th piece to third tape
+                based on the $i$-th dividing way
+            \item Simulate $M$ on the third tape
+            \item If all pieces in $i$-th way are done,
+                \begin{itemize}
+                    \item $M$ accepted all pieces in the $i$-th way, then accept
+                    \item otherwise, try next dividing way in \textit{Step $2$}
+                \end{itemize}
+                otherwise enter next round in \textit{Step $3$}
+            \item Reject
+        \end{enumerate}
+        Since $L$ is recursive, every piece check will halt, thus $N$ always halts.\\
+        \textbf{RE:}\par
+        Assume $L$ is RE and TM $M$ accepts it. Construct $3$-tape NTM $N$ for $L^*$:
+        \begin{enumerate}
+            \item Guess the dividing way for input string $w$ on the second tape
+            \item In $i$-th round, copy the $i$-th dividing piece to third tape
+            \item Simulate $M$ on the third tape
+            \item If all pieces are done,
+                \begin{itemize}
+                    \item $M$ accepted all pieces, then accept
+                    \item otherwise, reject
+                \end{itemize}
+                otherwise enter next round in \textit{Step $2$}
+        \end{enumerate}
+    \end{proof}
+\textbf{e)} RE is closed under homomorphism, while recursive languages are not.
+    \begin{proof} Let $\sigma$ be the homomorphism.\\
+        \textbf{RE:}\par
+        Assume $L$ is RE, TM $M$ accepts it, and $L'$ is $\sigma(L)$.
+        Construct $3$-tape NTM $N$ for $L'$:
+        \begin{enumerate}
+            \item Guess the original string $w'$ for input string $w$ on the second tape and copy it to third tape
+            \item Check whether $\sigma(w')=w$ on second tape
+            \item Simulate $M$ on third tape
+            \item Accept if $M$ accepts and the check is passed; reject otherwise
+        \end{enumerate}
+        \textbf{Recursive Language:}\par
+        Let $L=\{(M,w,2^k)|M\text{ accepts }w\text{ in $k$ steps}\}$, where $M$ is the binary representation of a TM
+        and $w$ is a binary string. Let $\sigma(2)=\varepsilon$, then $\sigma(L)=\{(M,w,\varepsilon)|M\text{ accepts }w\}$.
+        Since $L_u$ is not recursive language, $\sigma(L)$ is not either.
+    \end{proof}
+\textbf{f)} Both RE and recursive languages are closed under inverse homomorphism.
+    \begin{proof} Let $\sigma$ be the homomorphism.\\
+        \textbf{Recursive Language:}\par
+        Assume $\sigma(L)$ is RE, TM $M$ accepts $\sigma(L)$. Construct TM $N$ for $L$:
+        \begin{enumerate}
+            \item Convert the input string $w$ into $\sigma(w)$
+            \item Simulate $M$ on $\sigma(w)$
+            \item Accept if $M$ accepts; reject otherwise
+        \end{enumerate}
+        \textbf{RE:} Basically the same construction.
+    \end{proof}
+\end{exercise}
+
+\begin{exercise}{9.3.5} $L=\big\{(M_1,M_2,k)\big|\ |L(M_1)\cap L(M_2)|\geqslant k\big\}$ is RE, but not recursive.
+    \begin{proof}
+        To show it is RE, construct a $4$-tape NTM $M$ for $L$:
+        \begin{enumerate}
+            \item Guess $k$ strings on the second tape
+            \item In $i$-th round, copy the $i$-th string to third and fourth tape
+            \item Simulate $M_1$ on the third tape
+            \item Simulate $M_2$ on the fourth tape
+            \item If all strings are done,
+                \begin{itemize}
+                    \item $M_1,M_2$ accepted all $k$ strings, then accept
+                    \item otherwise, reject
+                \end{itemize}
+                otherwise enter next round in \textit{Step $2$}
+        \end{enumerate}
+        Assume it is recursive and $N$ accepts it.
+        Let $M_{all}$ be the TM accepts $\Sigma^*$. Then construct $M_{ne}$ for $L_{ne}$:
+        \begin{enumerate}
+            \item Modify the input $M$ into $(M,M_{all},1)$
+            \item Simulate $N$ on the new input
+            \item Accept if $N$ accepts; reject otherwise
+        \end{enumerate}
+        Since $L(M_{all})=\Sigma^*$, $|L(M)\cap L(M_{all})|\geqslant 1$ is tantamount to $L(M)$ being non-empty,
+        which is $M\in L_{ne}$. Since $M_{ne}$ always halts, $L_{ne}$ is recursive, a contradiction.
+    \end{proof}
+\end{exercise}
+
+\begin{exercise}{9.3.7} \hspace{0pt}\\
+\textbf{a)} $L=\big\{(M,w)\big|\ M\text{ started with }w\text{ does not halt}\big\}$ is not RE.
+    \begin{proof}
+        Assume $L$ is RE and TM $N$ accepts it. Construct TM $N_d$ for $L_d$:
+        \begin{enumerate}
+            \item Modify the input $M$ into $(M,w_M)$, where $w_M$ is the binary representation of TM $M$
+            \item Simulate $N$ on the new input
+            \item Reject if $N$ accepts
+            \item If $N$ rejects, it means $M$ will terminate with input $w_M$; so
+                simulate $M$ on $w_M$
+            \item Accept if $M$ rejects; reject otherwise
+        \end{enumerate}
+        Then $L_d$ is RE, a contradiction.
+    \end{proof}
+\textbf{b)} $L=\big\{(M_1,M_2)\big|\ L(M_1)\cap L(M_2)=\varnothing\big\}$ is not RE.
+    \begin{proof}
+        Assume $L$ is RE and TM $N$ accepts it. Let $M_{all}$ be the TM accepts $\Sigma^*$.
+        Then construct $N_{e}$ for $L_e$:
+        \begin{enumerate}
+            \item Modify the input $M$ into $(M,M_{all})$
+            \item Simulate $N$ on the new input
+            \item Accept if $N$ accepts; reject otherwise
+        \end{enumerate}
+        Then $L_e$ is RE, a contradiction.
+    \end{proof}
+\textbf{c)} $L=\big\{(M_1,M_2,M_3)\big|L(M_1)=L(M_2)L(M_3)\big\}$ is not RE.
+    \begin{proof}
+        Assume $L$ is RE and TM $N$ accepts it. Let $M_{empty}$ be the TM accepts $\varnothing$.
+        Then construct $N_{e}$ for $L_e$:
+        \begin{enumerate}
+            \item Modify the input $M$ into $(M,M_{empty},M_{empty})$
+            \item Simulate $N$ on the new input
+            \item Accept if $N$ accepts; reject otherwise
+        \end{enumerate}
+        Then $L_e$ is RE, a contradiction.
+    \end{proof}
+\end{exercise}
+
+\begin{exercise}{9.4.2} PCP is undecidable if $\Sigma=\{0,1\}$.
+    \begin{proof}
+        Let PCP2 be the PCP with $\Sigma=\{0,1\}$. Assume PCP2 is decidable.
+        For any PCP $T$, let $\Sigma'=\{c_1,c_2,\cdots,c_n\}$ be its character set.
+        Define mapping $\sigma:\Sigma'\to\Sigma^*$ as follows
+        $$
+        \sigma(c_k)=\underbrace{0\cdots 0}_{k-1}1\underbrace{0\cdots 0}_{n-k}.
+        $$
+        Translate every string $w$ into $\sigma(w)$, then we have a PCP2 $T'$.\par
+        Since every $\sigma(c_k)$ has same length, the interpretation is unique. This
+        reduction implies the decidability of PCP, a contradiction.
+    \end{proof}
+\end{exercise}
+
+\begin{exercise}{9.5.2} \hspace{0pt}\\
+    \textbf{Part $1$:}\par
+    Let $L$ be $\overline{L_A}\cup\overline{L_B}$.
+    Then $L$ is regular language iff $L=(\Sigma\cup I)^*$.
+    \begin{proof}\hspace{0pt}\\
+        $\Leftarrow$: Obvious.\\
+        $\Rightarrow$: \par
+        Assume $L$ is regular language but not $(\Sigma\cup I)^*$.
+        Then $\overline{L}=L_A\cap L_B$ is regular but not empty,
+        which means there must exists a solution to
+        PCP, say $wx\in\overline{L}$, where $w$ is the string from $\Sigma^*$ and $x$ is the corresponding index string.
+        Therefore repeat the construction, $w^kx^k,k\in\Nset_+$ are also solutions.\par
+        Since $L'=\{w^ix^j|i,j\in\Nset_+\}$ is regular, $L'\cap\overline{L}=\{w^kx^k|k\in\Nset_+\}$ is also
+        regular, a contradiction.
+    \end{proof}
+    \textbf{Part $2$:}\par
+    It is undecidable whether a CFG generates a regular language.
+    \begin{proof}
+        Assume it is decidable, it can be employed to check whether $\overline{L_A}\cup\overline{L_B}$,
+        which is a CFL, is regular. However, \textbf{Part $1$} showed that it is equivalent to PCP. Thus a contradiction.
+    \end{proof}
+\end{exercise}
+
+\end{document}

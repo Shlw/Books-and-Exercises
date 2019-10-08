@@ -1,0 +1,129 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+\usepackage{tikz}
+
+\usetikzlibrary{automata}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator{\E}{\mathbb E}
+\DeclareMathOperator{\Var}{\mathrm{Var}}
+\DeclareMathOperator{\tr}{\mathrm{tr}}
+\DeclareMathOperator{\poly}{\mathrm{poly}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\vabs}[1]{\left\| #1 \right\|}
+\newcommand{\abra}[1]{\left\langle #1 \right\rangle}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\floorbra}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceilbra}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\ZPP}{\mathtt{ZPP}}
+\newcommand{\RP}{\mathtt{RP}}
+\newcommand{\coRP}{\mathtt{co}\text{-}\mathtt{RP}}
+\newcommand{\per}{\text{per}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Zbb}{\mathbb{Z}}
+\newcommand{\Sset}{\mathbb{S}}
+\newcommand{\Fset}{\mathbb{F}}
+\newcommand{\Nset}{\mathbb{N}}
+\newcommand{\Zset}{\mathbb{Z}}
+\newcommand{\Uset}{\mathbb{U}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\qd}[2]{{\left(\frac{#1}{#2}\right)}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $3$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Clarification:} In the following work,
+\begin{itemize}
+\item if the set of the states of a finite state automaton $A$ is $Q$,
+then $Q=\{q_0,q_1,\cdots,q_{|Q|-1}\}$. So $q_t\in Q$ if and only if $t\in\{0,1,\cdots,|Q|-1\}$.
+\end{itemize}
+
+\begin{exercise}{3.2.6} Let the new $\varepsilon$-NFA be $B$ and $L=L(A)$.\\
+    \textbf{a)} $L(B)=LL^*$\\
+    \textbf{b)} $L(B)=\{x\in\Sigma^*|\exists y\in\Sigma^*, yx\in L\}$\\
+    \textbf{c)} $L(B)=\{x\in\Sigma^*|\exists y\in\Sigma^*, xy\in L\}$\\
+    \textbf{d)} $L(B)=\{x\in\Sigma^*|\exists y\in\Sigma^*, yxy\in L\}$
+\end{exercise}
+
+\begin{exercise}{3.2.7} $\{1\},\{2\},\{3\},\{1,2\}$\end{exercise}
+
+\begin{exercise}{3.2.8}
+    Since $A=(Q,\Sigma,\delta,q_0,F)$ is DFA,
+    different strings mean different paths.\par
+    Let $f[i][j][k]$ be the number of different strings of length $k$ going from $q_i$
+    to $q_j$. Let $\delta[i][j]$ be the number of ways to go from $q_i$ to $q_j$ in one step, which means 
+    $$
+    \delta[i][j]=\sum_{c\in\Sigma} [\delta(q_i,c)=q_j].
+    $$\par
+    Then the transfer equation is
+    \begin{gather*}
+        f[i][j][k]=\sum_{t=0}^{|Q|-1} f[i][t][k-1]\cdot\delta[t][j].
+    \end{gather*}
+    The final answer will be $\sum_{q_t\in F} f[0][t][n]$; and 
+    time complexity is $O(|Q|^3n)$.
+\end{exercise}
+
+\end{document}

@@ -1,0 +1,186 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+\usepackage{tikz}
+
+\usetikzlibrary{automata}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator{\E}{\mathbb E}
+\DeclareMathOperator{\Var}{\mathrm{Var}}
+\DeclareMathOperator{\tr}{\mathrm{tr}}
+\DeclareMathOperator{\poly}{\mathrm{poly}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\vabs}[1]{\left\| #1 \right\|}
+\newcommand{\abra}[1]{\left\langle #1 \right\rangle}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\floorbra}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceilbra}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\ZPP}{\mathtt{ZPP}}
+\newcommand{\RP}{\mathtt{RP}}
+\newcommand{\coRP}{\mathtt{co}\text{-}\mathtt{RP}}
+\newcommand{\per}{\text{per}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Zbb}{\mathbb{Z}}
+\newcommand{\Sset}{\mathbb{S}}
+\newcommand{\Fset}{\mathbb{F}}
+\newcommand{\Nset}{\mathbb{N}}
+\newcommand{\Zset}{\mathbb{Z}}
+\newcommand{\Uset}{\mathbb{U}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\qd}[2]{{\left(\frac{#1}{#2}\right)}}
+\newcommand{\dv}{\ |\ }
+\newcommand{\mylm}{\xLongrightarrow[lm]{}}
+\newcommand{\myrm}{\xLongrightarrow[rm]{}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $10$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Notation:}
+\begin{itemize}
+\item $w_i$ stands for the $i$-th character of string $w$.
+\item $w[l:r]$ stands for the substring of $w$ from $l$-th character to $r$-th, namely
+    $$
+        w[l:r]=\begin{cases}
+            w_lw_{l+1}\cdots w_{r-1}w_r, & 1\leqslant l\leqslant r\leqslant n\\
+            \varepsilon, & \it otherwise
+        \end{cases}
+    $$
+\end{itemize}
+
+\begin{exercise}{10.1.3} For any problem $S\in\mathcal P$, there is a polynomial-time $p(n)$ reduction
+    to this NPC problem. Therefore, it implies an algorithm for $S$ of running time
+    $$
+    O\left(p(n)+(p(n))^{\log_2 p(n)}\right)=O\left(n^{k_S\log_2 n}\right),
+    $$
+    where $k_S$ is a constant of $S$.
+\end{exercise}
+
+\begin{exercise}{10.1.5} \hspace{0pt}\\
+\textbf{a)} Given $(G,A,B)$, assume $G=(V,T,P,S)$. Construct $G_1=(V,T,P,A)$ and $G_2=(V,T,P,B)$.
+Therefore $L_1$ is polynomial-time reducible, more precisely linear-time reducible, to $L_2$.\\
+\textbf{b)} Given $(G_1,G_2)$, assume $G_1=(V_1,T_1,P_1,S_1)$ and $G_2=(V_2,T_2,P_2,S_2)$. First rename some variables in
+$V_2$ to make $V_1\cap V_2'=\varnothing$, which can be done in quadratic time. Then $G_2=(V_2',T_2,P_2',S_2')$.
+Construct $(G,S_1,S_2')$ where $G=(V_1\cup V_2',T_1\cup T_2,P_1\cup P_2',S_1)$, which is a linear time reduction.
+Therefore $L_2$ is polynomial-time reducible, more precisely quadratic-time reducible, to $L_1$.\\
+\textbf{c)} It shows that if any one of them are NPC, then both of them are NPC. But in fact, $L_1,L_2$ are undecidable,
+so they are not in $\mathcal{NP}$.
+\end{exercise}
+
+\begin{exercise}{10.1.6} \hspace{0pt}\\
+\textbf{b)} $\mathcal P$ is closed under union.\par
+Assume $L_1,L_2\in\mathcal P$ and for any input string $w$ of length $n$, algorithm $\mathcal A_1$ tests whether it is in
+$L_1$ in time $O(p(n))$, $\mathcal A_2$ tests whether it is in $L_2$ in time $O(q(n))$, where $p,q$ are polynomials.
+Therefore, we have an algorithm $\widehat{\mathcal A}$, which calls $\mathcal A_1,\mathcal A_2$, to test whether it is in
+$L_1$ or $L_2$ in time $O(p(n)+q(n))$. Thus $L_1\cup L_2\in\mathcal P$.\\
+\textbf{c)} $\mathcal P$ is closed under concatenation.\par
+Assume $L_1,L_2\in\mathcal P$ and for any input string $w$ of length $n$, algorithm $\mathcal A_1$ tests whether it is in
+$L_1$ in time $O(p(n))$, $\mathcal A_2$ tests whether it is in $L_2$ in time $O(q(n))$, where $p,q$ are polynomials.
+Therefore, we have an algorithm $\widehat{\mathcal A}$, which calls $\mathcal A_1$ for $w[1:k]$ and $\mathcal A_2$ for
+$w[k+1:n]$ for all $0\leqslant k\leqslant n$, to test whether it can be expressed as a concatenation of $w_1\in L_1,w_2\in L_2$
+in time $O\left(n\left(p(n)+q(n)\right)\right)$. Thus $\textit{cat}(L_1,L_2)\in\mathcal P$.\\
+\end{exercise}
+
+\begin{exercise}{10.4.4} \hspace{0pt}\\
+\textbf{e)} The \textit{firehouse problem} is NPC.\par
+Firstly, it is in $\mathcal{NP}$. Just guess $k$ nodes of $G$ and check whether it is valid.\par
+Secondly, the \textit{vertex cover problem} can be polynomial-time reduced to it. Given an undirected graph $G'=(V,E)$ and
+a number $k$, the \textit{vertex cover problem} asks whether there exists $S\subset V,|S|=k$ such that any
+edge in $E$ has at least one vertex in $S$. Construct a \textit{firehouse problem} instance by making
+$G=G',d=1,f=k$. Thus, $G'$ has a vertex cover of size $k$ if and only if $(G,d,f)$ has a solution.\\
+\textbf{g)} The \textit{unit-execution-time-scheduling problem} is NPC.\par
+Firstly, it is in $\mathcal{NP}$. Just guess the assignment time for every task and check whether it is valid.\par
+Secondly, the \textit{clique problem} is polynomial-time reducible to it. Given an undirected graph $G'=(V,E)$ and
+a number $k$, the \textit{clique problem} asks whether there exists $S\subset V,|S|=k$ such that any
+two nodes in $S$ have an edge in $E$. Assume $V=\{x_1,x_2,\cdots,x_n\},E=\{e_1,e_2,\cdots,e_m\}$.
+Construct a \textit{unit-execution-time-scheduling problem} instance as follows:
+\begin{itemize}
+    \item Let $m_c=\frac{k(k-1)}{2}$, $s=1+\max\{k,n-k+m_c,m-m_c\}$.
+    \item Let tasks be $A=\{x_1,x_2,\cdots,x_n\},B=\{e_1,e_2,\cdots,e_m\},U=\{u_i|1\leqslant i\leqslant s-k\},
+        V=\{v_i|1\leqslant i\leqslant s-m_c-n+k\},W=\{w_i|1\leqslant i\leqslant s-m+m_c\}$.
+    \item $\forall t_1\in A,t_2\in B, t_1<t_2$.
+    \item $\forall t_1\in U,t_2\in V,t3\in W, t_1<t_2<t_3$.
+    \item $\forall e_i=(x_j,x_k)\in E, x_j<e_i, x_k<e_i$.
+    \item The number of processors are $s$ and time limit is $3$.
+\end{itemize}
+Then $G$ has a $k$ clique if and only if the instance is satisfiable.
+\begin{proof}
+{\bf$k$ clique $\Rightarrow$ instance:} Assume $S\subset G$ is a $k$ clique and $E_S$ is the edges of induced graph of $S$.
+Then arrange the tasks as follows:
+\begin{itemize}
+    \item First time unit: $S\cup U$.
+    \item Second time unit: $(A-S)\cup E_s\cup V$.
+    \item Third time unit: $(B-E_s)\cup W$.
+\end{itemize}\par
+{\bf instance $\Rightarrow$ $k$ clique:} Since $|A|+|B|+|U|+|V|+|W|=3s$, the processors must be busy all the time.
+Also, $U<V<W$ indicates $U,V,W$ should be arranged to first, second, third time unit respectively.
+And $A<B$ shows that no $t\in B$ will be in the first time unit. Therefore, there are $k$ tasks $S$ in $A$ arranged
+to first time unit. Let $E_S$ be the edges of induced graph of $S$. Assume $S$ is not a clique, $|E_S|<m_c$.
+But only $E_S$ can be put in second time unit, thus there are $|B-E_S|>m-m_c$ tasks left after second time unit,
+which has no room for $W$. Therefore, $S$ must be a $k$ clique.
+\end{proof}
+\end{exercise}
+
+\end{document}

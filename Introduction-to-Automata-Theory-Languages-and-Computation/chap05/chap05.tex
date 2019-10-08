@@ -1,0 +1,203 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+\usepackage{tikz}
+
+\usetikzlibrary{automata}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator{\E}{\mathbb E}
+\DeclareMathOperator{\Var}{\mathrm{Var}}
+\DeclareMathOperator{\tr}{\mathrm{tr}}
+\DeclareMathOperator{\poly}{\mathrm{poly}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\vabs}[1]{\left\| #1 \right\|}
+\newcommand{\abra}[1]{\left\langle #1 \right\rangle}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\floorbra}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceilbra}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\ZPP}{\mathtt{ZPP}}
+\newcommand{\RP}{\mathtt{RP}}
+\newcommand{\coRP}{\mathtt{co}\text{-}\mathtt{RP}}
+\newcommand{\per}{\text{per}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Zbb}{\mathbb{Z}}
+\newcommand{\Sset}{\mathbb{S}}
+\newcommand{\Fset}{\mathbb{F}}
+\newcommand{\Nset}{\mathbb{N}}
+\newcommand{\Zset}{\mathbb{Z}}
+\newcommand{\Uset}{\mathbb{U}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\qd}[2]{{\left(\frac{#1}{#2}\right)}}
+\newcommand{\dv}{\ |\ }
+\newcommand{\mylm}{\xLongrightarrow[lm]{}}
+\newcommand{\myrm}{\xLongrightarrow[rm]{}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $5$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{5.1.5} $G=(V,T,P,S)=(\{S,S'\},\{0,1\},P,S)$, where $P$ is
+\begin{align*}
+     S &\to S'\dv SS\dv S+S\dv S^*\dv (S)\\
+     S' &\to e\dv 0\dv 1 \dv \varnothing
+\end{align*}
+\end{exercise}
+
+\begin{exercise}{5.2.2}
+    Let $T$ be the parse tree built step by step with the $m$-steps derivation;
+    so $T$ has $m$ non-leaf nodes.
+    Since $|w|=n$ and there is no $\varepsilon$ as right side in any production rule,
+    $T$ has $n$ leaf nodes.
+    As a result, the parse tree has $n+m$ nodes.
+\end{exercise}
+
+\begin{exercise}{5.2.3}
+    Let $T$ be the parse tree built step by step with the $m$-steps derivation;
+    so $T$ has $m$ non-leaf nodes.
+    Since $|w|=n,n>0$, $T$ has $n$ non-$\varepsilon$ leaf nodes.
+    \begin{itemize}
+        \item If $m>1$, then the root of parse tree can not give rise to $\varepsilon$.
+            So the number of $\varepsilon$ leaf nodes is no more than $m-1$.
+            As a result, the parse tree has no more than $n+2m-1$ nodes.
+        \item If $m=1$ and $w\neq\varepsilon$, then $w$ is derived in one step; thus
+            the number of nodes in parse tree is no more than $n+2m-1$.
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{5.4.3} $G=(V,T,P,S)=(\{S,S_1,S_2\},\{a,b\},P,S)$, where $P$ is
+\begin{align*}
+    S &\to SaS_2bS_1\dv S_1\\
+    S_1 &\to aS_1\dv \varepsilon\\
+    S_2 &\to aS_2bS_2\dv \varepsilon\\
+\end{align*}
+\end{exercise}
+
+\begin{exercise}{5.4.7}\hspace{0pt}\\
+\textbf{a)}
+\begin{itemize}
+\item \textit{Leftmost derivation:}
+    \begin{align*}
+        E&\mylm +EE\mylm +*EEE\mylm +*-EEEE\\
+        &\mylm +*-xEEE\mylm +*-xyEE\mylm +*-xyxE\mylm +*-xyxy
+    \end{align*}
+\item \textit{Rightmost derivation:}
+    \begin{align*}
+        E&\myrm +EE\myrm +Ey\myrm +*EEy\myrm +*Exy\\
+        &\myrm +*-EExy\myrm +*-Eyxy\myrm +*-xyxy
+    \end{align*}
+\item \textit{Parse tree:}
+    \begin{center}
+    \begin{tikzpicture}[level/.style={level distance=10mm}]
+        \node {E}[level 1/.style={sibling distance=40mm},
+        level 2/.style={sibling distance=30mm},
+        level 3/.style={sibling distance=20mm},
+        level 4/.style={sibling distance=10mm},
+        ]
+        child {node {+}}
+        child {node {E}
+            child {node {*}
+            }
+            child {node {E}
+                child {node {-}
+                }
+                child {node {E}
+                    child {node {x}
+                    }
+                }
+                child {node {E}
+                    child {node {y}}
+                }
+            }
+            child {node {E}
+                child {node {x}
+                }
+            }
+        }
+        child {node {E}
+            child {node {y}}
+        };
+    \end{tikzpicture}
+    \end{center}
+\end{itemize}
+\textbf{b)}
+    \begin{proof}
+        Assume this grammar is ambiguous, there exists a $w$ and it has two distinct
+        leftmost derivations, say $D_1$ and $D_2$.\par
+        Since both $D_1,D_2$ are leftmost derivation and they are distinct, they
+        must separate somewhere during the derivation. Thus
+        \begin{align*}
+            D_1: E&\xLongrightarrow[lm]{*} t_1t_2\cdots t_kET_1T_2\cdots T_m\\
+            &\mylm t_1t_2\cdots t_kE_1EE\cdots E\\
+            D_2: E&\xLongrightarrow[lm]{*} t_1t_2\cdots t_kET_1T_2\cdots T_m\\
+            &\mylm t_1t_2\cdots t_kE_2EE\cdots E,\\
+            & t_k\in\{+,-,*,x,y\}
+        \end{align*}
+        where $E_1,E_2\in\{+EE,*EE,-EE,x,y\},E_1\neq E_2$.
+        However, after this step, they will have different prefix as the $(k+1)$th character
+        is different; at least one of them will be different from $w$. A contradiction.
+    \end{proof}
+\end{exercise}
+
+\end{document}

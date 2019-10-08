@@ -1,0 +1,163 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+\usepackage{tikz}
+
+\usetikzlibrary{automata}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator{\E}{\mathbb E}
+\DeclareMathOperator{\Var}{\mathrm{Var}}
+\DeclareMathOperator{\tr}{\mathrm{tr}}
+\DeclareMathOperator{\poly}{\mathrm{poly}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\vabs}[1]{\left\| #1 \right\|}
+\newcommand{\abra}[1]{\left\langle #1 \right\rangle}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\floorbra}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceilbra}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\ZPP}{\mathtt{ZPP}}
+\newcommand{\RP}{\mathtt{RP}}
+\newcommand{\coRP}{\mathtt{co}\text{-}\mathtt{RP}}
+\newcommand{\per}{\text{per}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Zbb}{\mathbb{Z}}
+\newcommand{\Sset}{\mathbb{S}}
+\newcommand{\Fset}{\mathbb{F}}
+\newcommand{\Nset}{\mathbb{N}}
+\newcommand{\Zset}{\mathbb{Z}}
+\newcommand{\Uset}{\mathbb{U}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\qd}[2]{{\left(\frac{#1}{#2}\right)}}
+\newcommand{\dv}{\ |\ }
+\newcommand{\mylm}{\xLongrightarrow[lm]{}}
+\newcommand{\myrm}{\xLongrightarrow[rm]{}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $11$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{11.1.1} \hspace{0pt}\\
+\textbf{a)} TRUE-SAT problem is in $\mathcal{NP}$. Just check whether it is true when all variables are true,
+then guess another truth assignment and check if it yields true.\par
+co-TRUE-SAT consists of all inputs that are
+\begin{itemize}
+\item not well-formed
+\item well-formed but yields false when all variables are assigned true
+\item well-formed and yields true if and only if all variables are assigned true
+\end{itemize}\par
+TRUE-SAT problem is NPC. SAT problem is polynomial-time reducible to it. Given a SAT instance $E'$, the variables of
+which are $x_1,x_2,\cdots,x_n$, construct a
+TRUE-SAT instance $E$ as follows:
+\begin{itemize}
+\item If $E'=\it true$ when all $x$'s are true, then $E=x_1\vee\neg x_1$
+\item If $E'=\it false$ when all $x$'s are true, then $E=E'\vee(x_1\wedge x_2\wedge \cdots\wedge x_n)$
+\end{itemize}
+Then $E'$ is satisfiable if and only if $E$ is TRUE-SAT.\par
+Since whether $\mathcal{NP}=co\mathcal{-NP}$ is unknown, it is not clear whether co-TRUE-SAT is NPC.\\
+\textbf{b)} FALSE-SAT problem is in $\mathcal{NP}$. Just check whether it is false when all variables are false,
+then guess another truth assignment and check if it yields false.\par
+co-FALSE-SAT consists of all inputs that are
+\begin{itemize}
+\item not well-formed
+\item well-formed but yields true when all variables are assigned false
+\item well-formed and yields false if and only if all variables are assigned false
+\end{itemize}\par
+FALSE-SAT problem is NPC. SAT problem is polynomial-time reducible to it. Given a SAT instance $E'$, the variables of
+which are $x_1,x_2,\cdots,x_n$, construct a
+FALSE-SAT instance $E$ as follows:
+\begin{itemize}
+\item If $E'=\it true$ when all $x$'s are false, then $E=x_1\wedge\neg x_1$
+\item If $E'=\it false$ when all $x$'s are false, then $E=(\neg E')\wedge(x_1\vee x_2\vee \cdots\vee x_n)$
+\end{itemize}
+Then $E'$ is satisfiable if and only if $E$ is FALSE-SAT.\par
+Since whether $\mathcal{NP}=co\mathcal{-NP}$ is unknown, it is not clear whether co-FALSE-SAT is NPC.
+\end{exercise}
+
+\begin{exercise}{11.1.2} $L=\{(x,y)|f^{-1}(x)<y\}\in(\mathcal{NP}\cap co\mathcal{-NP})-\mathcal P$.
+\begin{proof}\hspace{0pt}\\
+\textbf{$L\in\mathcal{NP}$:} Just guess $z$ and compute $f(z)$ in polynomial time to see if it really is $x$, then
+compare $z$ and $y$ to check whether $z<y$.\\
+\textbf{$L\in co\mathcal{-NP}$:} Whether $x,y$ are integers of length $n$ can be tested in polynomial time. After
+that, guess $z$ and compute $f(z)$ in polynomial time to see if it really is $x$, then
+compare $z$ and $y$ to check whether $z\geqslant y$.\\
+\textbf{$L\notin\mathcal P$:} Assume $L\in\mathcal P$, we can design an algorithm $\mathcal A$ to compute $f^{-1}(x)$
+in polynomial time. With binary search, we only need to query $O(\log c^n)=O(n)$ times to get $f^{-1}(x)$.
+Since $L\in\mathcal P$, every query can be done in polynomial time, thus $\mathcal A$ runs in polynomial time. A contradiction.
+\end{proof}
+\end{exercise}
+
+\begin{exercise}{11.5.3} \hspace{0pt}\\
+\textbf{c)} Since $p$ is a prime, $F_p$ is a field, therefore $x^m=1$ has at most $m$ solutions in $F_p$.
+Thus $F_p-\{0\}$ forms a cyclic group under multiplication. Assume $F_p-\{0\}=\langle g,\times\rangle$, where $g\in F_p-\{0\}$.
+Any $a\in F_p-\{0\}$, $a=g^k,1\leqslant k\leqslant p-1$, more specifically, $g^{\frac{p-1}{2}}=-1$. Then
+\begin{itemize}
+    \item if $k=2c,c\in\Nset$, then $a$ is a quadratic residue since $(g^c)^2=g^k=a$.
+    \item if $k=2c+1,c\in\Nset$, then $a$ is not a quadratic residue. Otherwise assume $y^2=a$, then
+        $1=(y^2)^{\frac{p-1}{2}}=a^{\frac{p-1}{2}}=(g^{2c+1})^{\frac{p-1}{2}}=g^{\frac{p-1}{2}}=-1$. A contradiction.
+\end{itemize}
+    Thus, the number of quadratic residues modulo $p$ is $\frac{p-1}{2}$.
+\end{exercise}
+
+\end{document}
