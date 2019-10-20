@@ -58,4 +58,12 @@
 
     \maketitle
 
+    \begin{exercise}{13.7}
+    	Note that $M(f)$ is a random matrix uniformly sampled from $\mathbb F_2^{2^n\times 2^n}$. $\Pr[\text{rank}(M(f)) = 2^n] = \Omega(1)$ has been shown in a previous exercise. Next, we prove that the size of the maximum fooling set is less that $n^3$ w.h.p. Let $\mathcal S \subseteq [2^n]^2$ be the set family gathering all $n^3$-size set $S$ satisfying the element in $S$ are located in distinct rows and columns. It is easy to see that any $n^3$-size fooling set must be contained in $\mathcal S$ and $|\mathcal S| = 2^{O(n^4)}$. Whereas, any $S \in \mathcal S$ is a fooling set on a random communication matrix $M(f)$ with prob. of $2^{-\Theta(n^6)}$. Thus, \emph{Union bound} could show the result we want.
+    \end{exercise}
+
+    \begin{exercise}{13.18}
+    	The communication matrix would be divided into several submatrices during a protocol. After the $k$th round, $M(f)$ are divide into $M^{(k)}_1, \ldots, M^{(k)}_{2^k}$. Thus, in the $(k + 1)$round, the protocol further divides each submatrix $M_i^{(k)}: S_i^{(k)}\times T_i^{(k)} \to \{0, 1\}$ into $2$ submatrices $M_{i_1}^{(k + 1)}: S_{i_1}^{(k + 1)}\times T_{i_1}^{(k + 1)} \to \{0, 1\}$ and $M_{i_2}^{(k + 1)}: S_{i_2}^{(k + 1)}\times T_{i_2}^{(k + 1)} \to \{0, 1\}$ where $S_i^{(k)}, T_i^{(k)} \subseteq [2^n]$ and, w.l.o.g, $S_{i_1}^{(k + 1)} \sqcup S_{i_2}^{(k + 1)} = S_i^{(k)}$ and $T_{i_1}^{(k + 1)} = T_{i_2}^{(k + 1)} = T_i^{(k)}$ holds. It is easy to see that there are no more than $(2^{2^n})^{2^k}$ different divisions in the $(k+1)$th round. So, there are at most $2^{\sum_{k = 1}^K2^{n+k}}$ ($K \leq n$), which is exponential of the input size $2^{2n}$, different $K$-round protocols. Since that the correctness of a protocol can be checked efficiently, a brute force algorithm is in exponential-time.
+    \end{exercise}
+
 \end{document}
