@@ -58,12 +58,42 @@
 
     \maketitle
 
+    \begin{exercise}{13.4}
+    Just as in the previous question, by creating a "buffer zone" of zeores, the machine has to take $n$ steps just to transmit every message between Alice and Bob. And note that the machine has a space $S(n)$ work tape, which means every message can carry $S(n)$ bits information, it therefore takes at least $\Omega(n^2 / S(n))$ steps to decide the language.   
+    \end{exercise}
+
     \begin{exercise}{13.7}
     	Note that $M(f)$ is a random matrix uniformly sampled from $\mathbb F_2^{2^n\times 2^n}$. $\Pr[\text{rank}(M(f)) = 2^n] = \Omega(1)$ has been shown in a previous exercise. Next, we prove that the size of the maximum fooling set is less that $n^3$ w.h.p. Let $\mathcal S \subseteq [2^n]^2$ be the set family gathering all $n^3$-size set $S$ satisfying the element in $S$ are located in distinct rows and columns. It is easy to see that any $n^3$-size fooling set must be contained in $\mathcal S$ and $|\mathcal S| = 2^{O(n^4)}$. Whereas, any $S \in \mathcal S$ is a fooling set on a random communication matrix $M(f)$ with prob. of $2^{-\Theta(n^6)}$. Thus, \emph{Union bound} could show the result we want.
     \end{exercise}
 
-    \begin{exercise}{13.18}
-    	The communication matrix would be divided into several submatrices during a protocol. After the $k$th round, $M(f)$ are divide into $M^{(k)}_1, \ldots, M^{(k)}_{2^k}$. Thus, in the $(k + 1)$round, the protocol further divides each submatrix $M_i^{(k)}: S_i^{(k)}\times T_i^{(k)} \to \{0, 1\}$ into $2$ submatrices $M_{i_1}^{(k + 1)}: S_{i_1}^{(k + 1)}\times T_{i_1}^{(k + 1)} \to \{0, 1\}$ and $M_{i_2}^{(k + 1)}: S_{i_2}^{(k + 1)}\times T_{i_2}^{(k + 1)} \to \{0, 1\}$ where $S_i^{(k)}, T_i^{(k)} \subseteq [2^n]$ and, w.l.o.g, $S_{i_1}^{(k + 1)} \sqcup S_{i_2}^{(k + 1)} = S_i^{(k)}$ and $T_{i_1}^{(k + 1)} = T_{i_2}^{(k + 1)} = T_i^{(k)}$ holds. It is easy to see that there are no more than $(2^{2^n})^{2^k}$ different divisions in the $(k+1)$th round. So, there are at most $2^{\sum_{k = 1}^K2^{n+k}}$ ($K \leq n$), which is exponential of the input size $2^{2n}$, different $K$-round protocols. Since that the correctness of a protocol can be checked efficiently, a brute force algorithm is in exponential-time.
+    \begin{exercise}{13.15}
+    	We use the fingerprint technique to obtain a randomized communication protocal. Given two vectors $\mathbf{a}=(a_0,a_1,\cdots,a_{n-1})$,$\mathbf{b}=(b_0,b_1,\cdots,b_{n-1})$, $ a_i,b_i \in \{0,1\}, 0\leq i \leq n-1 $, we construct their corresponding  $(n-1)$-degree polynomials as follows.
+      \begin{equation*}
+      	 \left\{
+      	 	\begin{aligned}
+      	 		A_n(x) &= a_{n-1} x^{n-1} + \cdots + a_1 x^1 + a_0 \\
+      	 		B_n(x) &= b_{n-1} x^{n-1} + \cdots + b_1 x^1 + b_0 \\
+      	 	\end{aligned}
+      	 \right .
+      \end{equation*}
+      And then we have the following proctocol.
+      \begin{itemize}
+       \item Alice: Pick a random number $k \in \left[ 3n \right]$ and  compute $y_1\equiv A_n(k) \mod (3n) $. Send $k$ and $y_1$ to Bob.
+       \item Bob: Compute $y_2 \equiv B_n(k) \mod (3n)$. If $y_2 = y_1$, send the last message 1 to Alice; Otherwise, send 0 to Alice. 
+      \end{itemize}
+      Since  it requires at most $2\log(3n)$ rounds to send $y_1$ and $k$,  the total communication complexity of the protocol is $O(\log n)$. Next, we'll prove the correctness of the protocol.
+      \begin{itemize}
+      		\item Compeleteness : if $\mathbf{a}= \mathbf{b}$, the last message of the protocol is always 1.
+      		\item Soundness : if $\mathbf{a} \neq \mathbf{b}$, $p(x) := A_n(x) - B_n(x)$ is a univariate nonzero polynomial with degree at most $n-1$, according to Schwartz-Zippel Lemma,
+      		\[
+      			{\rm Pr}_{x\in_{R} ~[3n]}\left[p(x) \neq 0 \right] \geq 1- \frac{n-1}{3n} > \frac{2}{3} .
+      		\]
+            Therefore , the protocol output 0 with probability at least $2/3$. 
+      \end{itemize} 
+  Overall, by giving a $O(\log n)$ randomized communication protocol for equality fucntion, we prove $R(EQ)$ is at most $O(\log n)$.
     \end{exercise}
 
+    \begin{exercise}{13.18}
+    	The communication matrix would be divided into several submatrices during a protocol. After the $k$th round, $M(f)$ are divide into $M^{(k)}_1, \ldots, M^{(k)}_{2^k}$. Thus, in the $(k + 1)$round, the protocol further divides each submatrix $M_i^{(k)}: S_i^{(k)}\times T_i^{(k)} \to \{0, 1\}$ into $2$ submatrices $M_{i_1}^{(k + 1)}: S_{i_1}^{(k + 1)}\times T_{i_1}^{(k + 1)} \to \{0, 1\}$ and $M_{i_2}^{(k + 1)}: S_{i_2}^{(k + 1)}\times T_{i_2}^{(k + 1)} \to \{0, 1\}$ where $S_i^{(k)}, T_i^{(k)} \subseteq [2^n]$ and, w.l.o.g, $S_{i_1}^{(k + 1)} \sqcup S_{i_2}^{(k + 1)} = S_i^{(k)}$ and $T_{i_1}^{(k + 1)} = T_{i_2}^{(k + 1)} = T_i^{(k)}$ hold. It is easy to see that there are no more than $(2^{2^n})^{2^k}$ different divisions in the $(k+1)$th round. So, there are at most $2^{\sum_{k = 1}^K2^{n+k}}$ ($K \leq n$), which is exponential of the input size $2^{2n}$, different $K$-round protocols. Since that the correctness of a protocol can be checked efficiently, a brute force algorithm is in exponential-time.
+    \end{exercise}
 \end{document}
