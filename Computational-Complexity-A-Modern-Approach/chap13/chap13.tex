@@ -66,6 +66,18 @@
     	Note that $M(f)$ is a random matrix uniformly sampled from $\mathbb F_2^{2^n\times 2^n}$. $\Pr[\text{rank}(M(f)) = 2^n] = \Omega(1)$ has been shown in a previous exercise. Next, we prove that the size of the maximum fooling set is less that $n^3$ w.h.p. Let $\mathcal S \subseteq [2^n]^2$ be the set family gathering all $n^3$-size set $S$ satisfying the element in $S$ are located in distinct rows and columns. It is easy to see that any $n^3$-size fooling set must be contained in $\mathcal S$ and $|\mathcal S| = 2^{O(n^4)}$. Whereas, any $S \in \mathcal S$ is a fooling set on a random communication matrix $M(f)$ with prob. of $2^{-\Theta(n^6)}$. Thus, \emph{Union bound} could show the result we want.
     \end{exercise}
 
+    \begin{exercise}{13.8}
+	    \begin {definition}(entry wise product)
+	        A,B is a n*m matrix, then 
+	        $$A\circ B=\begin{bmatrix} 
+	   	A_{11}B_{11} &\cdots  & A_{1n}B_{1n} \\
+	        &\vdots&\\
+	   	A_{n1}B_{n1} & \cdots&A_{nn}B_{nn}\\
+	   	\end{bmatrix}	$$
+	    \end{definition}
+	    W.L.O.G, we have a fooling set $S$, $f(S) = 1$. Let $S = \{(x_1,y_1),(x_2,y_2)\cdots,(x_n,y_n)\}$. Let $M_a$ be the submatrix of the $M_f$, choose the row and column in the $S$. Using the definition of  fooling set, $M_a \circ M_a^T = I$. So $|S| = rank(I) = rank(M_a \circ M_a^T) \le M_a \otimes M_a^T = (rank(A))^2 \le (rank(M_f))^2$. So the rank method can get a lower bound at least 1/2$\lceil \log S \rceil$.
+	\end{exercise}
+
     \begin{exercise}{13.15}
     	We use the fingerprint technique to obtain a randomized communication protocal. Given two vectors $\mathbf{a}=(a_0,a_1,\cdots,a_{n-1})$,$\mathbf{b}=(b_0,b_1,\cdots,b_{n-1})$, $ a_i,b_i \in \{0,1\}, 0\leq i \leq n-1 $, we construct their corresponding  $(n-1)$-degree polynomials as follows.
       \begin{equation*}
@@ -99,5 +111,16 @@
 
     \begin{exercise}{13.18}
     	The communication matrix would be divided into several submatrices during a protocol. After the $k$th round, $M(f)$ are divide into $M^{(k)}_1, \ldots, M^{(k)}_{2^k}$. Thus, in the $(k + 1)$round, the protocol further divides each submatrix $M_i^{(k)}: S_i^{(k)}\times T_i^{(k)} \to \{0, 1\}$ into $2$ submatrices $M_{i_1}^{(k + 1)}: S_{i_1}^{(k + 1)}\times T_{i_1}^{(k + 1)} \to \{0, 1\}$ and $M_{i_2}^{(k + 1)}: S_{i_2}^{(k + 1)}\times T_{i_2}^{(k + 1)} \to \{0, 1\}$ where $S_i^{(k)}, T_i^{(k)} \subseteq [2^n]$ and, w.l.o.g, $S_{i_1}^{(k + 1)} \sqcup S_{i_2}^{(k + 1)} = S_i^{(k)}$ and $T_{i_1}^{(k + 1)} = T_{i_2}^{(k + 1)} = T_i^{(k)}$ hold. It is easy to see that there are no more than $(2^{2^n})^{2^k}$ different divisions in the $(k+1)$th round. So, there are at most $2^{\sum_{k = 1}^K2^{n+k}}$ ($K \leq n$), which is exponential of the input size $2^{2n}$, different $K$-round protocols. Since that the correctness of a protocol can be checked efficiently, a brute force algorithm is in exponential-time.
+    \end{exercise}
+    
+    \begin{exercise}{13.19}
+        \begin{definition}
+             $DIS_n:\{0,1\}^n\times\{0,1\}^n \mapsto \{0,1\}.DIS_n(x,y) = 1$ iff  the subsets of $\{1, 2, . . . , n\}$ whose characteristic vectors are $x$ and $y$ intersect.
+        \end{definition}
+        \begin{lemma}
+            The space complexity of DIS is $\Omega(n)$, and even the approximate of this problem within a $3/4$ factor is also $\Omega(n)$.
+            \label{thm:DIS}
+        \end{lemma}
+        We now assume that we have an $o(n)$ algorithm to calculate the frequency of the most frequent element.  We then use this algorithm to describe a simple protocol for two parties to compute $DIS(x,y)$. The first person just calculate the $DIS(x,y)$ use the algorithm, and then send the memory to another people, the second people just use this memory to calculate the $DIS(x,y)$. Then we get a protocol to calculate the $DIS(x,y)$. However, according to Lemma \ref{thm:DIS}, this is impossible, so there is no space-$o(n)$ streaming algorithm that solves the problem.
     \end{exercise}
 \end{document}
