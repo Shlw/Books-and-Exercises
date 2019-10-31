@@ -1,0 +1,68 @@
+
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsthm,amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{geometry}
+% \usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{answer}{Answer}
+\newtheorem*{refute}{Refute}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\bin}{\{0,1\}}
+
+
+\def\sD{\textsf{D}}
+\def\sE{\textsf{E}}
+\def\cD{\mathcal{D}}
+
+\title{Exercise Set --- Chapter 14}
+\date{}
+
+\begin{document}
+    \maketitle
+
+    \begin{exercise}{14.10}
+        Given a DAG $G = (V, A)$ with $|V| = n, |A| = m$ and the depth of $d$, select an arbitrary mapping $f: V \to [d]$ s.t. for each $(u \to v) \in A$, $c(u) < c(v)$ holds. Label the edges as 
+        \[
+           (u \to v) \mapsto \lfloor \log(c(u)\oplus c(v))\rfloor.
+        \]
+        Suppose the path containing at least $2^\ell$ vertices contains at least $\ell$ distinct edge-labels. Assume a path $P$ contains $2^{\ell + 1}$ vertices whose labels are gathered by $T = c(S) = \{a_1, \ldots, a_{2^{\ell + 1}}\}$ where $a_1 < \ldots < a_{2^{\ell + 1}}$. W.l.o.g, assume there exist $i$ s.t. $\lfloor\log a_i\rfloor \neq \lfloor\log a_{i + 1}\rfloor$ where $i$ is the maximum one. Thus, $\lfloor \log a_{i + 1}\rfloor$ appears in an edges of the path and all the others are less than it. Note that either the subpath containing the first $i$ vertices of $P$, or the one containing the last $2^{\ell + 1} - i$ has $2^{\ell}$ vertices, which means there are $\ell$ distinct and less than $\lfloor \log a_{i + 1}\rfloor$ edge-labels in either the first- or the second-part of $P$ due to the induction assumption. Remove all the edges labeled by the $k$ ``least popular'' numbers, which will be no more than $km/\lceil\log d\rceil$. After that, the longest path will be shorter than $2^{\ell - k} \leq d/2^{k - 1}$ as we want.
+    \end{exercise}
+\end{document}
