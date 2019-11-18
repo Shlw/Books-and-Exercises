@@ -57,6 +57,11 @@
 
 \begin{document}
     \maketitle
+    \begin{exercise}{14.7}
+        Let $N$ be the exact degree a polynomial over $GF(q)$ requires to exactly represent the OR function of $n$ varaibles $x_1,x_2,\dots,x_n $. Note that OR function can be represented by $1-\prod _{i=1}^n (1-x_i)$, so $N \leq n$. 
+      
+        Let $\hat{f}$ be any function agrees with $OR$ function on $\{0,1\}^n$. Since $x_i^2 =1 \mod q$ on $\{0,1\}$, we can assume $\hat{f}$ is a multilinear polynomial without loss of generality. It is not hard to prove that $\hat{f}$ is unique over $GF(q)$ by mathematical induction. Hence, $\hat{f}=1-\prod _{i=1}^n (1-x_i)$ and $N=n$.
+    \end{exercise}
 
     \begin{exercise}{14.9}
         Assume $L$ can be computed by a width-$c$ ($c=O(1)$) depth-$d$ branching program. 
