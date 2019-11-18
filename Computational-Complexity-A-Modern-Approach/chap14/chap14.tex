@@ -58,8 +58,26 @@
 \begin{document}
     \maketitle
 
+    \begin{exercise}{14.9}
+        Assume $L$ can be computed by a width-$c$ ($c=O(1)$) depth-$d$ branching program. 
+        Assume the $i$-th layer queries the $a_i$-th bit. Then the $i$-th layer can be seen as two functions 
+        $f_i,g_i:[c]\to[c]$, where we go along $f_i$ iff $x_{a_i}=0$.
+
+        Now we construct an $O(\log d)$ circuit $\mathcal C$ for $L$. In the first $O(1)$ layers, $\mathcal C$ concurrently evaluates
+        $h_i^1:[c]\to[c]$, where 
+        $$
+        h_i^1=\begin{cases}
+            f_i&x_{a_i}=0\\
+            g_i&x_{a_i}=1.
+        \end{cases}
+        $$
+        Then with $O(\log d)$ layers, $\mathcal C$ computes the composition of $h_i$'s, i.e., compute
+        $h_i^k=h_{2i}^{k-1}\circ h_{2i-1}^{k-1}$ for $k\in[\log d]$.
+        At last, $\mathcal C$ simply evaluates its value as we have computed $h_d^1\circ\cdots\circ h_2^1\circ h_1^1$ like the evaluation of the original branching program.
+    \end{exercise}
+
     \begin{exercise}{14.10}
-        Given a DAG $G = (V, A)$ with $|V| = n, |A| = m$ and the depth of $d$, select an arbitrary mapping $f: V \to [d]$ s.t. for each $(u \to v) \in A$, $c(u) < c(v)$ holds. Label the edges as 
+        Given a DAG $G = (V, A)$ with $|V| = n, |A| = m$ and the depth of $d$, select an arbitrary mapping $f: V \to [d]$ s.t., for each $(u \to v) \in A$, $c(u) < c(v)$ holds. Label the edges as 
         \[
            (u \to v) \mapsto \lfloor \log(c(u)\oplus c(v))\rfloor.
         \]
