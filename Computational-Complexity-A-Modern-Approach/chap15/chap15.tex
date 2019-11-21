@@ -57,4 +57,8 @@
 
 \begin{document}
     \maketitle
+    \begin{exercise}{15.1}
+        Firstly, we proof the resolution will end. Suppose the resolution never end, which means $\forall x_i, i \in [n], x_i$ and $\overline{x_i}$ don't exist simultaneously. W.L.O.G we assume that only $x_i$ exist, then we assign $x_i = 1$(if $\overline{x_i}$ exist we let $x_i=0$), then the $\varphi$ is satisfiable, which lead to a contradiction.
+        \par Secondly, we do one resolution refutation will create a new clause in $2^{S},S=\{x_1,x_2,\cdots,x_n\}$. So we can only add $2^O(n)$ new term into CNF, which means that there exist a resolution refutation for $\varphi$ of length $O(2^n)$.
+    \end{exercise}
 \end{document}
