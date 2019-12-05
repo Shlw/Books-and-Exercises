@@ -57,7 +57,9 @@
 \begin{document}
 
     \maketitle
-
+    \begin{exercise}{12.1}
+        根据题意，假设对应每个 $i$，都有 $x_i$ 使得 $f({x_i}^i)\neq f(x_i)$. 根据鸽巢原理，有：存在 $\{x_1,\dots,x_n\}$ 的一个大小为 $n/{2^k}$ 的子集 $S$，对于 $S$ 内的元素，决策树的前 $k$ 次查询都是相同的答案。则对于最后一个不为空的 $S=\{x_0\}$，即 $n/{2^{k_0}}=1$，则对于其中的元素有 $k_0=\log n$ 个 $i$ 使 $f({x_0}^i)\neq f(x_0)$。则根据定义 $S(f)=\Omega(\log n)$。
+    \end{exercise}
     \begin{exercise}{12.5}
         Simply compute 
         $$

@@ -57,6 +57,12 @@
 
 \begin{document}
     \maketitle
+    \begin{exercise}{14.6}
+        1.若$m$是一个包含$p$因子的合数，则可以利用$MOD m$与不限扇入度的与，或，非门模拟$MOD p$.模拟规则为：先利用常数个(记为$c$)与，或，非门实现“减p”的操作，重复$(m/p-1)$层，而后连接一个$MOD m$门，即可计算得$MOD p$。
+        
+        2.若$m$的因子都与$p$互素，无法证明，但已知加入$MOD 6$无法模拟任何$p>6$且$p$为素数的$MOD p$门。
+    \end{exercise}
+
     \begin{exercise}{14.7}
         Let $N$ be the exact degree a polynomial over $GF(q)$ requires to exactly represent the OR function of $n$ varaibles $x_1,x_2,\dots,x_n $. Note that OR function can be represented by $1-\prod _{i=1}^n (1-x_i)$, so $N \leq n$. 
       

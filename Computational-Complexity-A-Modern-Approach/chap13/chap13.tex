@@ -58,6 +58,11 @@
 
     \maketitle
 
+
+	\begin{exercise}{13.3}
+		使用反证法，假设存在 $o(n^2)$ 时间去判断 PAL 的图灵机，根据 H537 的提示，可为相等函数构造出一个通信协议，该通信协议在多余 $2^{n/2}/n$ 个输入上，仅通信 $o(n)$ 位，与 Thm 13.4 矛盾。	
+	\end{exercise}
+
     \begin{exercise}{13.4}
     Just as in the previous question, by creating a "buffer zone" of zeores, the machine has to take $n$ steps just to transmit every message between Alice and Bob. And note that the machine has a space $S(n)$ work tape, which means every message can carry $S(n)$ bits information, it therefore takes at least $\Omega(n^2 / S(n))$ steps to decide the language.   
     \end{exercise}
@@ -76,6 +81,31 @@
 	   	\end{bmatrix}	$$
 	    \end{definition}
 	    W.L.O.G, we have a fooling set $S$, $f(S) = 1$. Let $S = \{(x_1,y_1),(x_2,y_2)\cdots,(x_n,y_n)\}$. Let $M_a$ be the submatrix of the $M_f$, choose the row and column in the $S$. Using the definition of  fooling set, $M_a \circ M_a^T = I$. So $|S| = rank(I) = rank(M_a \circ M_a^T) \le M_a \otimes M_a^T = (rank(A))^2 \le (rank(M_f))^2$. So the rank method can get a lower bound at least 1/2$\lceil \log S \rceil$.
+	\end{exercise}
+
+	\begin{exercise}{13.14}
+		仿照Lemma 13.17的证明。
+		
+			$\underset{\underset{(k,n)cube}D}E(\underset{a\in D}\pi f(a))\\$
+			
+			$=\underset{a_1,a_1^{'}}E(\underset{\underset{(k-1,n)cube}{D^{'}}}E(\underset{a\in D^{'}}\pi f(a_1,a)\underset{a\in D^{'}}\pi f(a_1^{'},a)))\\$
+			
+			$\geq\underset{a_1,a_1^{'}}E(\underset{\underset{(k-1,n)cube}{D^{'}}}E(\underset{a\in D^{'}}\pi f(a_1,a))g_1{(a_1)}^{2^{k-1}}\cdot(\underset{a\in D^{'}}\pi f(a_1^{'},a))g_1{(a_1^{'})}^{2^{k-1}}))\\$
+			
+			$=\underset{\underset{(k-1,n)cube}{D^{'}}}E(\underset{a_1}E\;\underset{a\in D^{'}}\pi f(a_1,a)g_1{{(a_1)})}^2\\$
+			
+			$\geq(\underset{\underset{(k-1,n)cube}{D^{'}}}E\underset{a_1}E\;\underset{a\in D^{'}}\pi f(a_1,a)g_1{{(a_1)})}^2\\$
+			
+			$\geq\cdots\cdots\geqslant(\underset{a_1\dots a_k}Ef(a_1,\dots,a_k)g_1{(a_1)}\dots g_k{{(a_k)})}^{2^k}$
+		
+		又：
+		
+			$Disc(f)=\frac1{2^{nk}}\underset T{\;max}\vert\sum_{(a_1,\cdots,a_k)\in T}\;f(a_1,\cdots,a_k)\vert\\$
+			
+			$=\underset{a_1\dots a_k}Ef(a_1,\dots,a_k)g_1{(a_1)}\dots g_k{(a_k)}$
+			
+		得证：$Disc(f)\leq(\epsilon(f))^{1/{2^k}}$
+		
 	\end{exercise}
 
     \begin{exercise}{13.15}
