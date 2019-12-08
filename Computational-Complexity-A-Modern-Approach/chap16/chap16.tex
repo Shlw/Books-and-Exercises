@@ -62,6 +62,44 @@
 		任选一个函数$f$,存在一个拥有$S$个门的布尔线路计算$f$.对于该线路内的任一逻辑门$gate_i$，可用$l_i$长的代数直线程序实现，即可用$3l_i$规模的代数路线模拟，则该函数可使用$\sum_i 3i\cdot l_i$规模的代数路线模拟，令$c=3\cdot max{l_i,1/l_i}$，可知该代数路线的规模介于$c\cdot S$与$c/S$之间。
 	\end{exercise}
 
+    \begin{exercise}{16.4}
+        \begin{itemize}
+            \item[(a)]
+                Let $\#\texttt{ADDs}$ be the number of additions in the $k\times k$ algorithm.
+                We may assume $n=k^\ell$ and then use divide-and-conquer:
+                $$
+                \begin{bmatrix}
+                    \bm A_{1,1} & \cdots & \bm A_{1,k} \\
+                    \vdots & \ddots & \vdots \\
+                    \bm A_{k,1} & \cdots & \bm A_{k,k}
+                \end{bmatrix}
+                \begin{bmatrix}
+                    \bm B_{1,1} & \cdots & \bm B_{1,k} \\
+                    \vdots & \ddots & \vdots \\
+                    \bm B_{k,1} & \cdots & \bm B_{k,k}
+                \end{bmatrix}
+                =
+                \begin{bmatrix}
+                    \bm C_{1,1} & \cdots & \bm C_{1,k} \\
+                    \vdots & \ddots & \vdots \\
+                    \bm C_{k,1} & \cdots & \bm C_{k,k}
+                \end{bmatrix},
+                $$
+                where each $\bm C_{i,j}$ comes from the $k\times k$ algorithm and 
+                uses recursion for the multiplications required by $\bm C_{i,j}$.
+                Thus 
+                \begin{align*}
+                    S(k^\ell)
+                    &=k^\omega S(k^{\ell-1})+k^{\ell-1}\cdot\#\texttt{ADDs}\\
+                    &=n^{\omega}+\#\texttt{ADDs}\cdot\sum_{i=1}^\ell k^{\ell-i}\cdot k^{(i-1)\omega}\\
+                    &=O(n^\omega).
+                \end{align*}
+            \item[(b)]
+                By (a) and Strassen's algorithm\footnote{\url{https://en.wikipedia.org/wiki/Strassen_algorithm}}, we can compute
+                matrix multiplication of $2\times2$ matrices using $7$ multiplication gates. Thus $\omega=\log_27<2.81$.
+        \end{itemize}
+    \end{exercise}
+
 	\begin{exercise}{16.12}
 		对于$\forall L\in P/poly$，存在一个多项式规模的线路族${C_n}$判定L，该线路族可以编码为一个实数：令该线路族内每个线路编码成的二进制串位数固定为$n^c$位（多余位补零，c是一个足够大的实数），而后转化为该线路族的二进制编码，形成表示该线路族的实数。
 		
