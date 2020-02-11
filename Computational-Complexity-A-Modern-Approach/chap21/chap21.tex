@@ -42,6 +42,7 @@
 
 \DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
 \newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\vabs}[1]{\left\| #1 \right\|}
 \newcommand{\pbra}[1]{\left( #1 \right)}
 \newcommand{\cbra}[1]{\left\{ #1 \right\}}
 \newcommand{\sbra}[1]{\left[ #1 \right]}
@@ -58,5 +59,52 @@
 \begin{document}
     \maketitle
 
+    \begin{exercise}{21.9}
+        By reordering vertices in $G$, we assume 
+        $$
+        \bm A=\begin{bmatrix}
+            &\bm B\\
+            \bm C & 
+        \end{bmatrix},
+        $$
+        where $\bm B$ is $a$ by $n-a$ and $\bm C$ is $n-a$ by $a$.
+        Since 
+        $$
+        \bm A\begin{bmatrix}1\\\vdots\\1\end{bmatrix}=\begin{bmatrix}1\\\vdots\\1\end{bmatrix},
+        $$
+        we have
+        $$
+        \bm A\begin{bmatrix}-1\\\vdots\\-1\\1\\\vdots\\1\end{bmatrix}
+        =\begin{bmatrix}&\bm B\\\bm C &\end{bmatrix}\begin{bmatrix}-1\\\vdots\\-1\\1\\\vdots\\1\end{bmatrix}
+        =\begin{bmatrix}1\\\vdots\\1\\-1\\\vdots\\-1\end{bmatrix}.
+        $$
+    \end{exercise}
+
+    \begin{exercise}{21.14}
+        Let $\bm A$ be the random walk matrix of $G$ and
+        $$
+        (\bm 1_S)_i=\begin{cases}
+            \frac1{|S|} & i\in S\\
+            0 & i\notin S
+        \end{cases},\quad
+        (\bm 1_T)_i=\begin{cases}
+            \frac1{|T|} & i\in S\\
+            0 & i\notin S
+        \end{cases},\quad
+        \bm e=\frac1{\sqrt n}\begin{bmatrix}1\\\vdots\\1\end{bmatrix}.
+        $$
+        Then $\bm 1_T=\frac1{\sqrt n}\bm e+\alpha$, where $\alpha$ is orthogonal to $\bm e$, and 
+        \begin{align*}
+            \abs{\frac{|E(S,T)|}{d|S||T|}-\frac1n}
+            &=\abs{\bm 1_S^\top\bm A\bm 1_T-\frac1n}
+            =\abs{\bm 1_S^\top\bm A\pbra{\frac1{\sqrt n}\bm e+\alpha}-\frac1n}
+            =\abs{\bm 1_S^\top\bm A\alpha}
+            =\vabs{\bm 1_S^\top\bm A\alpha}_2\\
+            &\leq\vabs{\bm1_S}_2\vabs{\bm A\alpha}_2
+            \leq\frac\lambda{\sqrt{|S|}}\vabs{\alpha}_2
+            <\frac\lambda{\sqrt{|S|}}\vabs{\bm1_T}_2\\
+            &=\frac\lambda{\sqrt{|S||T|}}.
+        \end{align*}
+    \end{exercise}
 
 \end{document}
