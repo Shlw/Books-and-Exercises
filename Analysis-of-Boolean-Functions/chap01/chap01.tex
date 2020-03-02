@@ -1,0 +1,174 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator{\E}{\mathbb E}
+\DeclareMathOperator{\Var}{\mathrm{Var}}
+\DeclareMathOperator{\tr}{\mathrm{tr}}
+\DeclareMathOperator{\poly}{\mathrm{poly}}
+\newcommand{\abs}[1]{{\left| #1 \right|}}
+\newcommand{\vabs}[1]{{\left\| #1 \right\|}}
+\newcommand{\abra}[1]{{\left\langle #1 \right\rangle}}
+\newcommand{\pbra}[1]{{\left( #1 \right)}}
+\newcommand{\cbra}[1]{{\left\{ #1 \right\}}}
+\newcommand{\sbra}[1]{{\left[ #1 \right]}}
+\newcommand{\floorbra}[1]{{\left\lfloor #1 \right\rfloor}}
+\newcommand{\ceilbra}[1]{{\left\lceil #1 \right\rceil}}
+\newcommand{\bin}{{\{0,1\}}}
+\newcommand{\pmbin}{{\{-1,1\}}}
+\newcommand{\ZPP}{\mathtt{ZPP}}
+\newcommand{\RP}{\mathtt{RP}}
+\newcommand{\coRP}{\mathtt{co}\text{-}\mathtt{RP}}
+\newcommand{\per}{\text{per}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Zbb}{\mathbb{Z}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Gcal}{\mathcal{G}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $1$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{1.1}
+    \begin{itemize}
+        \item[(a)] $\text{min}_2(x_1,x_2)=-\frac12+\frac12x_1+\frac12x_2+\frac12x_1x_2$.
+        \item[(b)] $\text{min}_3(x_1,x_2,x_3)=\text{min}_2(\text{min}_2(x_1,x_2),x_3)=\frac{(x_1+1)(x_2+1)(x_3+1)}4-1
+            =-\frac34+\frac14\sum_{S\neq\emptyset}\chi_S(x)$.
+
+            $\text{max}_3(x)=-\text{min}_3(-x)=\frac34-\frac14\sum_{S\neq\emptyset}(-1)^{|S|}\chi_S(x)$.
+        \item[(c)] $\widehat{1_\cbra{a}}(S)=\E\sbra{1_\cbra{a}(x)\chi_S(x)}=2^{-n}(-1)^{\sum_{i\in S}a_i}$.
+        \item[(d)] $\phi_\cbra{a}(x)=2^n1_\cbra{a}$, 
+            so $\widehat{\phi_\cbra{a}}(S)=2^n\widehat{1_\cbra{a}}(S)=(-1)^{\sum_{i\in S}a_i}$.
+        \item[(e)] 
+            $$
+            \widehat{\phi_\cbra{a,a+e_i}}(S)=\E_{x\sim\phi_\cbra{a,a+e_i}}\sbra{\chi_S(x)}
+            =\frac12\chi_S(a)+\frac12\chi_S(a+e_i)=\frac12\chi_S(a)\pbra{1+\chi_S(e_i)}=\begin{cases}
+                0&i\in S\\
+                (-1)^{\sum_{j\in S}a_j}&i\notin S.
+            \end{cases}
+            $$
+        \item[(f)] Let $\phi$ be the corresponding density function, then
+            $$
+            \widehat{\phi}(S)=\E_{x\sim\phi}\sbra{\chi_S(x)}=\prod_{i\in S}\E_{x\sim\phi}\sbra{x_i}=\rho^{|S|}.
+            $$
+        \item[(g)] $\widehat{\text{IP}_{2n}}(S_1,S_2)=\E\sbra{\text{IP}_{2n}(x,y)\chi_{S_1,S_2}(x,y)}
+            =\prod_{i=1}^n\E\sbra{(-1)^{x_iy_i+1_{S_1}(i)x_i+1_{S_2}(i)y_i}}=(-1)^{|S_1\cap S_2|}2^{-n}$.
+        \item[(h)] $\widehat{\text{Equ}_n}(S)=\E\sbra{\text{Equ}_n(x)\chi_S(x)}=2^{-n}\pbra{\chi_S(\bm1)+\chi_S(\bm{-1})}
+            =2^{-n+1}(-1)^{|S|}.$
+        \item[(i)] $\text{NAE}_n(x)=1-\text{Equ}_n(x)$, so 
+            $$
+            \widehat{\text{NAE}_n}(S)=\begin{cases}
+                -2^{-n+1}(-1)^{|S|}&S\neq\emptyset\\
+                1-2^{-n+1}&S=\emptyset.
+            \end{cases}
+            $$
+        \item[(j)] $\widehat{\text{Sel}}(x)=x_2\frac{1-x_1}2+x_3\frac{1+x_1}2=\frac12x_2+\frac12x_3-\frac12x_1x_2+\frac12x_1x_3$.
+        \item[(k)] $\widehat{\text{mod}_3}(S)=\E\sbra{\text{mod}_3(x)\chi_S(x)}=\frac18\pbra{\chi_S(\bm0)+\chi_S(\bm1)}
+            =\frac18\pbra{1+(-1)^{|S|}}$.
+        \item[(l)] $x_2\oplus x_3=\frac{1-(-1)^{x_2+x_3}}2$, so 
+            \begin{align*}
+            \text{OXR}(x)
+                &=\frac{1-(-1)^{x_1}}2+\frac{1-(-1)^{x_2+x_3}}2-\frac{1-(-1)^{x_1}}2\frac{1-(-1)^{x_2+x_3}}2\\
+                &=\frac34-\frac14\chi_\cbra{1}(x)-\frac14\chi_\cbra{2,3}(x)-\frac14\chi_\cbra{1,2,3}(x).
+            \end{align*}
+        %\item[(m)] \item[(n)] \item[(o)] \item[(p)]
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{1.2}
+    $2^n\times 2$.
+\end{exercise}
+
+\begin{exercise}{1.3} 
+    $2^n\widehat f(S)=2^n\E\sbra{f(x)\chi_S(x)}=\sum_{x\in f^{-1}(1)}\chi_S(x)\equiv\abs{f^{-1}(1)}\equiv1\mod2$.
+\end{exercise}
+
+\begin{exercise}{1.4}
+    $\E_{y\sim\mu}\sbra{f(y)}=\sum_S\widehat f(S)\E_{y\sim\mu}\sbra{x^S}=\sum_S\widehat f(S)\mu^S$.
+\end{exercise}
+
+\begin{exercise}{1.5}
+    Since $1=\vabs{f}_2=\sqrt{\E\sbra{f^2}}=\sqrt{\sum_S\widehat{f}(S)^2}$, the claim holds for all such $f$.
+\end{exercise}
+
+\begin{exercise}{1.6}
+    Assume $f:\pmbin^n\to\pmbin$ has two different Fourier expansion $a(x)=\sum_Sa_Sx^S,b(x)=\sum_Sb_Sx^S$.
+    Then $0\equiv a(x)-b(x)=\sum_S(a_S-b_S)x^S$ and 
+    $$
+    0=\vabs{a-b}_2=\sum_S(a_S-b_S)^2,
+    $$
+    which gives $a_S=b_S$ for all $S\in[n]$. A contradiction.
+\end{exercise}
+
+\begin{exercise}{1.7}
+    $\E_f\sbra{\widehat f(S)}=\E_f\sbra{\E_x\sbra{f(x)x^S}}=\E_f\sbra{2^{-n}\sum_xf(x)x^S}=0$.
+
+    $\E_f\sbra{\widehat f(S)^2}=\E_f\sbra{2^{-2n}\sum_{x,y}f(x)f(y)x^Sy^S}=2^{-n}$.
+\end{exercise}
+
+\begin{exercise}{1.8}
+    \begin{itemize}
+        \item[(a)] $\widehat{f^\dag}(S)=(-1)^{|S|+1}\widehat f(S)$.
+        \item[(c)] Plug in $\widehat{f^\text{odd}}(S)=\frac12\pbra{\widehat f(S)+\widehat{f^\dag}(S)}$.
+    \end{itemize}
+\end{exercise}
+
+\end{document}

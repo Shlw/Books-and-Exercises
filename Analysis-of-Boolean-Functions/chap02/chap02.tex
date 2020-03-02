@@ -1,0 +1,252 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator{\E}{\mathbb E}
+\DeclareMathOperator{\Var}{\mathrm{Var}}
+\DeclareMathOperator{\tr}{\mathrm{tr}}
+\DeclareMathOperator{\poly}{\mathrm{poly}}
+\DeclareMathOperator{\sd}{\mathop{d}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\abs}[1]{{\left| #1 \right|}}
+\newcommand{\vabs}[1]{{\left\| #1 \right\|}}
+\newcommand{\abra}[1]{{\left\langle #1 \right\rangle}}
+\newcommand{\pbra}[1]{{\left( #1 \right)}}
+\newcommand{\cbra}[1]{{\left\{ #1 \right\}}}
+\newcommand{\sbra}[1]{{\left[ #1 \right]}}
+\newcommand{\floorbra}[1]{{\left\lfloor #1 \right\rfloor}}
+\newcommand{\ceilbra}[1]{{\left\lceil #1 \right\rceil}}
+\newcommand{\bin}{{\{0,1\}}}
+\newcommand{\pmbin}{{\{-1,1\}}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Zbb}{\mathbb{Z}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\Ncal}{\mathcal{N}}
+\newcommand{\Inf}{\mathtt{Inf}}
+\newcommand{\MaxInf}{\mathtt{MaxInf}}
+\newcommand{\Dtt}{\mathtt{D}}
+\newcommand{\Itt}{\mathtt{I}}
+\newcommand{\Ltt}{\mathtt{L}}
+\newcommand{\Wtt}{\mathtt{W}}
+\newcommand{\Ttt}{\mathtt{T}}
+\newcommand{\Stab}{\mathtt{Stab}}
+\newcommand{\NS}{\mathtt{NS}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $2$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{2.11}
+    Assume $i$ is irrelevant, then
+    $$
+    \hat f(S)=\E_{x}\sbra{f(x)\chi_S(x)}=\E_{x_{-i}}\sbra{f(x_{-i})\chi_{S\setminus\cbra{i}}(x_{-i})\E_{x_i}\sbra{x_i}}=0.
+    $$
+\end{exercise}
+
+\begin{exercise}{2.12}
+    $$
+    \E_f\sbra{\Inf_1\sbra{f}}
+    =\E_f\sbra{\E_x\sbra{\pbra{\frac{f(x)-f(x^1)}2}^2}}
+    =\E_x\sbra{\E_f\sbra{\pbra{\frac{f(x)-f(x^1)}2}^2}}
+    =\frac12
+    $$
+    and $\E\sbra{\Itt\sbra{f}}=n\cdot\E\sbra{\Inf_1\sbra{f}}=n/2$.
+\end{exercise}
+
+\begin{exercise}{2.19}
+    $$
+    \E_x\sbra{x_ix_jf(x)g(x)}
+    =\E_{x_{-i}}\sbra{f(x_{-i})x_j\E_{x_i}\sbra{x_ig(x)}}
+    =\E_{x_{-i}}\sbra{f(x_{-i})x_j\Dtt_ig(x)}
+    =\E\sbra{\Dtt_jf(x)\Dtt_ig(x)}.
+    $$
+\end{exercise}
+
+\begin{exercise}{2.20}
+    Since $\Ltt_if(x)=f(x)-\E_if(x)=\frac{f(x)-f(x^i)}2=f(x)\text{sens}_f(x,i)$, 
+    we have $\Ltt f(x)=\sum_S|S|\hat f(S)x^S$ and
+    \begin{align*}
+        &\E\sbra{\text{sens}_f(x)^2}=\E\sbra{(f(x)\Ltt f(x))^2}=\abra{\Ltt f,\Ltt f}=\sum_S|S|^2\hat f(S),\\
+        &\E\sbra{\text{sens}_f(x)^3}=\E\sbra{(f(x)\Ltt f(x))^3}=\sum_{S,T,W}|S||T||W|\hat f(S)\hat f(T)\hat f(W)\hat f(S\oplus T\oplus W).
+    \end{align*}
+\end{exercise}
+
+\begin{exercise}{2.29}
+    \begin{itemize}
+        \item[(a)] $\MaxInf\sbra{f}\geq\Itt\sbra{f}/n\geq\Var\sbra{f}/n=1/n$.
+        \item[(b)] $\Itt\sbra{f}=\sum_S|S|\hat f(S)^2\geq\Wtt^1\sbra{f}+2(1-\Wtt^1\sbra{f})=2-\Wtt^1[f]$.
+            Since $\abs{\hat f(i)}=\abs{\E\sbra{\Dtt_if(x)}}\leq\E\sbra{\abs{\Dtt_if(x)}}=\Inf_i[f]$, we have
+            $$
+            \Wtt^1[f]=\sum_i\hat f(i)^2\leq\sum_i\Inf_i^2[f]\leq n\MaxInf^2[f].
+            $$
+            Thus $2-n\MaxInf^2[f]\leq\Itt[f]\leq n\MaxInf[f]$, which means
+            $$
+            \MaxInf[f]\geq\frac2n-\frac4{n^2}.
+            $$
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{2.32}
+    Since
+    $$
+    \Ttt_{\rho_2} f(x)=\E_{y\sim\Ncal_{\rho_2}(x)}[f(y)]=\sum_S\rho_2^{|S|}\hat f(S)x^S,
+    $$
+    thus
+    $$
+    \Ttt_{\rho_1}\Ttt_{\rho_2} f(x)=\sum_S\rho_1^{|S|}\rho_2^{|S|}\hat f(S)x^S=\Ttt_{\rho_1\rho_2} f(x).
+    $$
+\end{exercise}
+
+\begin{exercise}{2.33}
+    $$
+    \vabs{\Ttt_\rho f}^p_p
+    =\E\sbra{\abs{\Ttt_\rho f(x)}^p}
+    =\E\sbra{\abs{\E_{y\sim\Ncal_\rho(x)}\sbra{f(y)}}^p}
+    \leq\E\sbra{\E_{y\sim\Ncal_\rho(x)}\sbra{\abs{f(y)}^p}}
+    =\E\sbra{\abs{f(x)}^p}
+    =\vabs{f}^p_p.
+    $$
+\end{exercise}
+
+\begin{exercise}{2.46}
+    View $\Stab_\rho[f]$ as a function on $\rho$, then by mean value theorem, we have
+    \begin{align*}
+    \abs{\Stab_\rho[f]-\Stab_{\rho-\eps}[f]}
+        &\leq\eps\max_{\alpha\in[\rho-\eps,\rho]}\abs{\frac{\sd\Stab_\alpha[f]}{\sd\alpha}}
+        =\eps\max_{\alpha\in[\rho-\eps,\rho]}\abs{\sum_{S\neq\emptyset}|S|\alpha^{|S|-1}\hat f(S)^2}\\
+        &\leq\eps\pbra{\max_{\alpha\in[\rho-\eps,\rho],S\neq\emptyset}|S|\alpha^{|S|-1}}\sum_{S\neq\emptyset}\hat f(S)^2\\
+        &\leq\frac\eps{1-\rho}\Var[f].
+    \end{align*}
+\end{exercise}
+
+\begin{exercise}{2.49}
+    Let $g(x_0,x)=x_0f(x_0x)$. Then $\Wtt^1[g]=\Wtt^{\leq1}[f]\geq1-\delta$. By FKN theorem, $g$ is $O(\delta)$-close to some $\pm x_i$. If $i=0$, it means $f$ is $O(\delta)$-close to constant; otherwise it means $f$ is $O(\delta)$-close to $\pm x_i$.
+\end{exercise}
+
+\begin{exercise}{2.53}
+    \begin{itemize}
+        \item[(a)] $f^{\text{odd}}(x)=\frac{f(x)-f(-x)}2$. Thus
+            $$
+            \vabs{f^\text{odd}}_2^2=\E\sbra{\pbra{\frac{f(x)-f(-x)}2}^2}=\sum_{S:|S|\text{ is odd}}\hat f(S)^2
+            \leq\sum_S|S|\hat f(S)^2=\Itt[f].
+            $$
+        \item[(b)] Summing over $i\in[m]$, we have
+            \begin{align*}
+            n^2&=\E\sbra{\vabs{F(x)-F(-x)}_2^2}=\E\sbra{\sum_{i=1}^m\pbra{f_i(x)-f_i(-x)}^2}\\
+            &\leq\sum_{j=1}^n\E\sbra{\sum_{i=1}^m\pbra{f_i(x)-f_i(x^{\oplus j})}^2}=\sum_{j=1}^n\E\sbra{\vabs{F(x)-F(x^{\oplus j})}_2^2}\\
+            &\leq nD^2.
+            \end{align*}
+        \item[(c)] $F(x)=\sqrt n\pbra{\frac{1+x_1}2,\frac{1+x_2}2,\ldots,\frac{1+x_n}2}$.
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{2.55}
+    \begin{itemize}
+        \item[(a)] Since $\Ltt g(x)=\sum_i\Ltt_ig(x)=\sum_i\pbra{g(x)-\E_i[g]}=\sum_i\frac12\pbra{g(x)-g(x^{\oplus i})}$,
+            it suffices to show $(n-2)g(x)\leq\sum_ig(x^{\oplus i})$. 
+            This holds as
+            $$
+            \sum_ig(x^{\oplus i})\geq\sum_i\pbra{g(x)-g(2x_ie_i)}=ng(x)-2\pbra{\sum_ig(x_ie_i)}\geq(n-2)g(x).
+            $$
+        \item[(b)] Since $g-\Ltt g\geq0$, we have $\abra{g,2g-\Ltt g}\geq\abra{g,g}=\E[g^2]$.
+            Since $\Ltt g=\sum_S|S|\hat f(S)x^S$ and $g$ is an even function, we also have
+            $$
+            \abra{g,2g-\Ltt g}=\sum_S(2-|S|)\hat f(S)^2\leq2\hat f(\emptyset)^2=2\E[g]^2,
+            $$
+            which means $2\Var[g]\leq\E[g^2]$.
+        \item[(c)] Assume $g(x)=\abs{x_1+x_2}$, then we have $1=\E[g]^2=\frac12\E[g^2]=1$.
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{2.57}
+    \begin{itemize}
+        \item[(a)] Since $\vabs{g^{=k}}_\infty=\max_x\abs{g^{=k}(x)}$, we have
+            $$
+            0\leq\Ttt_\rho g=\delta+\rho\sum_j\hat g(j)x^j+\sum_{k\geq2}\rho^kg^{=k}(x)
+            \leq\delta+\rho\sum_j\hat g(j)x^j+\sum_{k\geq2}\rho^k\vabs{g^{=k}}_\infty,\quad\forall x.
+            $$
+            In particular, we adjust the signs of $x$ to get
+            $$
+            0\leq\delta-\rho\sum_j\abs{\hat g(j)}+\sum_{k\geq2}\rho^k\vabs{g^{=k}}_\infty.
+            $$
+        \item[(b)] $\vabs{g^{=k}}_2^2=\Wtt^k[f]\leq\Var[g]$. Since $g$ is 0/1-valued, $\Var[g]\leq\E[g]\leq\delta$. 
+            Thus by Cauchy-Schwarz inequality, we have
+            $$
+            \vabs{g^{=k}}_\infty\leq\sqrt{\binom nk\Wtt^k[f]}\leq\sqrt\delta\sqrt{\binom nk}.
+            $$
+            Assuming $\rho\leq1/(2\sqrt n)$, we have
+            $$
+            \rho\sum_i\abs{\hat g(i)}
+            \leq\delta+2\rho^2\sqrt\delta n\sum_{k\ge2}\frac1{2n}\rho^{k-2}\sqrt{\binom nk}
+            \leq\delta+2\rho^2\sqrt\delta n\sum_{k\ge2}\frac1{2n}\pbra{\frac1{2\sqrt n}}^{k-2}n^{k/2}
+            \leq\delta+2\rho^2\sqrt\delta n.
+            $$
+        \item[(c)]
+            $$
+            \sum_i\abs{\hat g(i)}\leq\frac\delta\rho+2\rho\sqrt\delta n\leq2\sqrt2\delta^{3/4}\sqrt n.
+            $$
+            For $\Wtt^1[g]\leq2\sqrt\delta^{7/4}\sqrt n$, it suffices to show $\abs{\hat g(j)}\leq\delta$ for all $j$.
+            This is because $\abs{\hat g(j)}=\abs{\E\sbra{f(x)x_j}}\leq\E\sbra{\abs{f(x)}}=\E[f]=\delta$.
+    \end{itemize}
+\end{exercise}
+
+\end{document}

@@ -1,0 +1,161 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator{\E}{\mathbb E}
+\DeclareMathOperator{\Var}{\mathrm{Var}}
+\DeclareMathOperator{\tr}{\mathrm{tr}}
+\DeclareMathOperator{\poly}{\mathrm{poly}}
+\DeclareMathOperator{\sd}{\mathop{d}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\abs}[1]{{\left| #1 \right|}}
+\newcommand{\vabs}[1]{{\left\| #1 \right\|}}
+\newcommand{\hvabs}[1]{{\hat{\|} #1 \hat{\|}}}
+\newcommand{\abra}[1]{{\left\langle #1 \right\rangle}}
+\newcommand{\pbra}[1]{{\left( #1 \right)}}
+\newcommand{\cbra}[1]{{\left\{ #1 \right\}}}
+\newcommand{\sbra}[1]{{\left[ #1 \right]}}
+\newcommand{\floorbra}[1]{{\left\lfloor #1 \right\rfloor}}
+\newcommand{\ceilbra}[1]{{\left\lceil #1 \right\rceil}}
+\newcommand{\bin}{{\{0,1\}}}
+\newcommand{\pmbin}{{\{-1,1\}}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Zbb}{\mathbb{Z}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\Ncal}{\mathcal{N}}
+\newcommand{\Inf}{\mathtt{Inf}}
+\newcommand{\MaxInf}{\mathtt{MaxInf}}
+\newcommand{\Dtt}{\mathtt{D}}
+\newcommand{\Itt}{\mathtt{I}}
+\newcommand{\Ltt}{\mathtt{L}}
+\newcommand{\Wtt}{\mathtt{W}}
+\newcommand{\Ttt}{\mathtt{T}}
+\newcommand{\Stab}{\mathtt{Stab}}
+\newcommand{\NS}{\mathtt{NS}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $3$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{3.3}
+    $$
+    \E[f^2]-\Stab_{1-\delta}[f]=\sum_S(1-(1-\delta)^{|S|})\hat f(S)^2\geq(1-(1-\delta)^{1/\delta})\Wtt^{\geq1/\delta}[f]
+    \geq(1-1/e)\eps.
+    $$
+\end{exercise}
+
+\begin{exercise}{3.10}
+    $$
+    \abs{\hat f(S)}
+    =\abs{\E\sbra{\frac{f(x^{i\to1})-f(x^{i\to-1})}2x^{S\backslash\cbra{i}}}}
+    \leq\E\sbra{\abs{\frac{f(x^{i\to1})-f(x^{i\to-1})}2}}
+    =\E\sbra{\frac{f(x^{i\to1})-f(x^{i\to-1})}2}
+    =\hat f(i)
+    $$
+\end{exercise}
+
+\begin{exercise}{3.16}
+    Let's choose $\Fcal$ to contain the top $\hvabs{f}_1^2/\eps$ ones (in absolute value). 
+    Then $\abs{\hat f(S)}\leq\hvabs{f}_1/|\Fcal|=\eps/\hvabs{f}_1$ holds for any $S\notin\Fcal$, thus
+    $$
+    \sum_{S\notin\Fcal}\hat f(S)^2\leq\frac\eps{\hvabs{f}_1}\sum_{S\notin\Fcal}\abs{\hat f(S)}\leq\eps.
+    $$
+\end{exercise}
+
+\begin{exercise}{3.35}
+    \begin{itemize}
+        \item[(a)] For $n=2$, let $f_2=x_1\lor x_2=\frac12\pbra{x_1x_2+x_1+x_2-1}$. Then for $n=2k$, we construct
+            $$
+            f_{2k}=\prod_{i=1}^kf_2(x_{2i-1},x_{2i})
+            =2^{-n/2}\prod_{i=1}^k\pbra{x_{2i-1}x_{2i}+x_{2i-1}+x_{2i}-1}.
+            $$
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{3.45}
+    \begin{itemize}
+        \item[(a)] Let
+            $$
+            B=\cbra{s\middle|\Pr_r\sbra{A(r,f(s))=r\cdot s}\geq\frac12+\frac12\gamma}.
+            $$
+            Then 
+            $$
+            \frac12+\gamma\leq\Pr_{r,s}\sbra{A(r,f(s))=r\cdot s}\leq\frac{|B|}{2^n}+\pbra{1-\frac{|B|}{2^n}}\pbra{\frac12+\frac12\gamma},
+            $$
+            which means $|B|/2^n\geq\frac{\gamma}{1-\gamma}\geq\gamma/2$.
+        \item[(b)] Let $t=f(s)$, then
+            $$
+            \widehat{A_{|t}}(s)=\E_r\sbra{A(r,t)(-1)^{r\cdot s}}=\Pr_r[A(r,t)=r\cdot s]-\Pr_r[A(r,t)\neq r\cdot s]
+            \geq\gamma.
+            $$
+        \item[(c)] Since
+            $$
+            \sum_{t}\hat A(s\circ t)^2=\E_z\sbra{\widehat{A_{|z}}(s)^2}\geq\widehat{A_{|t}}(s)^2\geq\gamma^2,
+            $$
+            we will find $s$ using Goldreich-Levin algorithm by setting threshold at $\poly\gamma$ and early stopping when
+            the first $n$ bits (i.e., the $s$ part) are revealed.
+            The running time is within $\poly(n,m,1/\gamma)$.
+        \item[(d)] We can derandomize $A$ by hard-wiring the best random seed.
+    \end{itemize}
+\end{exercise}
+
+\end{document}
