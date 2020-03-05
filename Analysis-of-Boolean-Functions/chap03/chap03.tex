@@ -152,7 +152,7 @@
             \sum_{t}\hat A(s\circ t)^2=\E_z\sbra{\widehat{A_{|z}}(s)^2}\geq\widehat{A_{|t}}(s)^2\geq\gamma^2,
             $$
             we will find $s$ using Goldreich-Levin algorithm by setting threshold at $\poly\gamma$ and early stopping when
-            the first $n$ bits (i.e., the $s$ part) are revealed.
+            the first $n$ bits (i.e., the $s$ part) are revealed; then we check its value against the input image $f(s)$.
             The running time is within $\poly(n,m,1/\gamma)$.
         \item[(d)] We can derandomize $A$ by hard-wiring the best random seed.
     \end{itemize}

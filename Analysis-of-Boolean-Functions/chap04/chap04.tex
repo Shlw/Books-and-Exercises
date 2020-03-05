@@ -1,0 +1,185 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator{\E}{\mathbb E}
+\DeclareMathOperator{\Var}{\mathrm{Var}}
+\DeclareMathOperator{\tr}{\mathrm{tr}}
+\DeclareMathOperator{\poly}{\mathrm{poly}}
+\DeclareMathOperator{\sd}{\mathop{d}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\abs}[1]{{\left| #1 \right|}}
+\newcommand{\vabs}[1]{{\left\| #1 \right\|}}
+\newcommand{\hvabs}[1]{{\hat{\|} #1 \hat{\|}}}
+\newcommand{\abra}[1]{{\left\langle #1 \right\rangle}}
+\newcommand{\pbra}[1]{{\left( #1 \right)}}
+\newcommand{\cbra}[1]{{\left\{ #1 \right\}}}
+\newcommand{\sbra}[1]{{\left[ #1 \right]}}
+\newcommand{\floorbra}[1]{{\left\lfloor #1 \right\rfloor}}
+\newcommand{\ceilbra}[1]{{\left\lceil #1 \right\rceil}}
+\newcommand{\bin}{{\{0,1\}}}
+\newcommand{\pmbin}{{\{-1,1\}}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Zbb}{\mathbb{Z}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\Ncal}{\mathcal{N}}
+\newcommand{\Inf}{\mathtt{Inf}}
+\newcommand{\MaxInf}{\mathtt{MaxInf}}
+\newcommand{\Dtt}{\mathtt{D}}
+\newcommand{\Itt}{\mathtt{I}}
+\newcommand{\Ltt}{\mathtt{L}}
+\newcommand{\Wtt}{\mathtt{W}}
+\newcommand{\Ttt}{\mathtt{T}}
+\newcommand{\Stab}{\mathtt{Stab}}
+\newcommand{\NS}{\mathtt{NS}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $4$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{4.4}
+    \begin{itemize}
+        \item[(a)] First assume $\abs{\hat f(\emptyset)}<1/4s$.
+            Then there exists some term $C_i$ that
+            $$
+            \Pr\sbra{C_i(x)=1\mid f(x)=1}\geq\frac1s,
+            $$
+            which means
+            \begin{align*}
+                \E\sbra{f(x)\cdot C_i(x)}
+                &=\Pr\sbra{f(x)=-1}+\Pr\sbra{f(x)=C_i(x)=1}-\Pr\sbra{f(x)=1,C_i(x)=-1}\\
+                &\geq\frac12-\frac1{8s}+\pbra{\frac12-\frac1{8s}}\frac1s-\pbra{\frac12+\frac1{8s}}\pbra{1-\frac1s}\\
+                &=\frac3{4s}.
+            \end{align*}
+            Assume $C_i$ has width $w$, then $C_i(x)+1=2^{-w+1}\prod_i(1+x_i)=2\E_{S\subset[w]}\sbra{\chi_S(x)}$, thus
+            $$
+                \E_{S\subset[w]}\sbra{\hat f(S)}
+                =\E\sbra{f(x)\E_S\sbra{\chi_S(x)}}
+                =\frac12\E\sbra{f(x)\cdot (C_i(x)+1)}
+                \geq\frac12\pbra{\frac3{4s}-\frac1{4s}}=\frac1{4s}.
+            $$
+            In particular, we have some $\hat f(S)\geq1/4s$ with $|S|\leq w$. 
+            Now it suffices to prove $w\leq\log s+2$, which follows from 
+            $$
+            2^{-w}=\Pr\sbra{C_i(x)=1}=\Pr\sbra{C_i(x)=1,f(x)=1}\geq\pbra{\frac12-\frac1{8s}}\frac1s>\frac1{4s}.
+            $$
+        \item[(b)]
+            By setting threshold at $\poly(1/s)$ in Goldreich-Levin algorithm, we can find some $S$ with $\abs{\hat f(S)}\geq1/4s$.
+            Assume $\hat f(S)\geq1/4s$ (which can be verified in time $\poly(n,s)$), then we use $\chi_S(x)$ (otherwise we use $-\chi_S(x)$) as the weak learner.
+            Its error is 
+            $$
+            \E\sbra{\pbra{\frac{\chi_S(x)-f(x)}2}^2}=\frac12\pbra{1-\E\sbra{f(x)\chi_S(x)}}\leq\frac12-\frac1{8s}.
+            $$
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{4.7}
+    Assume $n$ is odd and define $f(x,y)=\text{Maj}_n(x)\text{Tribes}_n(y)$, then $\E[f]=\E[\text{Maj}_n]\E[\text{Tribes}_n]=0$.
+    The influence of bit in $x$ is $O(1/\sqrt n)=O(\log n/n)$, and the influence of bit in $y$ is $O(\log n/n)$.
+\end{exercise}
+
+\begin{exercise}{4.12}
+    \begin{itemize}
+        \item[(c)] $\text{XOR}_n=\text{XOR}_{\sqrt n}\pbra{\text{XOR}_{\sqrt n},\ldots,\text{XOR}_{\sqrt n}}$.
+            Let the outer $\text{XOR}_{\sqrt n}$ be a size-$2^{\sqrt n}$ CNF, and all inner $\text{XOR}_{\sqrt n}$ be
+            size-$2^{\sqrt n}$ DNF. So the middle two layers merge and the total size is $O\pbra{\sqrt n2^{\sqrt n}}$.
+        \item[(c)] Write $\text{XOR}_n$ as leveled composition of $\text{XOR}_{n^{1/(d-1)}}$, and use DNF/CNF alternatively for each level.
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{4.16}
+    Since $f$ is non-trivial transitive-symmetric, $\Inf_i[f]=\MaxInf[f]=\Omega(\log n/n)\Var[f]=\Omega(\log n/n)$ holds for any $i$.
+    Then we have $\Itt[f]=n\Inf_i[f]=\Omega(\log n)$.
+\end{exercise}
+
+\begin{exercise}{4.17}
+    \begin{itemize}
+        \item[(b)]
+            $$
+            p(x)
+            =\sum_{s\in\cbra{\Itt_j,\neg\Itt_j}^{\otimes j}}\Pr[s]\Pr\sbra{\bm x=x\mid s}
+            =\sum_{s\in\cbra{\Itt_j,\neg\Itt_j}^{\otimes j}}\Pr[s](1/2)^{n-\sum_j s_j}
+            =\E\sbra{\prod(1/2)^{1-\Itt_j}}.
+            $$
+        \item[(c)]
+            $$
+            2^np(x)=\E\sbra{2^{\sum_j\Itt_j}}\geq\E\sbra{2\sum_j\Itt_j}=2\sum_j\E\sbra{\Itt_j}.
+            $$
+        \item[(d)] First observe that the algorithm is deterministic given $\pi$ and $x$.
+            Since $f(x)=1,f(x^{\oplus j})=0$, let $C_{i_1},\ldots,C_{i_k}$ be the terms containing $x_j$ or $\neg x_j$ that flipping $x_j$ changes it to false. Then
+            $$
+            \E\sbra{\Itt_j\mid\bm x=x}=\Pr\sbra{x_j\text{ is forced}\mid\bm x=x}
+            \geq\Pr\sbra{x_j\text{ ranks the last in }C_{i_t}\text{ for some }t\text{ under }\pi\mid\bm x=x}
+            \geq\frac1w.
+            $$
+        \item[(e)] Let $B_j=\cbra{x\mid f(x)=1,f(x^{\oplus j})=0}$, then $\Itt[f]=2^{-n}\cdot2\sum_j|B_j|$.
+            Observe that
+            $$
+            \E\sbra{\Itt_j}\geq\sum_{x\in B_j}\E\sbra{\Itt_j\mid\bm x=x}p(x)
+            \geq\sum_{x\in B_j}\frac1w\cdot2^{-n}\cdot2\sum_j\E\sbra{\Itt_j}
+            =2^{1-n}|B_j|\cdot\frac1w\sum_j\E\sbra{\Itt_j},
+            $$
+            then summing over all $j$ gives the desired bound $\Itt[f]\leq w$.
+    \end{itemize}
+\end{exercise}
+
+\end{document}
