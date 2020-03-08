@@ -1,0 +1,293 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator*{\E}{\mathbb E}
+\DeclareMathOperator{\Var}{\mathrm{Var}}
+\DeclareMathOperator{\tr}{\mathrm{tr}}
+\DeclareMathOperator{\poly}{\mathrm{poly}}
+\DeclareMathOperator{\sd}{\mathop{d}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\abs}[1]{{\left| #1 \right|}}
+\newcommand{\vabs}[1]{{\left\| #1 \right\|}}
+\newcommand{\hvabs}[1]{{\hat{\|} #1 \hat{\|}}}
+\newcommand{\abra}[1]{{\left\langle #1 \right\rangle}}
+\newcommand{\pbra}[1]{{\left( #1 \right)}}
+\newcommand{\cbra}[1]{{\left\{ #1 \right\}}}
+\newcommand{\sbra}[1]{{\left[ #1 \right]}}
+\newcommand{\floorbra}[1]{{\left\lfloor #1 \right\rfloor}}
+\newcommand{\ceilbra}[1]{{\left\lceil #1 \right\rceil}}
+\newcommand{\bin}{{\{0,1\}}}
+\newcommand{\pmbin}{{\{-1,1\}}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Zbb}{\mathbb{Z}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\Ncal}{\mathcal{N}}
+\newcommand{\Scal}{\mathcal{S}}
+
+\newcommand{\Inf}{\mathtt{Inf}}
+\newcommand{\MaxInf}{\mathtt{MaxInf}}
+\newcommand{\Dtt}{\mathtt{D}}
+\newcommand{\Itt}{\mathtt{I}}
+\newcommand{\Ltt}{\mathtt{L}}
+\newcommand{\Wtt}{\mathtt{W}}
+\newcommand{\Ttt}{\mathtt{T}}
+\newcommand{\Stab}{\mathtt{Stab}}
+\newcommand{\NS}{\mathtt{NS}}
+\newcommand{\AC}{\textsc{AC}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $5$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{5.2}
+    \begin{itemize}
+        \item[(b)] It suffices to show $f(x)+f(-x)\geq0$ holds for any $x$. Let $t=\sum_ia_ix_i$, then 
+            $$
+            f(x)+f(-x)=\sgn(a_0+t)+\sgn(a_0-t)\geq\sgn(t)+\sgn(-t)=0.
+            $$
+            Take $f(x)=\sgn(-0.1+x_1)=\sgn(x_1)$ for counterexample to the converse.
+        \item[(c)] Let $g=\sgn(a_0+\sum_ia_ix_i)$ and assume w.l.o.g $a_0\geq0$. Then by (b), we know
+            $f(x)+f(-x)=\sgn(a_0+t)+\sgn(a_0-t)=\sgn(t)+\sgn(-t)=0$, where $t=\sum_ia_ix_i$.
+            Thus $\sgn(a_0+t)=\sgn(t),\sgn(x_0-t)=\sgn(-t)$, which means $g=\sgn(\sum_ia_ix_i)$.
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{5.3}
+    Since
+    $$
+    \Inf_i[f]-\Inf_j[f]=\E\sbra{\abs{f(x)-f(x^{\oplus i})}-\abs{f(x)-f(x^{\oplus j})}}
+    =\E_{x_{-\cbra{i,j}}}\sbra{\Inf_i\sbra{f_{|{x_{-\cbra{i,j}}}}}-\Inf_j\sbra{f_{|{x_{-\cbra{i,j}}}}}},
+    $$
+    it suffices to prove for $n=2$:
+    \begin{align*}
+    4\Inf_1[f]
+        &=\abs{\sgn(a_0+a_1+a_2)-\sgn(a_0-a_1+a_2)}+\abs{\sgn(a_0-a_1-a_2)-\sgn(a_0+a_1-a_2)}\\
+        &\geq\abs{\sgn(a_0+a_1+a_2)-\sgn(a_0+a_1-a_2)}+\abs{\sgn(a_0-a_1-a_2)-\sgn(a_0-a_1+a_2)}\\
+        &=4\Inf_2[f].
+    \end{align*}
+\end{exercise}
+
+\begin{exercise}{5.6}
+    Observe that $\Inf_i[f]\geq\abs{\hat f(i)}$ and $\sum_i\hat f(i)^2=\Wtt^1[f]\geq1/2$.
+\end{exercise}
+
+\begin{exercise}{5.10}
+    \begin{itemize}
+        \item[(a)] $\Wtt^{\leq n-1}\sbra{\chi_{[n]}}=0<e^{-2(n-1)}$, contradicting to Theorem 5.9.
+        \item[(b)] Since $\abs{f(x)-f^{\leq n-1}(x)}=\abs{\hat f([n])}<1$, we have $g=\sgn(f^{\leq n-1})=f$.
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{5.12}
+    \begin{itemize}
+        \item[(c)] Since
+            $$
+            \text{CQ}_n(x)=(-1)^{\binom{|x|}2}=\begin{cases}
+                1&|x|\equiv 0,1\mod4\\
+                -1&|x|\equiv 2,3\mod4,
+            \end{cases}
+            $$
+            we define $f_k(x)=\sgn(-k+0.5+\sum x_i)=(-1)^{1+[|x|\geq k]}$, then
+            $$
+            \text{CQ}_n(x)=\sgn\pbra{-0.5+\sum_{k=0}^{n/4}\pbra{f_{4k}(x)-f_{4k+2}(x)}}.
+            $$
+        \item[(d)] It suffices to show any PTF representing $\text{CQ}_n$ has sparsity at least $2^{n/2}$.
+            Then it suffices to show $\sum_{S\in\Scal}\abs{\hat f(S)}<1$ holds for any $\Scal\subset[n]$ if $|\Scal|<2^{n/2}$ .
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{5.13}
+    \textbf{I can only prove it for sparsity $O(ns^3)$.}
+
+    Let $f=C_1\lor\cdots\lor C_s$, then $f=\sgn(-0.5+n+\sum_iC_i(x))$. Now it suffices to find $\tilde C_i$ for every $C_i$ such 
+    that $\tilde C_i$ is a polynomial of sparsity $O(ns^2)$ and $\vabs{\tilde C_i-C_i}_\infty<1/2s$.
+    Since $\hvabs{C_i}_1=O(1)$, this follows from setting $\delta=O(1/s)$ in Theorem 5.12.
+\end{exercise}
+
+\begin{exercise}{5.14}
+    Let $f:\bin^{2m}\to\bin$ be $f(x,y)=\text{XOR}_m(x_i\land y_i)$. Then $f$ has a depth-$3$ $\AC^0$ circuit of size 
+    $O(\sqrt m2^{\sqrt m})$. On the other hand, $f$ is an inner product function, which requires PTF sparsity 
+    $\Omega(2^m)$. Hence, setting $m=\log^2n$ gives the desired construction.
+\end{exercise}
+
+\begin{exercise}{5.15}
+    $\widehat{1_a(S)}=a^S$
+    \begin{itemize}
+        \item[(a)] $\psi_a(a)=\pbra{2^n/|\Fcal|}\cdot\sum_{S\in\Fcal}a^S\cdot a^S=1$, 
+            $\E[\psi_a^2]=\pbra{2^n/|\Fcal|}^2\cdot\sum_{S\in\Fcal}\pbra{a^S}^2=1/|\Fcal|$.
+            $\sum_{a\neq x}\psi_a(x)^2=-1+2^n\E\sbra{\psi_a^2}=-1+2^n/|\Fcal|$.
+        \item[(b)] By Hoeffding bound,
+            $$
+            \Pr_f\sbra{\abs{\sum_{a\neq x}f(a)\psi_a(x)}\geq\eps}
+            \leq2\exp\cbra{\frac{-2\eps^2}{4\sum_{a\neq x}\psi_a(x)^2}}
+            =2\exp\cbra{-3n\pbra{1-\frac{\eps^2}{6n}}}
+            \leq4^{-n}.
+            $$
+        \item[(c)] By union bound,
+            $$
+            \Pr_f\sbra{\abs{\sum_af(a)\psi_a(x)-f(a)}\geq\eps,\exists x}
+            =\Pr_f\sbra{\abs{\sum_{a\neq x}f(a)\psi_a(x)}\geq\eps,\exists x}
+            \leq2^{-n}.
+            $$
+            Since $\psi_a(x)$ supports on $\Fcal$, $q=\sum_af(a)\psi_a(x)$ also supports on $\Fcal$ and $\abs{q-f}_\infty<\eps$
+            w.p at least $1-2^{-n}$.
+        \item[(d)] Let $\eps=1$ and $f=\sgn(q)$, where $f$ and $q$ come from (c). Then it suffices to show
+            $$
+            \min\cbra{d:|\Fcal|=\binom n{\leq d}\geq\pbra{1-\frac1{6n}}2^n}=\frac n2+O(\sqrt{n\log n}).
+            $$
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{5.35}
+    Let $\alpha=\max_i\abs{\hat f(i)}$, then it suffices to prove $\alpha>1-\delta$ (\textbf{but I can only prove $\alpha>1/2-\delta$}).
+    Observe that 
+    $$
+    \alpha\sum_i\abs{\hat f(i)}\leq\alpha\Itt[f]\leq(1+\delta)\alpha.
+    $$
+    Since $f$ is $\Itt[f]/2$-concentrated up to degree $<\Itt[f]/(\Itt[f]/2)=2$, we also have
+    $$
+    \alpha\sum_i\abs{\hat f(i)}\geq\sum_i\hat f(i)^2\geq1-\frac{1+\delta}2=\frac{1-\delta}2.
+    $$
+    Hence
+    $$
+    \alpha\geq\frac{1-\delta}{2(1+\delta)}>\frac12-\delta.
+    $$
+\end{exercise}
+
+\begin{exercise}{5.39}
+    By Peres's theorem, 
+    $$
+    \NS_\delta[f]=\frac12\pbra{1-\sum_k(1-2\delta)^k\Wtt^k[f]}\leq O(\sqrt\delta).
+    $$
+    Thus 
+    $$
+    1-O(\sqrt\delta)\leq\sum_k(1-2\delta)^k\Wtt^k[f]\leq1-\Wtt^{\geq k}[f]+(1-2\delta)^k\Wtt^{\geq k}[f],
+    $$
+    which gives
+    $$
+    \Wtt^{\geq k}[f]\leq\frac{O(\sqrt\delta)}{1-(1-2\delta)^k}=O(1/\sqrt k),\quad\text{set $\delta=\Theta(1/k)$}.
+    $$
+    Observe that
+    \begin{align*}
+    \frac{\sd}{\sd\delta}\NS_\delta[f]
+        &=\sum_kk(1-2\delta)^{k-1}\Wtt^k[f]
+        =\sum_k\sum_{i\leq k}(1-2\delta)^{k-1}\Wtt^k[f]
+        =\sum_i\sum_{k\geq i}(1-2\delta)^{k-1}\Wtt^k[f]\\
+        &\leq\sum_i(1-2\delta)^{i-1}\Wtt^{\geq i}[f]
+        \leq O\pbra{\sum_i(1-2\delta)^{i-1}\frac1{\sqrt i}}\\
+        &\leq O\pbra{\sum_{i<1/2\delta}\frac1{\sqrt i}+\sqrt{2\delta}\sum_{i\geq1/2\delta}(1-2\delta)^{i-1}}
+        =O(1/\sqrt\delta).
+    \end{align*}
+\end{exercise}
+
+\begin{exercise}{5.40}
+    Let $\delta=1/n$, then
+    $$
+    \eps(1/n)\geq\NS_\delta[f]
+    =\frac12\pbra{1-\sum_k(1-2/n)^k\Wtt^k[f]}
+    =\frac12\sum_k\pbra{1-(1-2/n)^k}\Wtt^k[f]
+    \geq\frac{1-e^{-2}}{2n}\sum_kk\Wtt^k[f].
+    $$
+    Hence $\Itt[f]=\sum_kk\Wtt^k[f]\leq O(\eps(1/n)\cdot n)$.
+\end{exercise}
+
+\begin{exercise}{5.45}
+    \begin{itemize}
+        \item[(a)] 
+            When $\Dtt_if(x)=1$, we have $\sgn(p(x^{i\to 1}))=1,\sgn(p(x^{i\to-1}))=-1$; 
+            hence $\sgn(\Dtt_ip(x))=\sgn(p(x^{i\to 1})-p(x^{i\to-1}))=1$.
+            For $\Dtt_if(x)=-1$, $\sgn(\Dtt_ip(x))=-1$ holds as well.
+            Thus $\abs{\Dtt_if(x)}=\sgn(\Dtt_ip(x))\E_{x_i}\sbra{f(x)x_i}$ and
+            $\Inf_i[f]=\E\sbra{f(x)x_i\sgn(\Dtt_ip(x))}$.
+        \item[(b)]
+            $\Itt[f]=\E\sbra{\sum_if(x)x_i\sgn(\Dtt_ip(x))}\leq\E\sbra{\abs{\sum_ix_i\sgn(\Dtt_ip(x))}}$.
+        \item[(c)]
+            \begin{align*}
+            \Itt[f]
+                &\leq2^{-n}\sum_x\abs{\sum_ix_i\sgn(\Dtt_ip(x))}
+                \leq2^{-n}\sqrt{2^n\sum_x\pbra{\sum_ix_i\sgn(\Dtt_ip(x))}^2}\\
+                &=2^{-n}\sqrt{2^n\pbra{n2^n+\sum_x\sum_{i\neq j}x_ix_j\sgn(\Dtt_ip(x))\sgn(\Dtt_jp(x))}}\\
+                &=\sqrt{n+\sum_{i\neq j}\E\sbra{x_ix_j\sgn(\Dtt_ip(x))\sgn(\Dtt_jp(x))}}.
+            \end{align*}
+        \item[(d)] Since $\Dtt_ip(x)$ does not depend on $x_i$ and $\Dtt_jp(x)$ does not depend on $x_j$, we know
+            $$
+            \E\sbra{x_ix_j\sgn(\Dtt_ip(x))\sgn(\Dtt_jp(x))}
+            =\E\sbra{\Dtt_i\sgn\Dtt_jp(x)\cdot\Dtt_j\sgn\Dtt_ip(x)}
+            \leq\frac12\E\sbra{\pbra{\Dtt_i\sgn\Dtt_jp(x)}^2+\pbra{\Dtt_j\sgn\Dtt_ip(x)}^2}.
+            $$
+            Thus
+            $$
+            \Itt[f]
+            \leq\sqrt{n+\sum_{i\neq j}\frac12\pbra{\Inf_i[\sgn(\Dtt_jp)]+\Inf_j[\sgn(\Dtt_ip)]}}
+            =\sqrt{n+\sum_i\Itt[\sgn(\Dtt_ip)]}.
+            $$
+        \item[(e)] Assume $p$ is a degree-$k$ polynomial, then
+            $$
+            \Itt[f]\leq\sqrt{n+\sum_i\Itt[\sgn(\Dtt_ip)]}\leq\sqrt{n+n\cdot 2n^{1-1/2^{k-1}}}
+            \leq2n^{1-1/2^k}.
+            $$
+        \item[(f)] Plugin $A(m)=2m^{1-1/2^k}$ in Theorem 5.35, we have $\NS_\delta[f]\leq\delta\cdot 2(1/\delta)^{1-1/2^k}=2\delta^{1/2^k}$ (omitting the rounding issue).
+    \end{itemize}
+\end{exercise}
+
+\end{document}
