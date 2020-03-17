@@ -1,0 +1,122 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator*{\E}{\mathbb E}
+\DeclareMathOperator{\Var}{\mathrm{Var}}
+\DeclareMathOperator{\tr}{\mathrm{tr}}
+\DeclareMathOperator{\poly}{\mathrm{poly}}
+\DeclareMathOperator{\sd}{\mathop{d}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\abs}[1]{{\left| #1 \right|}}
+\newcommand{\vabs}[1]{{\left\| #1 \right\|}}
+\newcommand{\hvabs}[1]{{\hat{\|} #1 \hat{\|}}}
+\newcommand{\abra}[1]{{\left\langle #1 \right\rangle}}
+\newcommand{\pbra}[1]{{\left( #1 \right)}}
+\newcommand{\cbra}[1]{{\left\{ #1 \right\}}}
+\newcommand{\sbra}[1]{{\left[ #1 \right]}}
+\newcommand{\floorbra}[1]{{\left\lfloor #1 \right\rfloor}}
+\newcommand{\ceilbra}[1]{{\left\lceil #1 \right\rceil}}
+\newcommand{\bin}{{\{0,1\}}}
+\newcommand{\pmbin}{{\{-1,1\}}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Zbb}{\mathbb{Z}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\Ncal}{\mathcal{N}}
+\newcommand{\Scal}{\mathcal{S}}
+
+\newcommand{\Inf}{\mathtt{Inf}}
+\newcommand{\MaxInf}{\mathtt{MaxInf}}
+\newcommand{\Dtt}{\mathtt{D}}
+\newcommand{\Itt}{\mathtt{I}}
+\newcommand{\Ltt}{\mathtt{L}}
+\newcommand{\Wtt}{\mathtt{W}}
+\newcommand{\Ttt}{\mathtt{T}}
+\newcommand{\Stab}{\mathtt{Stab}}
+\newcommand{\NS}{\mathtt{NS}}
+\newcommand{\AC}{\textsc{AC}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $6$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{6.4}
+    Let $\gamma\in\Fbb_2^n\setminus\cbra{\bm 0}$. Then
+    $$
+    \E_{y\sim\phi^{*d}}\sbra{\chi_\gamma(y)}
+    =\E_{y_1,\ldots,y_d\sim\phi}\sbra{\chi_\gamma(y_1+\cdots+y_d)}
+    =\E_{y_1,\ldots,y_d\sim\phi}\sbra{\chi_\gamma(y_1)\cdots\chi_\gamma(y_d)}
+    =\E_{y_1\sim\phi}\sbra{\chi_\gamma(y_1)}^d
+    \leq\eps^d.
+    $$
+\end{exercise}
+
+\begin{exercise}{6.5}
+    \begin{itemize}
+        \item[(a)] For any $S\neq\emptyset$, we have
+            $$
+            \abs{\hat f(S)}\leq\sqrt{|S|\hat f(S)^2}\leq\sqrt{\Itt[f]}\leq\sqrt\eps.
+            $$
+    \end{itemize}
+\end{exercise}
+
+\end{document}
