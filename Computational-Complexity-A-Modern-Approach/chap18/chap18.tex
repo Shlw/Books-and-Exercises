@@ -56,6 +56,17 @@
     \maketitle
 
     \begin{exercise}{18.5}
+        Since $\mathcal P^{\#\mathcal P}\neq\mathcal P$, we know $\#\mathcal P\neq\mathcal{FP}$. Thus, the number of perfect matchings in a balanced bipartite graph is not polynomial-time computable. Now consider the following $\mathcal P$-sampleable distribution $D$:
+        \begin{itemize}
+        \item On input $1^n$, uniformly select $(x,y)\in\bin^{n^2}\times\bin^{n^2}$.
+        \item We interpret $x$ as the adjacency matrix of a balanced bipartite graph $G$ where each side has $n$ vertices.
+        \item If $y$ represents a perfect matching in $G$ (we may use arbitrary encoding for this), then output $x1$.
+        \item Otherwise, output $x0$.
+        \end{itemize}
+        Assume $D$ is also $\mathcal P$-computable; then given any balanced bipartite graph $G$ (let $x$ be its adjacency matrix), we have
+        $$
+        \#\text{Perfect matchings in $G$}=2^{2n^2}\cdot\Pr\sbra{D(1^n)=x1}.
+        $$
     \end{exercise}
 
 \end{document}
