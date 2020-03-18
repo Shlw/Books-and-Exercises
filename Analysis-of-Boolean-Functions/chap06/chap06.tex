@@ -119,4 +119,160 @@
     \end{itemize}
 \end{exercise}
 
+\begin{exercise}{6.6}
+    Since $\E[f_{J|z}]=\sum_{S\cap J=\emptyset}\hat f(J\cup S)z^S$, we have
+    $$
+    \Var_z[\E[f_{J|z}]]=\Var_z\sbra{\sum_{S\cap J=\emptyset}\hat f(J\cup S)z^S}=\sum_{S\cap J=\emptyset,S\neq\emptyset}\hat f(J\cup S)^2.
+    $$
+\end{exercise}
+
+\begin{exercise}{6.12}
+    Let $g:\Fbb_2^n\to\Fbb_2$ be the $\Fbb_2$-polynomial of $f$, and $d=\deg_{\Fbb_2}(f)$.
+    \begin{itemize}
+        \item[(a)] Since restricting input bits does not increase sparsity, we assume $g$ has one maximal degree term and $n=d$.
+            This means $g$ has odd number (denote by $t$) of inputs with value $1$. Then for any $S$,
+            $$
+            \hat f(S)=\E\sbra{f(x)x^S}=2^{-d}\sbra{\underbrace{\#\cbra{x:f(x)=1,x^S=1}}_a-\underbrace{\#\cbra{x:f(x)=1,x^S=-1}}_{t-a}}\neq0,
+            $$
+            which means $2^d\leq\text{sparsity}(\hat f)$.
+        \item[(b)] Since restricting input bits does not decrease granularity, we assume $g$ has one maximal degree term and $n=d$ as well. Assume towards contradiction $\deg_{\Fbb_2}(f)=d>k$. Using similar analysis, we have
+            $$
+            \hat f(S)=\E\sbra{f(x)x^S}=2^{-d}\sbra{\underbrace{\#\cbra{x:f(x)=1,x^S=1}}_a-\underbrace{\#\cbra{x:f(x)=1,x^S=-1}}_{t-a}}=2^{-d}\underbrace{(2a-t)}_\text{odd}.
+            $$
+            Thus $\hat f$ should be $2^{-d}\cdot(\text{some odd number})$-granular. 
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{6.18}
+    $$
+    \widehat{2^{n/2}\hat f}(x)=\E_S\sbra{2^{n/2}\hat f(S)(-1)^{x\cdot S}}=2^{n/2}\E_{S,y}\sbra{f(y)(-1)^{y\cdot S}(-1)^{x\cdot S}}
+    =2^{n/2}\E_y\sbra{f(y)\E_S\sbra{(-1)^{(x+y)\cdot S}}}
+    =\pm2^{-n/2}.
+    $$
+\end{exercise}
+
+\begin{exercise}{6.19}
+    Since $g(x)=(-1)^{p(x)}$, for any $S$ we have
+    $$
+    \hat g(S)=\E\sbra{(-1)^{p(x)}(-1)^{x\cdot S}}=\E\sbra{(-1)^{\ell_0(x)+S\cdot x+\sum\ell_j(x)\ell'_j(x)}}.
+    $$
+    Since $\ell_1,\ell_1',\ldots,\ell_k,\ell_k'$ are linearly independent, we know $k\leq n/2$. 
+    Applying a linear transformation to input bits, we may rewrite $y_j=\ell_j(x),y_j'=\ell_j'(x)$ and 
+    $\ell_0(x)+S\cdot x=:y\cdot T$. Thus
+    $$
+    \hat g(S)=\E\sbra{(-1)^{y\cdot T+\sum y_jy'_j}}=\pm2^{-k}.
+    $$
+\end{exercise}
+
+\begin{exercise}{6.27}
+    Denote the new matrix as $H''$.
+    Since $n=2^\ell$, we can view $\Fbb_n$ as $\Fbb_2[x]/p(x)$ where $p(x)$ is a degree-$\ell$ irreducible polynomial.
+    Hence for any $\cbra{\beta_j}_j\subset\Fbb_n$, we have $\pbra{\sum_j\beta_j}^2=\sum_j\beta_j$.
+    Now assume without loss of generality there exists $\gamma\in\bin^n,|\gamma|\leq k$ such that $H''\gamma=0$.
+    Then we have
+    \begin{align*}
+        &\sum_j\gamma_j=0\\
+        &\sum_j\alpha^{2i-1}\gamma_j=0,\quad\forall i,
+    \end{align*}
+    which also implies 
+    $$
+    \sum_j\alpha^{2^t(2i-1)}\gamma_j=
+    \sum_j\alpha^{2^t(2i-1)}\gamma_j^{2^t}=
+    \pbra{\sum_j\alpha^{2i-1}\gamma_j}^t=0,\quad\forall t,i.
+    $$
+    Hence $H\gamma=0$. A contradiction.
+\end{exercise}
+
+\begin{exercise}{6.28}
+    \begin{itemize}
+        \item[(a)] Since $\phi_A$ is $k$-wise independent, for any $S,|S|\leq k$ we know
+            $$
+            0=\hat{\phi_A}(S)=\E\sbra{\phi_A(x)x^S}=|A|^{-1}\E\sbra{\phi_A(x)x^S\mid x\in A}.
+            $$
+            Now for any distinct $S,T\in\Fcal$, we compute
+            $$
+            \abra{\chi_S^A,\chi_T^A}=\sum_{a\in A}a^{S\oplus T}=|A|\cdot \hat{\phi_A}(S\oplus T)=0.
+            $$
+        \item[(b)] For even number $k$, we construct $\Fcal=\dbinom{[n]}{\leq k/2}$. 
+            For odd number $k$, we construct $\Fcal=\dbinom{[n]}{\leq (k-1)/2}\cup\pbra{\cbra{n}\times\dbinom{[n-1]}{(k-1)/2}}$.
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{6.34}
+    \begin{itemize}
+        \item[(a)]
+            $$
+            \abra{f_0,f_1}_{U^1}=\E_{x,y_1}\sbra{f_0(x)f_1(x+y_1)}=\E[f_0]\E[f_1].
+            $$
+        \item[(b)]
+            \begin{align*}
+            \abra{f_{00},f_{01},f_{10},f_{11}}_{U^2}
+                &=\E_{x,y_1,y_2}\sbra{f_{00}(x)f_{01}(x+y_1)f_{10}(x+y_2)f_{11}(x+y_1+y_2)}\\
+                &=\E_{x,y_1,y_2}\sbra{f_{00}(x)f_{01}(x+y_1)f_{10}(y_2)f_{11}(y_1+y_2)}\\
+                &=\E_{y_1}\sbra{(f_{00}*f_{01})(y_1)(f_{10}*f_{11})(y_1)}\\
+                &=\sum_\gamma\widehat{(f_{00}*f_{01})}(\gamma)\widehat{(f_{10}*f_{11})}(\gamma)\\
+                &=\sum_\gamma\hat f_{00}(\gamma)\hat f_{01}(\gamma)\hat f_{10}(\gamma)\hat f_{11}(\gamma).
+            \end{align*}
+        \item[(c)]
+            \begin{align*}
+                \abra{(f_s)_s}_{U^k}
+                &=\E_{x,y_1,\ldots,y_k}\sbra{\prod_sf_s(x+\sum_{i:s_i=1}y_i)}\\
+                &=\E_{y_1,\ldots,y_{k-1}}\sbra{\E_{x,y_k}\sbra{\prod_sf_s(x+\sum_{i:s_i=1}y_i)}}\\
+                &=\E_{y_1,\ldots,y_{k-1}}\sbra{\E_x\sbra{\prod_{s:s_k=0}f_s(x+\sum_{i:s_i=1}y_i)\E_{y_k}\sbra{\prod_{s:s_k=1}f_s(x+y_k+\sum_{i,i<k:s_i=1}y_i)}}}\\
+                &=\E_{y_1,\ldots,y_{k-1}}\sbra{\E_x\sbra{\prod_{s:s_k=0}f_s(x+\sum_{i:s_i=1}y_i)}\E_{x'}\sbra{\prod_{s:s_k=1}f_s(x'+\sum_{i,i<k:s_i=1}y_i)}}.
+            \end{align*}
+        \item[(d)] 
+            \begin{align*}
+            \abra{f,\ldots,f}_{U^k}
+                &=\E_{y_1,\ldots,y_{k-1}}\sbra{\E_x\sbra{\prod_{s:s_k=0}f(x+\sum_{i:s_i=1}y_i)}\E_{x'}\sbra{\prod_{s:s_k=1}f(x'+\sum_{i,i<k:s_i=1}y_i)}}\\
+                &=\E_{y_1,\ldots,y_{k-1}}\sbra{\E_x\sbra{\prod_{s:s_k=0}f(x+\sum_{i:s_i=1}y_i)}\E_{x'}\sbra{\prod_{s:s_k=0}f(x'+\sum_{i:s_i=1}y_i)}}\\
+                &=\E_{y_1,\ldots,y_{k-1}}\sbra{\E_x\sbra{\prod_{s:s_k=0}f(x+\sum_{i:s_i=1}y_i)}^2}\\
+                &\geq0.
+            \end{align*}
+        \item[(e)] Since $\E[a_ib_i]\leq\sqrt{\E[a_i^2]\E[b_i^2]}$, we have
+            \begin{align*}
+            \abra{(f_s)_s}_{U^k}
+                &=\E_{y_1,\ldots,y_{k-1}}\sbra{\E_x\sbra{\prod_{s:s_k=0}f_s(x+\sum_{i:s_i=1}y_i)}\E_{x'}\sbra{\prod_{s:s_k=1}f_s(x'+\sum_{i,i<k:s_i=1}y_i)}}\\
+                &\leq\sqrt{\E_{y_1,\ldots,y_{k-1}}\sbra{\E_x\sbra{\prod_{s:s_k=0}f_s(x+\sum_{i:s_i=1}y_i)}^2}}
+                \sqrt{\E_{y_1,\ldots,y_{k-1}}\sbra{\E_{x'}\sbra{\prod_{s:s_k=1}f_s(x'+\sum_{i,i<k:s_i=1}y_i)}^2}}.
+            \end{align*}
+            Then it suffices to show 
+            \begin{align*}
+                &\E_{y_1,\ldots,y_{k-1}}\sbra{\E_x\sbra{\prod_{s:s_k=0}f_s(x+\sum_{i:s_i=1}y_i)}^2}\\
+                =&\E_{y_1,\ldots,y_{k-1}}\sbra{\E_x\sbra{\prod_{s:s_k=0}f_s(x+\sum_{i:s_i=1}y_i)}\E_z\sbra{\prod_{s:s_k=0}f_s(z+\sum_{i:s_i=1}y_i)}}\\
+                =&\E_{y_1,\ldots,y_{k-1}}\sbra{\E_x\sbra{\prod_{s:s_k=0}f_s(x+\sum_{i:s_i=1}y_i)}\E_{y_k}\sbra{\prod_{s:s_k=0}f_s(x+y_k+\sum_{i:s_i=1}y_i)}}\\
+                =&\abra{f_{0\cdots00},\ldots,f_{1\cdots10},f_{0\cdots00},\ldots,f_{1\cdots10}}_{U^k}.
+            \end{align*}
+        \item[(f)] We show $\abra{f_{00},f_{01},f_{10},f_{11}}_{U^2}\leq\vabs{f_{00}}_{U^2}\vabs{f_{01}}_{U^2}\vabs{f_{10}}_{U^2}\vabs{f_{11}}_{U^2}$ and the argument is similar for larger $k$.
+            By (e), it suffices to prove $\abra{f_{00},f_{10},f_{00},f_{10}}_{U^2}\leq\vabs{f_{00}}_{U^2}^2\vabs{f_{10}}_{U^2}^2$.
+            This follows from
+            \begin{align*}
+                \abra{f,g,f,g}_{U^2}
+                &=\E_{x,y_1,y_2}\sbra{f(x)g(x+y_1)f(x+y_2)g(x+y_1+y_2)}\\
+                &=\E_{x,y_1,y_2}\sbra{f(x)f(x+y_2)g(x+y_1)g(x+y_1+y_2)}\\
+                &=\E_{y_1,y_2}\sbra{\E_x\sbra{f(x)f(x+y_2)}\E_{x'}\sbra{g(x')g(x'+y_2)}}\\
+                &\leq\sqrt{\E_{y_1,y_2}\E_x\sbra{f(x)f(x+y_2)}^2}\sqrt{\E_{y_1,y_2}\E_{x'}\sbra{g(x')g(x'+y_2)}^2}\\
+                &=\sqrt{\abra{f,f,f,f}_{U^2}}\sqrt{\abra{g,g,g,g}_{U^2}}\\
+                &=\vabs{f}_{U^2}^2\vabs{g}_{U^2}^2.
+            \end{align*}
+        \item[(g)] Observe that
+            \begin{align*}
+                \vabs{f}_{U^k}^{2^k}=
+                \abra{\underbrace{f,\ldots,f}_{2^k},\underbrace{1,\ldots,1}_{2^k}}_{U^{k+1}}
+                \leq\vabs{f}_{U^{k+1}}^{2^k}\vabs{1}_{U^{k+1}}^{2^k}
+                =\vabs{f}_{U^{k+1}}^{2^k}.
+            \end{align*}
+        \item[(h)] Since Gowers inner product is multilinear, we have
+            \begin{align*}
+                \vabs{f_0+f_1}_{U^k}^{2^k}
+                &=\abra{f_0+f_1,\ldots,f_0+f_1}_{U^k}\\
+                &=\sum_{s\in\bin^{2^k}}\abra{f_{s_1},\ldots,f_{s_k}}_{U^k}\\
+                &\leq\sum_{s\in\bin^{2^k}}\vabs{f_{s_1}}_{U^k}\cdots\vabs{f_{s_k}}_{U^k}\\
+                &=\sum_{i=0}^{2^k}\binom{2^k}i\vabs{f_0}_{U^k}^i\vabs{f_1}_{U^k}^{2^k-i}\\
+                &=\pbra{\vabs{f_0}_{U^k}+\vabs{f_1}_{U^k}}^{2^k}.
+            \end{align*}
+        \item[(i)] Since $\vabs{f}_{U^2}\leq\vabs{f}_{U^k},\forall k\geq2$, we know $0=\vabs{f}_{U^2}=\hvabs{f}_4$.
+    \end{itemize}
+\end{exercise}
+
 \end{document}
