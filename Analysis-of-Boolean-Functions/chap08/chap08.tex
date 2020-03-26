@@ -1,0 +1,215 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator*{\E}{\mathbb E}
+\DeclareMathOperator{\Var}{\mathrm{Var}}
+\DeclareMathOperator{\tr}{\mathrm{tr}}
+\DeclareMathOperator{\poly}{\mathrm{poly}}
+\DeclareMathOperator{\sd}{\mathop{d}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\abs}[1]{{\left| #1 \right|}}
+\newcommand{\vabs}[1]{{\left\| #1 \right\|}}
+\newcommand{\hvabs}[1]{{\hat{\|} #1 \hat{\|}}}
+\newcommand{\abra}[1]{{\left\langle #1 \right\rangle}}
+\newcommand{\pbra}[1]{{\left( #1 \right)}}
+\newcommand{\cbra}[1]{{\left\{ #1 \right\}}}
+\newcommand{\sbra}[1]{{\left[ #1 \right]}}
+\newcommand{\floorbra}[1]{{\left\lfloor #1 \right\rfloor}}
+\newcommand{\ceilbra}[1]{{\left\lceil #1 \right\rceil}}
+\newcommand{\bin}{{\{0,1\}}}
+\newcommand{\pmbin}{{\{-1,1\}}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Zbb}{\mathbb{Z}}
+
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\Ncal}{\mathcal{N}}
+\newcommand{\Rcal}{\mathcal{R}}
+\newcommand{\Scal}{\mathcal{S}}
+\newcommand{\Tcal}{\mathcal{T}}
+\newcommand{\Xcal}{\mathcal{X}}
+\newcommand{\Ycal}{\mathcal{Y}}
+\newcommand{\Zcal}{\mathcal{Z}}
+
+\newcommand{\Inf}{\mathtt{Inf}}
+\newcommand{\MaxInf}{\mathtt{MaxInf}}
+\newcommand{\Dtt}{\mathtt{D}}
+\newcommand{\Itt}{\mathtt{I}}
+\newcommand{\Ltt}{\mathtt{L}}
+\newcommand{\Wtt}{\mathtt{W}}
+\newcommand{\Ttt}{\mathtt{T}}
+\newcommand{\Stab}{\mathtt{Stab}}
+\newcommand{\NS}{\mathtt{NS}}
+\newcommand{\DT}{\mathtt{DT}}
+\newcommand{\AC}{\textsc{AC}}
+\newcommand{\True}{\texttt{True}}
+\newcommand{\False}{\texttt{False}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $8$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{8.17}
+    We fix an arbitrary base $\phi$.
+    \begin{itemize}
+        \item[(a)] Since $f^{\subset[t]}(x)=\sum_{a:a_i=0,i>t}\hat f(a)\phi_a(x)$, we have
+            \begin{align*}
+                &\E\sbra{f^{\subset[t]}(x)\mid f^{\subset[0]}(x),\ldots,f^{\subset[t-1]}(x)}\\
+                =&f^{\subset[t-1]}(x)
+            +\E\sbra{\sum_{a:a_i=0,i>t;a_t\neq0}\hat f(a)\phi_a(x)\mid f^{\subset[0]}(x),\ldots,f^{\subset[t-1]}(x)}\\
+                =&f^{\subset[t-1]}(x).
+            \end{align*}
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{8.22}
+    Since $f$ is symmetric, $f^{=S}=f^{=T}$ holds for all $T,|S|=|T|$. Thus we let $\alpha_k=\hvabs{f^{=S}}_2^2,|S|=k$, and we have 
+    $$
+    \Var[f^{\subset S}]=\sum_{k=1}^{|S|}\binom{|S|}k\alpha_k.
+    $$
+    Hence it suffices to prove 
+    $$
+    \frac1{|S|}\binom{|S|}k\leq\frac1{|T|}\binom{|T|}k.
+    $$
+\end{exercise}
+
+\begin{exercise}{8.28}
+    Since $(f_n)$ has a coarse threshold, there exists some constant $D>0$ and a sequence $n_1<n_2<\cdots$ such that
+    $\delta(n_i)/\sigma^2_c(n_i)>D$ holds for all $i$. Fix any $i$, by mean value theorem, there exists some $p_0(n_i)\leq p(n_i)\leq p_1(n_i)$ such that
+    $$
+    \frac{\partial}{\partial p}\Pr\sbra{f^{p(n_i)}_{n_i}(x)=\True}=\frac{1-2\eps}{\delta(n_i)}<\frac{1-2\eps}{D\sigma_c^2(n_i)}.
+    $$
+    By Margulis-Russo theorem and $f_{n_i}$ being monotone, we know
+    $$
+    \frac{\partial}{\partial p}\Pr\sbra{f^{p(n_i)}_{n_i}(x)=\True}=\frac1{\sigma_c^2(n_i)}\Itt\sbra{f_{n_i}^{p(n_i)}}.
+    $$
+    Thus it suffices to set $C=(1-2\eps)/D$.
+\end{exercise}
+
+\begin{exercise}{8.29}
+    To clarify, we denote $1$ as $\True$ and $b\sim\pi_p$ has probability $p$ to be $1$. Then $\mu=2p-1,\sigma^2=4p(1-p)$.
+    \begin{itemize}
+        \item[(a)] Observe that
+            \begin{align*}
+            F'(p)
+                &=\frac{\partial}{\partial p}\Pr\sbra{f^{(p)}(x)=\True}=\frac1{\sigma}\sum_i\widehat{f^{(p)}}(i)
+                =\frac{\Itt\sbra{f^{(p)}}}{\sigma^2}=\frac{\sum_S|S|\widehat{f^{(p)}}(S)^2}{4p(1-p)}\\
+                &\geq\frac{\sum_{S\neq\emptyset}\widehat{f^{(p)}}(S)^2}{4p(1-p)}
+                =\frac{1-\E[f^{(p)}]^2}{4p(1-p)}
+                =\frac{1-(2F(p)-1)^2}{4p(1-p)}
+                =\frac{F(p)(1-F(p))}{p(1-p)}.
+            \end{align*}
+        \item[(b)] Since we assume $p_c\leq1/2$, we have $(1-F(p))/(1-p)\geq1/2$ holds for all $p\leq p_c$.
+        \item[(c)] By (b), we have
+            $$
+            \ln F(p_0)=-\int_{p_0}^{p_c}\frac{\partial}{\partial p}\ln F(p)\sd p+\ln F(p_c)
+            \leq\ln(1/2)-\int_{p_0}^{p_c}\frac1{2p}=\ln\pbra{\frac12\sqrt{\frac{p_0}{p_c}}}.
+            $$
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{8.41}
+    Using Corollary 3.32, it suffices to show $\Itt[f^{(1/2)}]=O(\sqrt k)$.
+    By OS inequality and monotonicity of $f$, we have 
+    $$
+    \Itt[f^{(1/2)}]=\sum\hat f(i)\leq\vabs{f}_2\sqrt{\Delta^{(1/2)}(f)}\leq\sqrt{\DT(f)}=\sqrt k.
+    $$
+\end{exercise}
+
+\begin{exercise}{8.43}
+    For any leaf $v$, let $h_v$ be its depth. Then the probability that $v$ is hit under uniform input is $2^{-h_v}$.
+    Then $\Delta(\Tcal)=\sum_vh_v2^{-h_v}$. On the other hand, we have $\sum_v2^{-h_v}=1$. Thus $\Delta(\Tcal)$ can be seen as the 
+    entropy of distribution $\cbra{2^{-h_v}}_v$, which is maximized at $\log\#\text{leaves}\leq\log s$.
+\end{exercise}
+
+\begin{exercise}{8.44}
+    \begin{itemize}
+        \item[(a)] By OSSS inequality, we have 
+            $$
+            \Var[f]\leq\sum_i\delta_i^{(\pi)}(\Tcal)\Inf_i[f]\leq\MaxInf[f]\cdot\Delta^{(\pi)}(f).
+            $$
+        \item[(b)] Using the fact that $\Delta^{(\pi)}(f)\leq\DT(f)\leq\deg(f)^3$.
+        \item[(c)] By OSSS inequality, we have
+            $$
+            \Var[f]\leq\sum_i\delta_i^{(\pi)}(\Tcal)\Inf_i[f]\leq\delta^{(\pi)}(\Tcal)\sum_i\Inf_i[f]=\delta^{(\pi)}(\Tcal)\Itt[f].
+            $$
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{8.45}
+    \begin{itemize}
+        \item[(a)] Using decision tree process, we have 
+            $\Inf_i[f]=\E_{J,x_J,x_{\bar J}}\sbra{\pbra{\Dtt_{\phi_i}f(x_J,x_{\bar J})}^2}$.
+            If $i\notin J$, then $\Dtt_{\phi_i}f(x_J,x_{\bar J})=\sigma\Dtt_{x_i}f(x_J,x_{\bar J})=0$.
+            Thus
+            $$
+            \Inf_i[f]\leq\Pr_{J,x_J,x_{\bar J}}\sbra{i\in J}=\delta^{(\pi)}_i(f).
+            $$
+        \item[(b)] Since $f$ is transitive-symmetric, we know $\Inf_i[f]=\Inf_j[f],\delta_i^{(\pi)}(f)=\delta_j^{(\pi)}(f)$.
+            Thus by OS inequality and (a), we have
+            $$
+            \Var[f]\leq n\delta_i^{(\pi)}(f)\Inf_i^{(\pi)}[f]\leq n\pbra{\delta_i^{(\pi)}}^2.
+            $$
+    \end{itemize}
+\end{exercise}
+
+\end{document}
