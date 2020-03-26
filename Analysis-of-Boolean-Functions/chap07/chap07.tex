@@ -1,0 +1,196 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator*{\E}{\mathbb E}
+\DeclareMathOperator{\Var}{\mathrm{Var}}
+\DeclareMathOperator{\tr}{\mathrm{tr}}
+\DeclareMathOperator{\poly}{\mathrm{poly}}
+\DeclareMathOperator{\sd}{\mathop{d}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\abs}[1]{{\left| #1 \right|}}
+\newcommand{\vabs}[1]{{\left\| #1 \right\|}}
+\newcommand{\hvabs}[1]{{\hat{\|} #1 \hat{\|}}}
+\newcommand{\abra}[1]{{\left\langle #1 \right\rangle}}
+\newcommand{\pbra}[1]{{\left( #1 \right)}}
+\newcommand{\cbra}[1]{{\left\{ #1 \right\}}}
+\newcommand{\sbra}[1]{{\left[ #1 \right]}}
+\newcommand{\floorbra}[1]{{\left\lfloor #1 \right\rfloor}}
+\newcommand{\ceilbra}[1]{{\left\lceil #1 \right\rceil}}
+\newcommand{\bin}{{\{0,1\}}}
+\newcommand{\pmbin}{{\{-1,1\}}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Zbb}{\mathbb{Z}}
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\Ncal}{\mathcal{N}}
+\newcommand{\Rcal}{\mathcal{R}}
+\newcommand{\Scal}{\mathcal{S}}
+
+\newcommand{\Inf}{\mathtt{Inf}}
+\newcommand{\MaxInf}{\mathtt{MaxInf}}
+\newcommand{\Dtt}{\mathtt{D}}
+\newcommand{\Itt}{\mathtt{I}}
+\newcommand{\Ltt}{\mathtt{L}}
+\newcommand{\Wtt}{\mathtt{W}}
+\newcommand{\Ttt}{\mathtt{T}}
+\newcommand{\Stab}{\mathtt{Stab}}
+\newcommand{\NS}{\mathtt{NS}}
+\newcommand{\AC}{\textsc{AC}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $7$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{7.6}
+    We assume $T$ queries $f(x)$ and $f(y)$. It suffices to show $T$ never rejects $\text{Maj}_{n'}$ given $f(x),f(y)$.
+    \begin{itemize}
+        \item If $f(x)=f(y)=-1$, then $T$ rejects only when $x_i\neq-1$ or $y_i\neq-1$ holds for any $i$.
+            At this time, $x$ has more than a half $-1$, which means $y$ has more than a half $1$. A contradiction to $f(y)=-1$.
+        \item If $f(x)=f(y)=1$, then $T$ rejects only when $x_i=-1$ or $y_i=-1$ holds for any $i$.
+            At this time, $x$ has more than a half $1$, which means $y$ has more than a half $-1$. A contradiction to $f(y)=1$.
+        \item If $f(x)=-1, f(y)=1$, then $T$ rejects only when $x_i=1$ or $y_i=-1$ holds for any $i$.
+            At this time, $x$ has more than a half $-1$, which means $y$ has more than a half $-1$. A contradiction to $f(y)=1$.
+        \item If $f(x)=1, f(y)=-1$, similar as above.
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{7.7}
+    We only consider non-adaptive tester. Since $T$ uses \texttt{Max-E3-Lin} predicates, 
+    assume $T$ accepts iff $f(x)f(y)f(z)=b$ where $(x,y,z,b)$ is sampled from some probability space.
+    Thus when $f$ is dictator (say, $f(x)=x_i$), we have
+    $$
+    1=\Pr_{x,y,z,b}\sbra{f(x)f(y)f(z)=b}=\frac12+\frac12\E_{x,y,z,b}\sbra{bx_iy_iz_i},
+    $$
+    which means $z_i=bx_iy_i$ for all $i$.
+    Now, for any $\eps$, we take $f(x)=\chi_S(x)$ for $S$ sufficiently large to guarantee $\Inf_i^{(1-\eps)}[f]=(1-\eps)^{|S|-1}<\eps$ holds for all $i$. Then $f$ has no $(\eps,\eps)$-notable bits, and
+    $$
+    \Pr_{x,y,z,b}\sbra{f(x)f(y)f(z)=b}=\frac12+\frac12\E_{x,y,z,b}\sbra{bx_Sy_Sz_S}
+    =\frac12+\frac12\E_b\sbra{b^{|S|+1}}=1,
+    $$
+    where we additionally let $|S|$ be an odd number.
+\end{exercise}
+
+\begin{exercise}{7.12}
+    View the $r$-query as an $r$-CNF and then transform it to a $3$-CNF of size at most $r2^r$. 
+    Let $\Pi_1,\ldots,\Pi_\ell,\ell\leq r2^r$ be the newly introduced variables, 
+    and we include their value as $\Rcal_2$'s output (together with the original $\Rcal_1$'s output).
+    When doing query, we random check one of the $r2^r$ clauses of the chosen $r$-query.
+    Since there must exist at least one falsified clause (if the $r$-query is false), we hit it with probability at least $1/(r2^r)$,
+    which means the rejection rate is $\lambda/(r2^r)$.
+\end{exercise}
+
+\begin{exercise}{7.18}
+    \begin{itemize}
+        \item[(a)] 
+            $$
+            \Pr\sbra{y^\top Dx\neq0}\geq\Pr\sbra{y^\top Dx\neq0,Dx\neq0}\geq\frac12\Pr\sbra{y^\top Dx\neq0\mid Dx\neq0}=\frac14.
+            $$
+        \item[(b)] Since $(\gamma^\top x)(\gamma^\top y)=x^\top\gamma\gamma^\top y$ and $\Gamma\cdot(xy^\top)=x^\top\Gamma y$,
+            we have
+            $$
+            \Pr\sbra{(\gamma^\top x)(\gamma^\top y)=\Gamma\cdot(xy^\top)}=\Pr\sbra{x^\top(\gamma\gamma^\top-\Gamma)y=0}
+            \begin{cases}
+                =1&\Gamma=\gamma\gamma^\top,\\
+                \leq3/4&\text{otherwise}.
+            \end{cases}
+            $$
+        \item[(c)] The testing algorithm has three parts, and we choose to perform with equal probability.
+            \begin{itemize}
+                \item Use BLR test to check if $\ell$ is close to some parity $\chi_\gamma$.
+                \item Use BLR test to check if $q$ is close to some parity $\chi_\Gamma$.
+                \item Use (b) to check if $\gamma\gamma^\top=\Gamma$. Specifically, sample $x,y\sim\Fbb_2^n$ and 
+                    use local correcting on $q(xy^\top)$, which takes $4$ queries.
+            \end{itemize}
+        \item[(d)] Note that $\sum_{i,j}c_{ij}w_iw_j=b$ is equivalent to $\chi_{ww^\top}(c)=b$.
+            Assume $L$ has $m$ such equations, i.e., $\chi_{ww^\top}(c^i)=b^i,i\in[m]$. Then our testing algorithm has two parts,
+            which expects the truth table of $\chi_w$ and $\chi_{ww^\top}$.
+            \begin{itemize}
+                \item Use (c) to check if the truth table is really $\chi_w$ and $\chi_{ww^\top}$ for some $w$.
+                \item Select a random string $s\in\bin^m$ and using local correcting to check if 
+                    $$
+                    \chi_{ww^\top}\pbra{\sum_{i:s_i=1}c^i}=\sum_{i:s_i=1}b^i.
+                    $$
+                    This works since, if $w$ dissatisfy some equation then this test fails with probability at least $1/2$.
+            \end{itemize}
+        \item[(e)] Assume value to each gate as $\bar w\in\bin^{\text{size}(C)}$ and we can write the restriction for each gate
+            to check if it's computing correctly. For example, $x=y\lor z$ is equivalent to $x=yz+y+z$, 
+            which has homogeneous degree-$2$ form $x^2+yz+y^2+z^2=0$. Then we use (d) to check if $\bar w$ is a valid 
+            computation of $C$ with proof length $O\pbra{2^{\text{size}(C)^2}}$. We also need a consistency check between
+            $w$ and $\bar w$, i.e., check $w$ equals the value of the input gates of $C$.
+            At last we appeal to Exercise 7.12 to reduce the $O(1)$ queries to $3$ queries.
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{7.27}
+    We equivalently formulate the instance of Unique-Games($q$) using graph model.
+    Each edge $e$ represents a constraint, where we assign some bijection $\pi_e:[q]\to[q]$.
+    Each vertex $v$ can be color to one of the $q$ colors $c_v\in[q]$.
+    Then we say $e=(u,v)$ is satisfied if $\pi(c_v)=c_u$.
+    When the instance has a satisfying assignment, if we obtain the color of one vertex, then all colors of its neighbors
+    are determined. Thus $(1,1)$-approximating Unique-Games($q$) can be done in polynomial time.
+\end{exercise}
+
+\begin{exercise}{7.30}
+    What does the context mean...
+\end{exercise}
+
+\end{document}
