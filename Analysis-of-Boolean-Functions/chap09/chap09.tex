@@ -1,0 +1,185 @@
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{extarrows}
+\usepackage{geometry}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{proof}{Proof}
+\newtheorem*{answer}{Answer}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+\newenvironment{problem}[1]{
+	\par
+	\noindent\textbf{Problem #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator*{\E}{\mathbb E}
+\DeclareMathOperator{\Var}{\mathrm{Var}}
+\DeclareMathOperator{\tr}{\mathrm{tr}}
+\DeclareMathOperator{\poly}{\mathrm{poly}}
+\DeclareMathOperator{\sd}{\mathop{d}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\abs}[1]{{\left| #1 \right|}}
+\newcommand{\vabs}[1]{{\left\| #1 \right\|}}
+\newcommand{\hvabs}[1]{{\hat{\|} #1 \hat{\|}}}
+\newcommand{\abra}[1]{{\left\langle #1 \right\rangle}}
+\newcommand{\pbra}[1]{{\left( #1 \right)}}
+\newcommand{\cbra}[1]{{\left\{ #1 \right\}}}
+\newcommand{\sbra}[1]{{\left[ #1 \right]}}
+\newcommand{\floorbra}[1]{{\left\lfloor #1 \right\rfloor}}
+\newcommand{\ceilbra}[1]{{\left\lceil #1 \right\rceil}}
+\newcommand{\bin}{{\{0,1\}}}
+\newcommand{\pmbin}{{\{-1,1\}}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\Nbb}{\mathbb{N}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Zbb}{\mathbb{Z}}
+
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Gcal}{\mathcal{G}}
+\newcommand{\Ncal}{\mathcal{N}}
+\newcommand{\Rcal}{\mathcal{R}}
+\newcommand{\Scal}{\mathcal{S}}
+\newcommand{\Tcal}{\mathcal{T}}
+\newcommand{\Xcal}{\mathcal{X}}
+\newcommand{\Ycal}{\mathcal{Y}}
+\newcommand{\Zcal}{\mathcal{Z}}
+
+\newcommand{\Inf}{\mathtt{Inf}}
+\newcommand{\MaxInf}{\mathtt{MaxInf}}
+\newcommand{\Dtt}{\mathtt{D}}
+\newcommand{\Itt}{\mathtt{I}}
+\newcommand{\Ltt}{\mathtt{L}}
+\newcommand{\Wtt}{\mathtt{W}}
+\newcommand{\Ttt}{\mathtt{T}}
+\newcommand{\Stab}{\mathtt{Stab}}
+\newcommand{\NS}{\mathtt{NS}}
+\newcommand{\DT}{\mathtt{DT}}
+\newcommand{\AC}{\textsc{AC}}
+\newcommand{\True}{\texttt{True}}
+\newcommand{\False}{\texttt{False}}
+
+\bibliographystyle{plainnat}
+
+\title{Exercise Set --- Chapter $9$}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{exercise}{9.6}
+    \begin{itemize}
+        \item[(a)]
+            \begin{align*}
+            \vabs{\Ttt_{(1-\delta)/\sqrt 3}f}_4
+                \leq&\sum_k\vabs{\Ttt_{(1-\delta)/\sqrt 3}f^{=k}}_4\leq
+            \sum_k(\sqrt 3)^k\vabs{\Ttt_{(1-\delta)/\sqrt 3}f^{=k}}_2=
+            \sum_k(1-\delta)^k\vabs{f^{=k}}_2\leq
+            \frac1\delta\sum_k\vabs{f^{=k}}_2\\
+                =&\frac1\delta\vabs{f}_2.
+            \end{align*}
+        \item[(c)]
+            $$
+            \vabs{\Ttt_\rho f}_4^d=\vabs{\Ttt_\rho f^{\oplus d}}_4\leq\frac1\delta\vabs{f^{\oplus d}}_2=\frac1\delta\vabs{f}_2^d.
+            $$
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{9.12}
+    \begin{itemize}
+        \item[(b)] $\E[Y]=\theta^2-2\E[X]+\vabs{X}_2^2=1+\theta^2$ and 
+            $\E[Y^2]=\vabs{X-\theta}_4^4\leq\vabs{-\theta+\frac1\rho X}_2^4=\pbra{\rho^{-2}+\theta^2}^2$.
+        \item[(c)] Since $\Pr\sbra{\abs{X-\theta}>t}=\Pr\sbra{Y>t^2}$, we have
+            \begin{align*}
+                \E[Y]&=\Pr[Y>t^2]\E[Y\mid Y>t^2]+\Pr[Y\leq t^2]\E[Y\mid Y\leq t^2]\\
+                &\leq \E\sbra{Y\cdot 1_{Y>t^2}}+t^2\\
+                &\leq \sqrt{\E[Y^2]\Pr[Y>t^2]}+t^2.
+            \end{align*}
+            Hence 
+            $$
+            \Pr[Y>t^2]\geq\pbra{\frac{1+\theta^2-t^2}{\rho^{-2}+\theta^2}}^2\geq(1-t^2)^2\rho^4.
+            $$
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{9.18}
+    \begin{itemize}
+        \item[(a)] $\alpha^2+\rho\Wtt^1[f]\leq\Stab_\rho[f]\leq\E[f]^{\frac2{1+\rho}}.$
+    \end{itemize}
+\end{exercise}
+
+\begin{exercise}{9.22}
+    Using H\"older inequality with $1=1/(1/\lambda)+1/(1/(1-\lambda))$, we have
+    \begin{align*}
+    \vabs{\Ttt_\rho f}_q^2
+        &=\vabs{\Ttt_{\rho^\lambda}\Ttt_{\rho^{1-\lambda}}f}_q^2\leq\vabs{\Ttt_{\rho^{1-\lambda}}f}_2^2
+    =\sum_S\rho^{2(1-\lambda)|S|}\hat f(S)^2\\
+        &=\sum_S\pbra{\rho^{|S|}\hat f(S)}^{2(1-\lambda)}\hat f(S)^{2\lambda}\\
+        &\leq\vabs{\Ttt_\rho f}_2^{1-\lambda}\vabs{f}_2^\lambda.
+    \end{align*}
+\end{exercise}
+
+\begin{exercise}{9.33}
+    Using KKL Edge-Isoperimetric theorem, we have $\MaxInf[f]\geq\exp(-O(\Itt[f]/\Var[f]))$.
+    By monotonicity, we also have $\Inf_i[f]=\hat f(i)$.
+\end{exercise}
+
+\begin{exercise}{9.34}
+    We prove $\vabs{f}_4^4\leq\text{sparsity}(\hat f)\vabs{f}_2^4$ by induction on $n$.
+    \begin{itemize}
+        \item $n=0$. Trivial.
+        \item $n>0$. Denote $f=xD+E$ where $D,E$ do not depend on $x$. 
+            Assume $s=\text{sparsity}(\hat D),t=\text{sparsity}(\hat E)$, then $\text{sparsity}(\hat f)=s+t$.
+            Thus
+            \begin{align*}
+            \vabs{f}_4^4
+                &=\vabs{D}_4^4+\vabs{E}_4^4+6\E\sbra{D^2E^2}\leq\vabs{D}_4^4+\vabs{E}_4^4+6\sqrt{\vabs{D}_4^4\vabs{E}_4^4}\\
+                &\leq s\vabs{D}_2^4+t\vabs{E}_2^4+6\sqrt{st\vabs{D}_2^4\vabs{E}_2^4}\\
+                &\leq (s+t)\vabs{D}_2^4+(s+t)\vabs{E}_2^4+2(s+t)\vabs{D}_2^2\vabs{E}_2^2\\
+                &=\text{sparsity}(\hat f)\vabs{f}_2^4.
+            \end{align*}
+    \end{itemize}
+\end{exercise}
+
+\end{document}
