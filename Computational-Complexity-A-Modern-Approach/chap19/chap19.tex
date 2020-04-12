@@ -1,0 +1,167 @@
+
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsthm,amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{geometry}
+% \usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{answer}{Answer}
+\newtheorem*{refute}{Refute}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\poly}{\text{poly}}
+
+
+\title{Exercise Set --- Chapter 19}
+\date{}
+
+\begin{document}
+    \maketitle
+
+    \begin{exercise}{19.5}
+        It naturally follows from the general form of von Neumann's minimax theorem\footnote{See from \url{https://en.wikipedia.org/wiki/Minimax_theorem}}:
+        \textit{
+            Let $X\subset\Rbb^n$ and $Y\subset\Rbb^m$ be compact convex sets. If $f:X\times Y\to\Rbb$ is a continuous function
+            that 
+            \begin{itemize}
+                \item $f(\cdot,y):X\to\Rbb$ is concave for fixed $y$,
+                \item $f(x,\cdot):Y\to\Rbb$ is convex for fixed $x$.
+            \end{itemize}
+            Then we have 
+            $$
+            \max_{x\in X}\min_{y\in Y}f(x,y)=\min_{y\in Y}\max_{x\in X}f(x,y).
+            $$
+        }
+    \end{exercise}
+
+    \begin{exercise}{19.17}
+        \begin{itemize}
+            \item[(a)] Observe that
+                $$
+                    \text{dist}(E)=\max_{x\neq x'}\Delta(E(x),E(x'))=\max_{x\neq x'}\abs{E(x)-E(x')}=\max_{x\neq x'}\abs{E(x-x')}
+                    =\max_{y\neq0}\abs{E(y)}.
+                $$
+            \item[(b)] Let $m=1.1n/(1-H(\delta))$ with $\delta<1/2$, and sample a random matrix $A\in\Fbb_2^{m\times n}$.
+                Then we take $E(x)=Ax$ and show 
+                $$
+                \Pr_A\sbra{\abs{Ax}\geq\delta n,\forall x\neq0}>0.
+                $$
+                Thus it suffices to show for any fixed $x\neq0$, 
+                $$
+                \Pr_A\sbra{\abs{Ax}<\delta n}=\Pr_{a_1,\ldots,a_m}\sbra{\sum_ia_i<\delta n}<2^{-n},
+                $$
+                where $a_i=(Ax)_i$ are independent uniform bits, and the inequality follows from Chernoff's bound.
+            \item[(c)] We view $\Fbb_{2^k}$ as $\Fbb_2[x]/(f(x))$ where $f$ is an irreducible degree-$k$ $\Fbb_2$ polynomial.
+                We denote $P:\Fbb_2^k\to\Fbb_2[x]/(f(x))$ as the usual encoding, and denote $P^{-1}$ as its inverse.
+                Then $P,P^{-1}$ are linear. Now let $k=k(n,\delta)=O_\delta(\log n)$ be a suitable parameter and define 
+                $$
+                E(x)=(P^{-1})^{\otimes 2^k}(E_\text{RS}(P^{\otimes n/k}(x))),
+                $$
+                where $E_\text{RS}:(\Fbb_{2^k})^{n/k}\to(\Fbb_{2^k})^{2^k}$ is the Reed-Solomon code with distance $\delta$. 
+                Then $E$ is linear and has distance $\delta$, and its polynomial-time
+                encoding/decoding mechanisms follow from the Reed-Solomon code.
+            \item[(d)]
+                We follow the notation in (c). 
+                \begin{itemize}
+                    \item There exists a linear $\eps$-biased code $E_1:\bin^n\to\bin^m,m=n/\eps^2$ with 
+                        $2^{O\pbra{n^2/\eps^2}}$ encoding time.
+                        \begin{proof}
+                        Similar as (b), we sample a random matrix $A\in\Fbb_2^{m\times n}$ and have 
+                        $$
+                        \Pr_A\sbra{\abs{\abs{Ax}-m/2}>\eps}
+                        =\Pr_{a_1,\ldots,a_m}\sbra{\abs{\frac1m\sum_ia_i-\frac12}>\eps}
+                        \leq2e^{-2\eps^2m}<2^{-n}.
+                        $$
+                        Thus there exists a valid $A$ and we set $E_1(x)=Ax$. Moreover, $A$ can be found in time 
+                        $$
+                        \underbrace{2^{n\cdot m}}_\text{brute force $A$}\cdot\underbrace{2^n\cdot\poly(n)}_\text{check validity}.
+                        $$
+                        \end{proof}
+                    \item There exists a linear $\eps$-biased code $E_2:\bin^n\to\bin^m,m=2^k\cdot 4k/\eps^2$ with
+                        $2^{O\pbra{k^2/\eps^2}}\cdot\poly(n/\eps)$ encoding time, where $k=\log(n/\eps)$.
+                        \begin{proof}
+                        Let $k=\log(n/\eps)$, and apply $E_1$ with input length $k$ and bias $\eps/2$. Then 
+                            $$
+                            E_2(x)=E_1^{\otimes 2^k}\pbra{(P^{-1})^{\otimes 2^k}\pbra{E_\text{RS}\pbra{P^{\otimes n/k}(x)}}}
+                            $$ 
+                            satisfies the following property:
+                            \begin{itemize}
+                                \item $E_2:\bin^n\to\bin^{2^k\cdot 4k/\eps^2}=\bin^m$ is linear, 
+                                    and the encoding time is 
+                                    $$
+                                    2^{O\pbra{k^2/\eps^2}}+\poly(2^k,n)\leq2^{O\pbra{k^2/\eps^2}}\cdot\poly(n/\eps);
+                                    $$
+                                \item for any $x\neq0$, the number of zeros in $E_2(x)$ is at most
+                                    $$
+                                    \frac nk\cdot\ell+\pbra{2^k-\frac nk}\cdot\pbra{\frac12+\frac\eps2}\cdot\ell
+                                    \leq\pbra{\frac12+\eps}\cdot2^k\cdot\ell;
+                                    $$
+                                \item for any $x\neq0$, the number of zeros in $E_2(x)$ is at least
+                                    $$
+                                    2^k\cdot\pbra{\frac12-\frac\eps2}\cdot\ell
+                                    \geq\pbra{\frac12-\eps}\cdot2^k\cdot\ell.
+                                    $$
+                            \end{itemize}
+                        \end{proof}
+                    \item There exists a linear $\eps$-biased code $E_3:\bin^n\to\bin^m,m=2^k\cdot 2^\ell\cdot16\ell/\eps^2=\poly(n/\eps)$ with
+                        $\poly(n/\eps)$ encoding time, where $k=\log(n/\eps),\ell=\log(2k/\eps)$.
+                        \begin{proof}
+                        Let $k=\log(n/\eps)$, and apply $E_2$ with input length $k$ and bias $\eps/2$. Then 
+                            $$
+                            E_3(x)=E_2^{\otimes 2^k}\pbra{(P^{-1})^{\otimes 2^k}\pbra{E_\text{RS}\pbra{P^{\otimes n/k}(x)}}}
+                            $$ 
+                            satisfies the following property:
+                            \begin{itemize}
+                                \item $E_3$ is $\eps$-biased.                            
+                                \item $E_3:\bin^n\to\bin^{2^k\cdot 2^k\cdot16k/\eps^2}=\bin^m$ is linear, 
+                                    and the encoding time is 
+                                    $$
+                                    2^{O(\ell^2/\eps^2)}\cdot\poly(k/\eps)\cdot\poly(2^k,n)=\poly(n/\eps).
+                                    $$
+                            \end{itemize}
+                        \end{proof}
+                \end{itemize}
+        \end{itemize}
+    \end{exercise}
+
+\end{document}
