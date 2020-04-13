@@ -78,17 +78,17 @@
         \begin{itemize}
             \item[(a)] Observe that
                 $$
-                    \text{dist}(E)=\max_{x\neq x'}\Delta(E(x),E(x'))=\max_{x\neq x'}\abs{E(x)-E(x')}=\max_{x\neq x'}\abs{E(x-x')}
-                    =\max_{y\neq0}\abs{E(y)}.
+                    \text{dist}(E)=\min_{x\neq x'}\Delta(E(x),E(x'))=\min_{x\neq x'}\abs{E(x)-E(x')}=\min_{x\neq x'}\abs{E(x-x')}
+                    =\min_{y\neq0}\abs{E(y)}.
                 $$
             \item[(b)] Let $m=1.1n/(1-H(\delta))$ with $\delta<1/2$, and sample a random matrix $A\in\Fbb_2^{m\times n}$.
                 Then we take $E(x)=Ax$ and show 
                 $$
-                \Pr_A\sbra{\abs{Ax}\geq\delta n,\forall x\neq0}>0.
+                \Pr_A\sbra{\abs{Ax}\geq\delta m,\forall x\neq0}>0.
                 $$
                 Thus it suffices to show for any fixed $x\neq0$, 
                 $$
-                \Pr_A\sbra{\abs{Ax}<\delta n}=\Pr_{a_1,\ldots,a_m}\sbra{\sum_ia_i<\delta n}<2^{-n},
+                \Pr_A\sbra{\abs{Ax}<\delta m}=\Pr_{a_1,\ldots,a_m}\sbra{\sum_ia_i<\delta m}<2^{-n},
                 $$
                 where $a_i=(Ax)_i$ are independent uniform bits, and the inequality follows from Chernoff's bound.
             \item[(c)] We view $\Fbb_{2^k}$ as $\Fbb_2[x]/(f(x))$ where $f$ is an irreducible degree-$k$ $\Fbb_2$ polynomial.
@@ -126,7 +126,7 @@
                             $$ 
                             satisfies the following property:
                             \begin{itemize}
-                                \item $E_2:\bin^n\to\bin^{2^k\cdot 4k/\eps^2}=\bin^m$ is linear, 
+                                \item $E_2:\bin^n\to\bin^{2^k\cdot\ell}=\bin^m,\ell=4k/\eps^2$ is linear, 
                                     and the encoding time is 
                                     $$
                                     2^{O\pbra{k^2/\eps^2}}+\poly(2^k,n)\leq2^{O\pbra{k^2/\eps^2}}\cdot\poly(n/\eps);
@@ -153,7 +153,7 @@
                             satisfies the following property:
                             \begin{itemize}
                                 \item $E_3$ is $\eps$-biased.                            
-                                \item $E_3:\bin^n\to\bin^{2^k\cdot 2^k\cdot16k/\eps^2}=\bin^m$ is linear, 
+                                \item $E_3:\bin^n\to\bin^{2^k\cdot 2^\ell\cdot16\ell/\eps^2}=\bin^m$ is linear, 
                                     and the encoding time is 
                                     $$
                                     2^{O(\ell^2/\eps^2)}\cdot\poly(k/\eps)\cdot\poly(2^k,n)=\poly(n/\eps).
