@@ -1,0 +1,77 @@
+
+% !TeX encoding = UTF-8
+% !TeX program = XeLaTeX
+% !TeX spellcheck = LaTeX
+
+\documentclass[a4paper]{article}
+
+\usepackage{amsthm,amsmath,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{geometry}
+% \usepackage{ntheorem}
+\usepackage{hyperref}
+\usepackage[ruled]{algorithm2e}
+\usepackage{caption,subcaption}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\def\UrlBreaks{\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\[\do\\\do\]\do\^\do\_\do\`\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9\do\.\do\@\do\\\do\/\do\!\do\_\do\|\do\;\do\>\do\]\do\)\do\,\do\?\do\'\do+\do\=\do\#}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{construction}{Construction}
+\newtheorem*{answer}{Answer}
+\newtheorem*{refute}{Refute}
+\newtheorem*{example}{Example}
+\newtheorem*{counterexample}{Counterexample}
+
+\newenvironment{exercise}[1]{
+	\par
+	\noindent\textbf{Exercise #1.}\quad
+}{
+	\par
+	\bigskip
+}
+
+
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\pbra}[1]{\left( #1 \right)}
+\newcommand{\cbra}[1]{\left\{ #1 \right\}}
+\newcommand{\sbra}[1]{\left[ #1 \right]}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Fbb}{\mathbb{F}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\poly}{\text{poly}}
+\newcommand{\NEXP}{\textbf{NEXP}}
+\newcommand{\MA}{\textbf{MA}}
+\newcommand{\Ppoly}{\textbf{P}_\textbf{/poly}}
+\newcommand{\EXP}{\textbf{EXP}}
+\newcommand{\BPP}{\textbf{BPP}}
+\newcommand{\NE}{\textbf{NE}}
+\newcommand{\SUBEXP}{\textbf{SUBEXP}}
+\newcommand{\NSUBEXP}{\textbf{NSUBEXP}}
+
+
+\title{Exercise Set --- Chapter 20}
+\date{}
+
+\begin{document}
+    \maketitle
+
+    \begin{exercise}{20.10}
+        We assume $\NEXP=\MA$ and $\NEXP\not\subseteq\Ppoly$. 
+        Since $\MA\subseteq\EXP$, we know $\NEXP=\EXP\not\subseteq\Ppoly$.
+        Then by derandomization (Theorem 20.7 and the remarks below), we know $\BPP\subseteq\SUBEXP$.
+        This means $\NEXP=\MA\subseteq\NSUBEXP\subseteq\NE$, which violates nondeterministic time hierarchy theorem.
+    \end{exercise}
+
+
+\end{document}
